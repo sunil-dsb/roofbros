@@ -1155,8 +1155,8 @@
           <h2>Measure — the golden path opens</h2>
         </div>
         <p class="sec-sub serif-note">
-          Address → map confirm → the measuring reveal → figures the roofer
-          trusts at a glance.
+          Job type → address → map confirm → the measuring reveal → figures
+          the roofer trusts at a glance.
         </p>
       </div>
       <div class="screens-row">
@@ -1172,12 +1172,65 @@
                 ></span>
               </div>
               <div class="appbody">
-                <div class="screen-title">
-                  <h5>New quote</h5>
+                <div class="screen-title" style="justify-content: flex-end">
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div>
+                  <div class="auth-h">New quote</div>
+                  <p class="auth-sub">What kind of job is this?</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <div class="opt-card sel">
+                    <i class="ic ic-roller"></i>
+                    <div class="ot">
+                      <b>Roof Restoration/Replacement</b>
+                      <span>Clean, repair and recoat an existing roof</span>
+                    </div>
+                  </div>
+                  <div class="opt-card">
+                    <i class="ic ic-tiles"></i>
+                    <div class="ot">
+                      <b>New Roof Installation</b>
+                      <span>New tiles for new construction</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B0 · Job type</b>A leading icon per card (roller, tile grid) —
+            same outline family as the rest of the app, not a one-off
+            illustration — for faster recognition on repeat use. Tapping a
+            card selects it and advances immediately; one exclusive choice
+            with nothing else on screen doesn't need a separate Continue tap.
+            The one decision that shapes everything after it: an existing
+            roof gets AI measuring, new construction gets manual dimensions.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Site address</div>
+                  <p class="auth-sub">Where's the job?</p>
+                </div>
                 <div class="field">
-                  <label>Site address</label>
                   <div class="control focus">
                     <i class="ic ic-search"></i> 14 banks…
                   </div>
@@ -1199,8 +1252,14 @@
                       >14 Banksia Pde, Dee Why NSW <small>· 18 km</small></span
                     >
                   </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Cl, Castle Hill NSW <small>· 31 km</small></span
+                    >
+                  </div>
                 </div>
-                <div class="aerial" style="height: 300px">
+                <div class="aerial" style="height: 190px">
                   <div class="pin"></div>
                   <div class="badge">Drag pin to adjust</div>
                 </div>
@@ -1231,9 +1290,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Measuring…</h5>
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="auth-h">Measuring…</div>
                 <div class="aerial" style="height: 300px">
                   <div class="roof" style="opacity: 0.35"></div>
                   <div class="scanline"></div>
@@ -1297,9 +1357,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Measurement</h5>
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="auth-h">Measurement</div>
                 <div class="aerial" style="height: 280px">
                   <div class="roof"></div>
                   <div class="badge">98% confidence</div>
@@ -1322,7 +1383,9 @@
                     <div class="k">Roof faces</div>
                   </div>
                 </div>
-                <button class="btn btn-primary btn-full">Build quote</button>
+                <button class="btn btn-primary btn-full">
+                  Choose paint &amp; colour
+                </button>
                 <button class="btn btn-secondary btn-full">
                   Re-check outline
                 </button>
@@ -1334,6 +1397,73 @@
             <b>B3 · Measurement review</b>Image + polygon stay on top; big
             tabular figures below; confidence is first-class. Below 85% an amber
             banner explains what to check.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Roof dimensions</div>
+                  <p class="auth-sub">New construction — enter what the plans specify.</p>
+                </div>
+                <div style="display: flex; gap: 12px">
+                  <div class="field" style="flex: 1">
+                    <label>Total area (m²)</label>
+                    <div class="control">150</div>
+                  </div>
+                  <div class="field" style="flex: 1">
+                    <label>Pitch (°)</label>
+                    <div class="control">24</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Additional items (optional)</label>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Ridge length (m)</label
+                      ><span class="val ph">e.g., 20</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Starters (qty)</label
+                      ><span class="val ph">e.g., 56</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Three ways (qty)</label
+                      ><span class="val ph">e.g., 10</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">Choose tile</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B2alt · Roof dimensions — New Installation</b>Replaces the AI
+            measuring reveal for this job type: new construction usually has
+            no existing roof to scan, so total area and pitch are entered
+            directly. Continues into the tile library, not straight to quote.
           </p>
         </div>
       </div>
@@ -1351,6 +1481,66 @@
         </p>
       </div>
       <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Paint &amp; colour</div>
+                  <p class="auth-sub">Pick a brand, then the finish colour.</p>
+                </div>
+                <div class="field">
+                  <label>Paint brand</label>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <div class="opt-card sel">
+                      <div class="ot">
+                        <b>Industrial roof coatings</b>
+                        <span>Heavy-duty acrylic, 15-year rating</span>
+                      </div>
+                    </div>
+                    <div class="opt-card">
+                      <div class="ot">
+                        <b>Shield coat</b>
+                        <span>Reflective membrane, budget option</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Colour</label>
+                  <div style="display: flex; flex-wrap: wrap; gap: 10px">
+                    <span class="swatch sel t-heritage"></span>
+                    <span class="swatch t-terracotta"></span>
+                    <span class="swatch t-slate"></span>
+                    <span class="swatch t-titan"></span>
+                    <span class="swatch t-olive"></span>
+                    <span class="swatch t-cream"></span>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">Build quote</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C0 · Paint &amp; colour — Restoration</b>Two brand tiers, then a
+            curated six-colour range — not the live tool's 24-swatch wall.
+            Fewer, larger targets beat an exhaustive grid (Hick's law).
+          </p>
+        </div>
+
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1528,7 +1718,7 @@
                 ></span>
               </div>
               <div class="appbody">
-                <div class="screen-title" style="align-items: flex-start">
+                <div class="screen-title">
                   <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
                   <span class="status quoted">Quoted</span>
                 </div>

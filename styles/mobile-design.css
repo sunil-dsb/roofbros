@@ -4,7 +4,14 @@
    Load order: tokens → base → components → device → docs/page.
    ============================================================ */
 
-.suggest { border: 1px solid var(--line-soft); border-top: none; background: var(--surface); border-radius: 0 0 var(--r-structure) var(--r-structure); }
+.suggest {
+  border: 1px solid var(--line-soft); border-top: none; background: var(--surface);
+  border-radius: 0 0 var(--r-structure) var(--r-structure);
+  max-height: 146px; overflow-y: auto;
+}
+  .suggest::-webkit-scrollbar { width: 3px; }
+  .suggest::-webkit-scrollbar-track { background: transparent; margin: 4px 0; }
+  .suggest::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 2px; }
   .suggest .s-row { padding: 12px 14px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); border-bottom: 1px solid var(--line-soft); display: flex; gap: 10px; align-items: center; }
   .suggest .s-row:last-child { border-bottom: none; }
   .suggest .s-row small { color: var(--muted); font-size: var(--t-caption); }
@@ -148,6 +155,7 @@
 .t-terracotta { background: linear-gradient(140deg, #B4573F, #8E3D2B); }
 .t-slate { background: linear-gradient(140deg, #5A5E66, #3C4046); }
 .t-olive { background: linear-gradient(140deg, #7A7E6A, #5A5E4C); }
+.t-cream { background: linear-gradient(140deg, #E8DFC8, #CBB98F); }       /* coating colour, Restoration */
 
 /* bottom-anchored action group (auth + action screens) */
 .screen-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
