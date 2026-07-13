@@ -96,6 +96,16 @@
 .otp.error .box { background: var(--field-active); outline: 1.5px solid var(--err); outline-offset: -1.5px; color: var(--err); }
 .field-error { margin: 8px 0 0; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--err); }
 
+/* ---------- notice banner (measurement-failed, low-confidence, etc.) ---------- */
+.banner {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: var(--warn-tint); border: 1px solid var(--warn);
+  border-radius: var(--r-structure); padding: 12px 14px;
+}
+.banner .ic { width: 20px; height: 20px; flex: none; color: var(--warn); margin-top: 1px; }
+.banner p { font-family: var(--font-ui); font-size: var(--t-caption); line-height: 1.5; color: var(--warn); }
+.banner b { font-variation-settings: 'wght' 600; }
+
 /* social sign-in: the fast path, offered before the manual form (Jakob's Law —
    this ordering matches the convention every user already knows). Apple's mark
    is a CSS-mask icon like the rest of our system (masks ignore fill, so it
@@ -206,6 +216,14 @@
   border-radius: var(--r-structure);
 }
 .aerial::before { content: ''; position: absolute; left: 7%; bottom: 7%; width: 26%; height: 17%; background: rgba(45,32,18,0.25); }
+/* real photo variant — B1/B2/B3 only (confirming/measuring a real address).
+   C2/D1 keep the flat gradient + solid .roof colour swap: that's the
+   recolour illustration, a different job from "here's a real aerial view". */
+.aerial.photo {
+  background-image: url('../assets/photos/aerial-suburb.jpg');
+  background-size: cover; background-position: center;
+}
+.aerial.photo::before { display: none; }
 .aerial .roof {
   position: absolute; inset: 15% 13% 18% 15%;
   background: var(--roof-colour, #B4573F);
@@ -240,17 +258,30 @@
 .li:last-child { border-bottom: none; }
 .li .n { flex: 1; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .li .n small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); }
-.li .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
-.li .mini-step { display: flex; border: 1px solid var(--line-soft); border-radius: var(--r-structure); overflow: hidden; }
-.li .mini-step i { font-style: normal; width: 26px; height: 26px; display: grid; place-items: center; background: var(--panel); font-size: var(--t-caption); color: var(--ink); }
+.li > .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
+/* stepper: one connected unit (− | qty | +) — same "construction" grouping as
+   .input-group, not three loose controls. Buttons and value are deliberately
+   different shades: grey = tappable, white = the value itself, not a control. */
+.li .stepper {
+  display: flex; align-items: center;
+  border: 1px solid var(--line-soft); border-radius: var(--r-structure); overflow: hidden;
+}
+.li .stepper .mini-step { width: 30px; height: 30px; display: grid; place-items: center; background: var(--panel); font-style: normal; font-size: var(--t-caption); color: var(--ink); }
+.li .stepper .q {
+  min-width: 44px; text-align: center; padding: 0 4px;
+  background: var(--surface);
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums;
+  color: var(--ink); font-size: var(--t-body);
+  border-left: 1px solid var(--line-soft); border-right: 1px solid var(--line-soft);
+}
 
 /* totals bar */
 .total-bar {
   display: flex; justify-content: space-between; align-items: center;
   background: var(--panel); border: 1px solid var(--line-soft); padding: 12px 14px;
 }
-.total-bar b { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-heading); }
-.total-bar span { font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
+.total-bar b { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-data); letter-spacing: -0.01em; }
+.total-bar span { font-family: var(--font-ui); font-size: var(--t-caption); color: var(--body); line-height: 1.4; }
 
 /* timeline */
 .timeline { display: flex; flex-direction: column; }
@@ -270,14 +301,18 @@
 .hub .h b { display: block; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .hub .h span { font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
 
-/* segmented control */
-.seg { display: flex; border: 1px solid var(--line-ink); border-radius: var(--r-structure); overflow: hidden; }
-.seg span {
-  flex: 1; text-align: center; padding: 12px 0;
-  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-body); color: var(--muted);
-  border-right: 1px solid var(--line-soft);
+/* segmented control — a padded grey track, each segment (incl. selected)
+   its own floating pill, not a flush-fill rectangle with divider lines */
+.seg {
+  display: flex; gap: 3px; padding: 3px;
+  background: var(--panel); border: 1px solid var(--line-soft);
+  border-radius: var(--r-pill);
 }
-.seg span:last-child { border-right: none; }
+.seg span {
+  flex: 1; text-align: center; padding: 10px 0;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-body); color: var(--body);
+  border-radius: var(--r-pill);
+}
 .seg span.on { background: var(--ink); color: var(--ground); }
 
 /* progress stages (measuring theatre) */

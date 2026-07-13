@@ -960,7 +960,7 @@
                   </div>
                   <div class="jt">
                     <b>14 Banksia St, Ryde</b
-                    ><span>Marseille · Restoration</span>
+                    ><span>Marseille · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status quoted"
@@ -1068,7 +1068,7 @@
                   </div>
                   <div class="jt">
                     <b>14 Banksia St, Ryde</b
-                    ><span>Marseille · Restoration</span>
+                    ><span>Marseille · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status quoted"
@@ -1155,8 +1155,10 @@
           <h2>Measure — the golden path opens</h2>
         </div>
         <p class="sec-sub serif-note">
-          Job type → address → map confirm → the measuring reveal → figures
-          the roofer trusts at a glance.
+          Job type → address → map confirm, then a real fork: AI measuring
+          reveal when imagery is available, manual entry when it isn't or
+          the roofer already has the numbers — either way, figures the
+          roofer trusts at a glance.
         </p>
       </div>
       <div class="screens-row">
@@ -1205,8 +1207,10 @@
             illustration — for faster recognition on repeat use. Tapping a
             card selects it and advances immediately; one exclusive choice
             with nothing else on screen doesn't need a separate Continue tap.
-            The one decision that shapes everything after it: an existing
-            roof gets AI measuring, new construction gets manual dimensions.
+            Decides materials only — Coatings for Restoration, Tiles +
+            Substrate for New Installation. Measurement method is a separate,
+            later choice on B1 (AI measuring or manual entry), open to
+            either job type.
           </p>
         </div>
 
@@ -1259,12 +1263,16 @@
                     >
                   </div>
                 </div>
-                <div class="aerial" style="height: 190px">
+                <div class="aerial photo" style="height: 168px">
                   <div class="pin"></div>
                   <div class="badge">Drag pin to adjust</div>
                 </div>
+                <p class="link-line">
+                  Already have your measurements?
+                  <b>Enter them manually</b>
+                </p>
                 <button class="btn btn-primary btn-full">
-                  Measure this roof
+                  Confirm address
                 </button>
               </div>
               <div class="home-ind"></div>
@@ -1273,7 +1281,63 @@
           <p class="cap">
             <b>B1 · Address &amp; map confirm</b>Places autocomplete, then a
             draggable pin on aerial imagery. ~50m drag threshold before
-            re-geocoding.
+            re-geocoding. Shared by both job types, so the button says
+            "Confirm address," not "Measure this roof" — Restoration takes
+            this into AI measuring (B2→B3); New Installation takes it into
+            Manual measurements instead, and nothing here should imply
+            a scan that isn't coming. The "Enter them manually" link is the
+            other route in, for either job type, any time the roofer already
+            has the numbers. Real aerial photo now, not the flat gradient —
+            only here and B2/B3, where it's standing in for actual Nearmap
+            imagery; C2/D1 keep the abstract version since that one's an
+            illustration of a colour, not a location.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Site address</div>
+                  <p class="auth-sub">Where's the job?</p>
+                </div>
+                <div class="field">
+                  <div class="control">14 Wattle Ct, Orange NSW 2800</div>
+                </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>Aerial imagery not available for this address.</b>
+                    You can proceed with manual measurements instead.
+                  </p>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">
+                  Continue with manual measurements
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B1 · Measurement-failed state</b>The real failure mode we
+            traced from the live reference tool, finally built instead of
+            just logged as a backlog item. Same amber tint/border as every
+            other warning — no separate "error illustration." Available to
+            either job type; not exclusive to New Installation.
           </p>
         </div>
 
@@ -1294,7 +1358,7 @@
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
                 <div class="auth-h">Measuring…</div>
-                <div class="aerial" style="height: 300px">
+                <div class="aerial photo" style="height: 300px">
                   <div class="roof" style="opacity: 0.35"></div>
                   <div class="scanline"></div>
                   <div class="badge">14 Banksia St, Ryde</div>
@@ -1361,8 +1425,8 @@
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
                 <div class="auth-h">Measurement</div>
-                <div class="aerial" style="height: 280px">
-                  <div class="roof"></div>
+                <div class="aerial photo" style="height: 280px">
+                  <div class="roof" style="opacity: 0.5"></div>
                   <div class="badge">98% confidence</div>
                 </div>
                 <div class="hub">
@@ -1395,8 +1459,10 @@
           </div>
           <p class="cap">
             <b>B3 · Measurement review</b>Image + polygon stay on top; big
-            tabular figures below; confidence is first-class. Below 85% an amber
-            banner explains what to check.
+            tabular figures below; confidence is first-class. Below 85% this
+            would show an amber banner explaining what to check — that
+            specific state is still on the backlog, not built here (98%
+            shown needs no banner).
           </p>
         </div>
 
@@ -1418,7 +1484,7 @@
                 </div>
                 <div>
                   <div class="auth-h">Roof dimensions</div>
-                  <p class="auth-sub">New construction — enter what the plans specify.</p>
+                  <p class="auth-sub">Enter the figures you already have.</p>
                 </div>
                 <div style="display: flex; gap: 12px">
                   <div class="field" style="flex: 1">
@@ -1454,16 +1520,19 @@
                   </div>
                 </div>
                 <div style="flex: 1"></div>
-                <button class="btn btn-primary btn-full">Choose tile</button>
+                <button class="btn btn-primary btn-full">Continue</button>
               </div>
               <div class="home-ind"></div>
             </div>
           </div>
           <p class="cap">
-            <b>B2alt · Roof dimensions — New Installation</b>Replaces the AI
-            measuring reveal for this job type: new construction usually has
-            no existing roof to scan, so total area and pitch are entered
-            directly. Continues into the tile library, not straight to quote.
+            <b>Manual measurements</b>Not exclusive to New Installation — the
+            other side of the fork from B1, reached either by "Enter them
+            manually" or by the measurement-failed state, for either job
+            type. "Continue" routes to E1 (tile library) for New
+            Installation, or straight to C0 (Paint &amp; colour) for
+            Restoration, skipping B2/B3 either way since there's nothing
+            here to review — the roofer just told us the numbers.
           </p>
         </div>
       </div>
@@ -1520,8 +1589,8 @@
                 <div class="field">
                   <label>Colour</label>
                   <div style="display: flex; flex-wrap: wrap; gap: 10px">
-                    <span class="swatch sel t-heritage"></span>
-                    <span class="swatch t-terracotta"></span>
+                    <span class="swatch t-heritage"></span>
+                    <span class="swatch sel t-terracotta"></span>
                     <span class="swatch t-slate"></span>
                     <span class="swatch t-titan"></span>
                     <span class="swatch t-olive"></span>
@@ -1555,7 +1624,71 @@
               <div class="appbody">
                 <div class="screen-title">
                   <h5>Quote</h5>
-                  <span class="status measured">Marseille · Restoration</span>
+                  <span class="status measured">Terracotta · Restoration</span>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px 8px;
+                    flex: 1;
+                    overflow: hidden;
+                  "
+                >
+                  <div class="li-group">Coatings</div>
+                  <div class="li">
+                    <div class="n">Top coat buckets</div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">6</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">High-build primer</div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">3</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="total-bar">
+                  <span
+                    >2 items · from calculator<br />GST included: $194</span
+                  ><b>$2,140</b>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Try on a roof
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C1 · Materials quote — Restoration</b>Coatings only; tiles and
+            substrate belong to the other job type, never shown together.
+            AppliCad-style category groups, steppers not keyboards,
+            GST-inclusive total with the subline. Edits are revertable
+            overrides.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Quote</h5>
+                  <span class="status measured">Titan Gloss · New Install</span>
                 </div>
                 <div
                   style="
@@ -1571,59 +1704,53 @@
                     <div class="n">
                       Main tiles<small>incl. profile waste factor</small>
                     </div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">2,875</div>
-                    <div class="mini-step"><i>+</i></div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">2,875</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
                   </div>
                   <div class="li">
                     <div class="n">Ridge caps</div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">60</div>
-                    <div class="mini-step"><i>+</i></div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">60</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
                   </div>
                   <div class="li-group">Substrate</div>
                   <div class="li">
                     <div class="n">Sarking rolls</div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">4</div>
-                    <div class="mini-step"><i>+</i></div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">4</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
                   </div>
                   <div class="li">
                     <div class="n">Batten bundles</div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">12</div>
-                    <div class="mini-step"><i>+</i></div>
-                  </div>
-                  <div class="li-group">Coatings</div>
-                  <div class="li">
-                    <div class="n">Top coat buckets</div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">6</div>
-                    <div class="mini-step"><i>+</i></div>
-                  </div>
-                  <div class="li">
-                    <div class="n">High-build primer</div>
-                    <div class="mini-step"><i>−</i></div>
-                    <div class="q">3</div>
-                    <div class="mini-step"><i>+</i></div>
+                    <div class="stepper">
+                      <span class="mini-step"><i>−</i></span>
+                      <span class="q">12</span>
+                      <span class="mini-step"><i>+</i></span>
+                    </div>
                   </div>
                 </div>
                 <div class="total-bar">
                   <span
-                    >11 items · from calculator<br />GST included: $1,722</span
+                    >4 items · from calculator<br />GST included: $1,722</span
                   ><b>$18,940</b>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  Choose tile colour
-                </button>
+                <button class="btn btn-primary btn-full">Save quote</button>
               </div>
               <div class="home-ind"></div>
             </div>
           </div>
           <p class="cap">
-            <b>C1 · Materials quote</b>AppliCad-style category groups, steppers
-            not keyboards, GST-inclusive total with the subline. Edits are
-            revertable overrides.
+            <b>C1 · Materials quote — New Installation</b>Tiles and substrate
+            only; no coatings. Colour was already chosen and previewed via
+            E1 → E2 → C2 earlier in this path, so the primary action here is
+            just saving, not another colour step.
           </p>
         </div>
 
@@ -1688,7 +1815,11 @@
           <p class="cap">
             <b>C2 · Colour visualiser</b>Tap a square tile swatch — the real
             roof re-tints in under 250ms, shadows preserved. Press-and-hold
-            shows the original.
+            shows the original. One shared screen, two entry points: from C1
+            (Restoration, quote already built) "Save colour to quote"
+            finalises that quote; from E2 (New Installation, arriving before
+            a quote exists yet) the same button carries the choice forward
+            into C1 for the first time.
           </p>
         </div>
       </div>
@@ -1877,9 +2008,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Colours</h5>
-                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="auth-h">Choose a tile</div>
                 <div class="seg">
                   <span class="on">All</span><span>Terracotta</span
                   ><span>Concrete</span>
@@ -1947,19 +2079,15 @@
                   </div>
                 </div>
               </div>
-              <div class="tabbar">
-                <span class="t"><i class="ic ic-home"></i>Jobs</span>
-                <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
-                <span class="t"><i class="ic ic-user"></i>Profile</span>
-              </div>
               <div class="home-ind"></div>
             </div>
           </div>
           <p class="cap">
-            <b>E1 &middot; Colour chart</b>Material segmented control, profile
-            chips, and real AU market names (Monier / Bristile / La Escandella).
-            Recycled stock badged in the range.
+            <b>E1 &middot; Choose a tile</b>Reached contextually from Manual
+            measurements (New Installation path), not a standalone tab — the
+            tab bar is gone, back returns there. Material segmented control,
+            profile chips, and real AU market names (Monier / Bristile / La
+            Escandella). Recycled stock badged in the range.
           </p>
         </div>
 
@@ -2067,7 +2195,9 @@
           <p class="cap">
             <b>E2 &middot; Colour detail</b>The compliance trio (SA / SRI / LRV)
             + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
-            "Try on a roof" jumps into the visualiser with the last measurement.
+            "Try on a roof" jumps into C2 (Visualiser); its "Save colour to
+            quote" then carries the choice into C1 &mdash; no separate
+            confirm step needed.
           </p>
         </div>
       </div>

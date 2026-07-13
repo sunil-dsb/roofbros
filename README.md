@@ -31,6 +31,10 @@ RoofBros/
     │                       brand font) + Albert Sans (free display fallback)
     ├── brand/              favicon.png (tile mark, used) + logo-full.png
     ├── photos/             real RoofBros before/after restoration shots (welcome slider)
+    │                       + aerial-suburb.jpg, a stock aerial photo standing in for
+    │                       Nearmap imagery in B1/B2/B3 (Unsplash License, free for
+    │                       commercial use, no attribution required — photo id
+    │                       1476385822777-70eabacbd41f)
     └── video/              empty-hub-illustration.mp4 (looping, muted, A0 empty state)
 ```
 
