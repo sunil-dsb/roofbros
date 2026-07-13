@@ -19,6 +19,10 @@
   padding: 12px 24px; min-height: var(--tap-secondary);
 }
 .btn-compact { padding: 8px 14px; min-height: var(--tap-compact-visual); font-size: var(--t-body); }
+/* destructive action — err outline (err #D92D20 on white = 4.83:1, passes). Never
+   filled like the primary, and always physically separated from it (Nielsen #3). */
+.btn-danger { background: transparent; color: var(--err); border: 1px solid var(--err); padding: 12px 24px; min-height: var(--tap-secondary); }
+.btn-danger:active { background: var(--err-tint); }
 .btn-full { width: 100%; }
 .btn:disabled { opacity: 0.38; cursor: not-allowed; }
 
@@ -126,10 +130,10 @@
   font-variant-numeric: tabular-nums; font-size: var(--t-data); color: var(--ink);
   letter-spacing: -0.01em; line-height: 1.1;
 }
-.fig .v small { font-size: var(--t-caption); color: var(--muted); }
+.fig .v small { font-size: var(--t-caption); color: var(--body); }  /* --muted was 3.96:1 on the panel bg; --body = 7.7:1 */
 .fig .k {
   font-family: var(--font-ui); font-variation-settings: 'wght' 600;
-  font-size: var(--t-micro); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+  font-size: var(--t-micro); letter-spacing: 0.09em; text-transform: uppercase; color: var(--body);
   margin-top: 2px;
 }
 
@@ -166,6 +170,7 @@
 }
 .opt-card.sel { border-color: var(--accent); outline: 1.5px solid var(--accent); outline-offset: -1.5px; background: var(--accent-tint); }
 .opt-card.sel .ic { color: var(--accent); }  /* icon recolours; label stays ink — same rule as .tabbar .t.on */
+.opt-card.sel span { color: var(--body); }   /* --muted (3.38:1) fails on the tint bg; --body = 6.62:1 verified */
 
 /* ---------- in-screen layout & app components ---------- */
 /* bottom padding matches the welcome so every screen has the same gap above the home indicator / tab bar */
@@ -178,6 +183,21 @@
   border-radius: var(--r-pill);
 }
 .chip-row { display: flex; gap: 8px; overflow: hidden; }
+
+/* step indicator — 4 thin segments (Job · Site · Details · Quote) filled up to
+   the current phase. Visibility of status (Nielsen #1) across the wizard spine;
+   sub-tools (colour library, visualiser) aren't wizard steps so they omit it. */
+.stepbar { display: flex; gap: 5px; }
+.stepbar i { flex: 1; height: 3px; border-radius: var(--r-pill); background: var(--line-soft); }
+.stepbar i.on { background: var(--accent); }
+
+/* modal scrim + confirm dialog (discard-on-close). Scrim is a backdrop, not a
+   drop-shadow, so it doesn't break the flat/no-shadow rule. */
+.scrim { position: absolute; inset: 0; z-index: 40; background: rgba(45, 32, 18, 0.55); display: grid; place-items: center; padding: 0 20px; }
+.dialog { width: 100%; background: var(--surface); border-radius: var(--r-sheet); padding: 22px 20px 18px; }
+.dialog h4 { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-title); color: var(--ink); margin: 0; }
+.dialog p { margin: 8px 0 0; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); }
+.dialog-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
 
 /* search field: what the icon-btn opens into. Same fill/height/field language
    as every standalone .field .control — square, not the OS-native rounded bar */
@@ -266,9 +286,9 @@
   display: flex; align-items: center;
   border: 1px solid var(--line-soft); border-radius: var(--r-structure); overflow: hidden;
 }
-.li .stepper .mini-step { width: 30px; height: 30px; display: grid; place-items: center; background: var(--panel); font-style: normal; font-size: var(--t-caption); color: var(--ink); }
+.li .stepper .mini-step { width: 44px; height: 44px; display: grid; place-items: center; background: var(--panel); font-style: normal; font-size: var(--t-body); color: var(--ink); }
 .li .stepper .q {
-  min-width: 44px; text-align: center; padding: 0 4px;
+  min-width: 44px; text-align: center; padding: 0 4px; align-self: stretch; display: grid; place-items: center;
   background: var(--surface);
   font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums;
   color: var(--ink); font-size: var(--t-body);

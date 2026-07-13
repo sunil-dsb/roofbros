@@ -1177,6 +1177,7 @@
                 <div class="screen-title" style="justify-content: flex-end">
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i></i><i></i><i></i></div>
                 <div>
                   <div class="auth-h">New quote</div>
                   <p class="auth-sub">What kind of job is this?</p>
@@ -1230,6 +1231,7 @@
                   <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i></i><i></i></div>
                 <div>
                   <div class="auth-h">Site address</div>
                   <p class="auth-sub">Where's the job?</p>
@@ -1310,6 +1312,7 @@
                   <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i></i><i></i></div>
                 <div>
                   <div class="auth-h">Site address</div>
                   <p class="auth-sub">Where's the job?</p>
@@ -1357,6 +1360,7 @@
                   <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Measuring…</div>
                 <div class="aerial photo" style="height: 300px">
                   <div class="roof" style="opacity: 0.35"></div>
@@ -1424,6 +1428,7 @@
                   <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Measurement</div>
                 <div class="aerial photo" style="height: 280px">
                   <div class="roof" style="opacity: 0.5"></div>
@@ -1482,6 +1487,7 @@
                   <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div>
                   <div class="auth-h">Roof dimensions</div>
                   <p class="auth-sub">Enter the figures you already have.</p>
@@ -1520,7 +1526,7 @@
                   </div>
                 </div>
                 <div style="flex: 1"></div>
-                <button class="btn btn-primary btn-full">Continue</button>
+                <button class="btn btn-primary btn-full">Choose tile</button>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -1529,10 +1535,70 @@
             <b>Manual measurements</b>Not exclusive to New Installation — the
             other side of the fork from B1, reached either by "Enter them
             manually" or by the measurement-failed state, for either job
-            type. "Continue" routes to E1 (tile library) for New
-            Installation, or straight to C0 (Paint &amp; colour) for
-            Restoration, skipping B2/B3 either way since there's nothing
-            here to review — the roofer just told us the numbers.
+            type. The CTA names the actual next step rather than a vague
+            "Continue": <b>Choose tile</b> here (New Installation → E1), or
+            <b>Choose paint &amp; colour</b> on the Restoration instance
+            (→ C0). Either way it skips B2/B3 — nothing to review when the
+            roofer just typed the numbers.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div>
+                  <div class="auth-h">Roof dimensions</div>
+                  <p class="auth-sub">Enter the figures you already have.</p>
+                </div>
+                <div style="display: flex; gap: 12px">
+                  <div class="field" style="flex: 1">
+                    <label>Total area (m²)</label>
+                    <div class="control">150</div>
+                  </div>
+                  <div class="field" style="flex: 1">
+                    <label>Pitch (°)</label>
+                    <div class="control">24</div>
+                  </div>
+                </div>
+              </div>
+              <div class="scrim">
+                <div class="dialog">
+                  <h4>Discard this quote?</h4>
+                  <p>
+                    You've entered measurements that aren't saved yet.
+                    Closing now discards them.
+                  </p>
+                  <div class="dialog-actions">
+                    <button class="btn btn-danger btn-full">Discard quote</button>
+                    <button class="btn btn-primary btn-full">Keep editing</button>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>Discard confirmation — the × on any step</b>Back (chevron)
+            is instant, it's non-destructive. But × exits the whole flow and
+            would bin everything entered, so it confirms first (Nielsen #3,
+            error prevention). The safe action, <b>Keep editing</b>, is the
+            prominent primary and sits thumb-closest; the destructive
+            <b>Discard</b> is an err-outline button held separate above it,
+            never a matching filled twin next to the primary.
           </p>
         </div>
       </div>
@@ -1562,9 +1628,11 @@
                 ></span>
               </div>
               <div class="appbody">
-                <div class="screen-title" style="justify-content: flex-end">
+                <div class="screen-title">
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
                   <span class="icon-btn"><i class="ic ic-close"></i></span>
                 </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div>
                   <div class="auth-h">Paint &amp; colour</div>
                   <p class="auth-sub">Pick a brand, then the finish colour.</p>
@@ -1623,7 +1691,12 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Quote</h5>
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+                  <div class="auth-h">Quote</div>
                   <span class="status measured">Terracotta · Restoration</span>
                 </div>
                 <div
@@ -1687,7 +1760,12 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Quote</h5>
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+                  <div class="auth-h">Quote</div>
                   <span class="status measured">Titan Gloss · New Install</span>
                 </div>
                 <div
