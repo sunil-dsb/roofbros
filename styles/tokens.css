@@ -1,0 +1,123 @@
+/* ============================================================
+   RoofBros Smart Quote — Design Tokens v1.0 (July 2026)
+   Language: flat, square, hairline borders, no shadows.
+   White ground · powder panels · espresso ink · maroon accent.
+   These tokens map 1:1 to the future React Native theme object.
+   ============================================================ */
+
+/* ------------------------------------------------------------------
+   DISPLAY = af Another Sans (headings, wordmark) — the tekt look.
+   Commercial (a.Foundry); Albert Sans is the free fallback.
+   BODY/UI = Outfit — the client's own brand font (roofbros.com.au),
+   free + fully variable, so every weight is available. */
+@font-face {
+  font-family: 'af Another Sans';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../assets/fonts/modular-reimagined-tekt.font.Woblo.af_another_sans.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Albert Sans';
+  font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('../assets/fonts/AlbertSans-Variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('../assets/fonts/Outfit-Variable.woff2') format('woff2');
+}
+
+:root {
+  /* --- colour: neutrals --- */
+  --ground: #FFFFFF;        /* app background — pure white */
+  --surface: #FFFFFF;       /* cards, tab bar, active fields */
+  --panel: #ECF1F4;         /* powder blue-grey: figure tiles, chips, secondary surfaces */
+  --panel-2: #DEE6ED;       /* pressed/nested panel */
+  --line-soft: #E2DCD4;     /* passive borders — warm neutral, matches the espresso palette */
+  --line-ink: #2D2012;      /* interactive borders — 1px hairline ink */
+
+  /* --- colour: ink (warm espresso, never pure black) --- */
+  --ink: #2D2012;           /* headings, hairlines, primary text */
+  --body: #55483B;          /* body text */
+  --muted: #807568;         /* captions, placeholders (taupe) — 4.5:1 on white, verified */
+
+  /* --- colour: ONE accent (matches roofbros.com.au — maroon + neutrals) ---
+     maroon does everything: buttons, brand, selection, focus, links, progress.
+     Information/selection that isn't maroon uses ink/panel neutrals.
+     Semantic colours below appear only as status. */
+  --accent: #7D1017;        /* tile maroon — the single accent */
+  --accent-press: #5C0B11;
+  --accent-tint: #EDDBD8;   /* selected backgrounds, tint panels */
+  --on-accent: #FFFFFF;
+
+  /* --- form fields (neutral grey — a RoofBros brand grey, not powder).
+     Active = a darker fill (no border/ring needed to show focus). --- */
+  --field: #ECECEC;      /* inactive — every field, everywhere */
+  --field-active: #FFFFFF; /* active — pure white lift */
+  --field-active-line: color-mix(in srgb, var(--ink) 16%, transparent); /* thin, warm, NOT pure black */
+  --placeholder: #6B6B6B;  /* AA-safe: 4.51:1 on ECECEC, verified (previous #6E6E6E measured 4.32:1) */
+
+  /* --- link colour: harmonised slate-blue — the ONLY blue in the system,
+     used solely for secondary text links (not actions; those stay maroon). --- */
+  --link: #2B4C8C;
+
+  /* --- colour: semantic (status only, never decorative) --- */
+  --ok: #1A7C4B;      --ok-tint: #E3F3EA;    /* 4.54:1 on ok-tint, verified */
+  --warn: #A7590A;    --warn-tint: #FBEEDC;  /* 4.51:1 on warn-tint, verified */
+  --err: #D92D20;     --err-tint: #FDE8E6;   /* leans orange — never confused with maroon */
+
+  /* --- type --- */
+  --font-display: 'af Another Sans', 'Albert Sans', system-ui, sans-serif;  /* headings, wordmark, hero numbers — 600 */
+  --font-ui: 'Outfit', system-ui, -apple-system, sans-serif;                /* body, buttons, labels, data — variable */
+
+  /* --- LOCKED type scale: 7 steps, every size derives from these ---
+     One semantic role each; nothing off-scale anywhere in the app. */
+  --t-display: 28px;  /* screen H1s: titles, auth headings, greeting, hero */
+  --t-data: 26px;     /* measurement figures, OTP digits (big tabular) */
+  --t-title: 22px;    /* section titles */
+  --t-heading: 17px;  /* card headings, field values, subheadings */
+  --t-body: 15px;     /* body, field labels, sub-descriptions, list rows */
+  --t-caption: 13px;  /* small labels, captions, secondary text, links */
+  --t-micro: 11px;    /* status pills, tab labels, tiny uppercase */
+
+  /* --- space (4pt grid) --- */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+
+  /* --- shape: just TWO values ---
+     0    = everything structural: cards, panels, inputs, imagery, tiles
+     pill = touch controls: buttons, chips, status pills
+     (sheets keep a rounded top by OS convention) */
+  --r-structure: 0;
+  --r-pill: 999px;
+  --r-sheet: 20px;
+
+  /* --- touch --- */
+  --tap-min: 48px;    /* primary CTAs — hard minimum, gloves */
+  --tap-secondary: 44px;
+  --tap-compact-visual: 36px;  /* compact visual only; hitSlop expands to 44+ in RN */
+}
+
+/* NOTE: light is the locked default for these design documents — they must look
+   identical on every machine regardless of OS dark mode. The app itself ships
+   both themes; the dark token set below is opt-in via data-theme="dark". */
+:root[data-theme="light"] {
+  --ground: #FFFFFF; --surface: #FFFFFF; --panel: #ECF1F4; --panel-2: #DEE6ED;
+  --line-soft: #E2DCD4; --line-ink: #2D2012;
+  --ink: #2D2012; --body: #55483B; --muted: #807568;
+  --accent: #7D1017; --accent-press: #5C0B11; --accent-tint: #EDDBD8; --on-accent: #FFFFFF;
+  --field: #ECECEC; --field-active: #FFFFFF; --placeholder: #6B6B6B;
+  --field-active-line: color-mix(in srgb, var(--ink) 16%, transparent);
+  --link: #2B4C8C;
+  --ok: #1A7C4B; --ok-tint: #E3F3EA; --warn: #A7590A; --warn-tint: #FBEEDC;
+  --err: #D92D20; --err-tint: #FDE8E6;
+}
+:root[data-theme="dark"] {
+  --ground: #221B15; --surface: #2B2318; --panel: #352C1E; --panel-2: #3E3424;
+  --line-soft: #42382A; --line-ink: #A99C8A;
+  --ink: #F0EAE0; --body: #CCC1B0; --muted: #958977;
+  --accent: #8E141C; --accent-press: #6E0F15; --accent-tint: #3D2A22; --on-accent: #FFFFFF;
+  --field: #2C2419; --field-active: #3A3020; --placeholder: #8C8C8C;
+  --field-active-line: color-mix(in srgb, var(--ink) 22%, transparent);
+  --ok: #4CC38A; --ok-tint: #1D3229; --warn: #E0A050; --warn-tint: #382A18;
+  --link: #8FA9D8;
+  --err: #F0655A; --err-tint: #3D211F;
+}

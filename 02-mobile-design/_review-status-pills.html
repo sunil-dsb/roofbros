@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review — status pill vs. quiet status</title>
+<link rel="stylesheet" href="../styles/tokens.css">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="../styles/device.css">
+<link rel="stylesheet" href="../styles/docs.css">
+<link rel="stylesheet" href="../styles/mobile-design.css">
+<style>
+  /* ---- review-only: this file is scratch, not part of the design system ---- */
+  body { background: var(--panel); }
+  .review-wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+  .review-h { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: 28px; color: var(--ink); margin: 0 0 8px; }
+  .review-sub { font-family: var(--font-ui); font-size: 15px; color: var(--body); margin: 0 0 36px; max-width: 60ch; }
+  .review-row { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; }
+  .review-col { flex: 0 0 auto; }
+  .review-label { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; text-align: center; }
+  .review-label b { display: block; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: 17px; letter-spacing: normal; text-transform: none; color: var(--ink); margin-bottom: 2px; }
+
+  /* ---- proposed quiet status: colour-coded text + small leading dot, no filled pill ---- */
+  .status-quiet {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+    font-size: var(--t-caption); letter-spacing: 0.02em;
+    background: none; border: none; padding: 0;
+  }
+  .status-quiet::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+  .status-quiet.measured { color: var(--muted); }
+  .status-quiet.quoted { color: var(--warn); }
+  .status-quiet.delivery { color: var(--ok); }
+</style>
+</head>
+<body>
+
+<div class="review-wrap">
+  <h1 class="review-h">Job-card status: current vs. quieter</h1>
+  <p class="review-sub">Same four real rows, same data — only the status treatment changes. Left is what's live today (filled colour pill). Right drops the background fill for a small dot + colour-coded text, same colours and meaning, just quieter across a longer list.</p>
+
+  <div class="review-row">
+
+    <div class="review-col">
+      <div class="review-label"><b>Current</b>filled pill</div>
+      <div class="phone"><span class="island"></span><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-ic"><i class="ic-cell"></i><i class="ic-wifi"></i><i class="ic-batt"></i></span></div>
+        <div class="appbody">
+          <div class="screen-title"><h5>Jobs</h5><span class="icon-btn"><i class="ic ic-search"></i></span></div>
+          <div class="chip-row">
+            <span class="chip on">All</span><span class="chip">Measured</span><span class="chip">Quoted</span><span class="chip">Delivered</span>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba2-before.jpg" alt="14 Banksia St, Ryde"></div>
+            <div class="jt"><b>14 Banksia St, Ryde</b><span>Marseille &middot; Restoration</span></div>
+            <div class="jr"><span class="status quoted">Quoted <span class="age-dot" style="background:var(--warn)"></span></span><span class="val">$18,940</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba3-after.jpg" alt="3 Coral Ave, Cronulla"></div>
+            <div class="jt"><b>3 Coral Ave, Cronulla</b><span>Swiss &middot; New roof</span></div>
+            <div class="jr"><span class="status delivery">Delivered</span><span class="val">$24,120</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba1-before.jpg" alt="88 Marion Rd, Auburn"></div>
+            <div class="jt"><b>88 Marion Rd, Auburn</b><span>Measured yesterday</span></div>
+            <div class="jr"><span class="status measured">Measured</span><span class="val">&mdash;</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba1-after.jpg" alt="21 Hume Hwy, Chullora"></div>
+            <div class="jt"><b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span></div>
+            <div class="jr"><span class="status delivery">Delivered</span><span class="val">$9,480</span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+          <span class="t"><i class="ic ic-plus"></i>New</span>
+          <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+          <span class="t"><i class="ic ic-user"></i>Profile</span>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+    </div>
+
+    <div class="review-col">
+      <div class="review-label"><b>Proposed</b>dot + colour text</div>
+      <div class="phone"><span class="island"></span><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-ic"><i class="ic-cell"></i><i class="ic-wifi"></i><i class="ic-batt"></i></span></div>
+        <div class="appbody">
+          <div class="screen-title"><h5>Jobs</h5><span class="icon-btn"><i class="ic ic-search"></i></span></div>
+          <div class="chip-row">
+            <span class="chip on">All</span><span class="chip">Measured</span><span class="chip">Quoted</span><span class="chip">Delivered</span>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba2-before.jpg" alt="14 Banksia St, Ryde"></div>
+            <div class="jt"><b>14 Banksia St, Ryde</b><span>Marseille &middot; Restoration</span></div>
+            <div class="jr"><span class="status-quiet quoted">Quoted <span class="age-dot" style="background:var(--warn)"></span></span><span class="val">$18,940</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba3-after.jpg" alt="3 Coral Ave, Cronulla"></div>
+            <div class="jt"><b>3 Coral Ave, Cronulla</b><span>Swiss &middot; New roof</span></div>
+            <div class="jr"><span class="status-quiet delivery">Delivered</span><span class="val">$24,120</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba1-before.jpg" alt="88 Marion Rd, Auburn"></div>
+            <div class="jt"><b>88 Marion Rd, Auburn</b><span>Measured yesterday</span></div>
+            <div class="jr"><span class="status-quiet measured">Measured</span><span class="val">&mdash;</span></div>
+          </div>
+          <div class="job-card">
+            <div class="thumb"><img src="../assets/photos/ba1-after.jpg" alt="21 Hume Hwy, Chullora"></div>
+            <div class="jt"><b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span></div>
+            <div class="jr"><span class="status-quiet delivery">Delivered</span><span class="val">$9,480</span></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+          <span class="t"><i class="ic ic-plus"></i>New</span>
+          <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+          <span class="t"><i class="ic ic-user"></i>Profile</span>
+        </div>
+        <div class="home-ind"></div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

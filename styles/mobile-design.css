@@ -1,0 +1,232 @@
+/* ============================================================
+   RoofBros — mobile-design.css
+   Page-local styles for 02-mobile-design screens only. Promote anything reused twice into components.css.
+   Load order: tokens → base → components → device → docs/page.
+   ============================================================ */
+
+.suggest { border: 1px solid var(--line-soft); border-top: none; background: var(--surface); border-radius: 0 0 var(--r-structure) var(--r-structure); }
+  .suggest .s-row { padding: 12px 14px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); border-bottom: 1px solid var(--line-soft); display: flex; gap: 10px; align-items: center; }
+  .suggest .s-row:last-child { border-bottom: none; }
+  .suggest .s-row small { color: var(--muted); font-size: var(--t-caption); }
+  .scanline { position: absolute; left: 0; right: 0; top: 38%; height: 2px; background: #fff; opacity: 0.9; box-shadow: 0 0 12px 2px rgba(255,255,255,0.7); }
+  .serif-note { font-size: var(--t-body); color: var(--body); }
+  .datewin { display: flex; gap: 10px; }
+  .datewin .d { flex: 1; border: 1px solid var(--line-ink); border-radius: var(--r-structure); padding: 12px; text-align: center; font-family: var(--font-ui); }
+  .datewin .d b { display: block; color: var(--ink); font-variation-settings: 'wght' 600; font-size: var(--t-body); }
+  .datewin .d span { font-size: var(--t-micro); color: var(--muted); }
+
+/* ---------- entry flow: splash, welcome, auth, empty hub ----------
+   Splash = mark + wordmark only (Wise/Revolut/Uber pattern). White badge
+   rounded with --r-sheet (~app-icon squircle) — a deliberate brand
+   exception echoing the phone's home-screen icon; reuses a token, not a
+   new magic value. */
+.splash-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;  }
+.splash-badge { width: 112px; height: 112px; background: #FFFFFF; border-radius: var(--r-sheet); display: grid; place-items: center; }
+.splash-badge img { width: 76px; height: 76px; display: block; }
+.splash-word { margin-top: 20px; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); letter-spacing: -0.02em; color: #FFFFFF; }
+
+.auth-h { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); line-height: 1.08; letter-spacing: -0.01em; color: var(--ink); }
+.auth-sub { margin-top: 8px; font-size: var(--t-body); color: var(--body); }
+
+/* social sign-in: the fast path, offered before the manual form (Jakob's Law —
+   this ordering matches the convention every user already knows). Apple's mark
+   is a CSS-mask icon like the rest of our system (masks ignore fill, so it
+   still inherits ink); Google's is genuinely 4-colour and can't go through a
+   single-colour mask, so it's an inline SVG kept at its own real brand colours. */
+.social-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.social-row .btn { gap: 8px; padding-left: 12px; padding-right: 12px; }
+.social-row .ic, .social-row svg { width: 20px; height: 20px; flex: none; }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 4px 0; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--line-soft); }
+.field .control .val { color: var(--ink); }
+.field .control .eye { margin-left: auto; color: var(--muted); }
+.link-line { text-align: center; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.link-line b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
+.terms { text-align: center; font-size: var(--t-caption); line-height: 1.55; color: var(--muted); padding: 0 12px; }
+.terms u { text-decoration-color: var(--line-soft); text-underline-offset: 2px; }
+/* forgot-password link — larger, danger colour (draws attention) */
+.forgot-link { text-align: right; }
+.forgot-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--err); text-decoration: underline; text-underline-offset: 2px; }
+
+
+/* home greeting (Jobs tab only) */
+.greeting { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-data); letter-spacing: -0.01em; color: var(--ink); }
+
+/* welcome card: explains the empty jobs list, no tour or carousel needed.
+   A looping illustration video bleeds full-width at the top; text below it. */
+.welcome-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.welcome-card .wc-t { padding: 16px 20px 24px; }
+.welcome-card .wc-t h6 { margin: 0; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.welcome-card .wc-t p { margin: 6px 0 0; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); max-width: 30ch; }
+
+.wc-illustration { width: 100%; aspect-ratio: 16 / 9; background: var(--panel); }
+.wc-illustration video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+
+/* ---------- OTP code entry (6 boxes) — same field system as every input: grey at rest, white + soft border when active ---------- */
+.otp { display: flex; gap: 8px; }
+.otp .box {
+  flex: 1; height: 60px; border-radius: var(--r-structure);
+  background: var(--field); display: grid; place-items: center;
+  font-family: var(--font-display); font-variation-settings: 'wght' 600;
+  font-size: var(--t-data); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.otp .box.active { background: var(--field-active); outline: 1.5px solid var(--field-active-line); outline-offset: -1.5px; }
+.otp .box .caret { width: 2px; height: 26px; background: var(--ink); }
+.otp.disabled .box { opacity: 0.38; }
+.otp.error .box { background: var(--field-active); outline: 1.5px solid var(--err); outline-offset: -1.5px; color: var(--err); }
+.field-error { margin: 8px 0 0; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--err); }
+.ig-row.locked { opacity: 0.55; }
+
+/* success confirmation: a quiet green badge, not a full takeover — matches the
+   flat, no-shadow system (a tinted circle, not an animated checkmark burst) */
+.success-badge { width: 72px; height: 72px; border-radius: 50%; background: var(--ok-tint); display: grid; place-items: center; margin: 0 auto; }
+.success-badge .ic { width: 32px; height: 32px; color: var(--ok); }
+
+/* resend link — same treatment as the forgot link, but maroon (an action, not danger) */
+.resend-link { text-align: right; }
+.resend-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- colours library ---------- */
+.cl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow: hidden; align-content: start; flex: 1; }
+.cl-card { border: 1px solid var(--line-soft); background: var(--surface); }
+.cl-card .ph { height: 72px; border-radius: var(--r-structure) var(--r-structure) 0 0; }
+.cl-card .nm { padding: 8px 10px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro); color: var(--ink); line-height: 1.25; }
+.cl-card .nm small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); margin-top: 1px; }
+.cl-hero { height: 210px; border-radius: var(--r-structure); }
+.spec-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line-soft); font-family: var(--font-ui); font-size: var(--t-caption); }
+.spec-row:last-child { border-bottom: none; }
+.spec-row span { color: var(--muted); }
+.spec-row b { color: var(--ink); font-variation-settings: 'wght' 600; text-align: right; }
+.basix { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro); letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--r-pill); background: var(--accent-tint); color: var(--accent); }
+
+/* ---------- welcome: FULL-SCREEN interactive before/after slider ----------
+   Brand-expression screen. Real RoofBros restoration photos fill the screen;
+   content overlays a bottom scrim. Drag anywhere (script at foot of 02 page)
+   except the button/link. Before/After pills sit at the top. */
+.ba-screen { position: relative; display: flex; flex-direction: column; background: #000; }
+/* three slides stacked and crossfaded; only the active one accepts drag input */
+.ba-slider { position: absolute; inset: 0; z-index: 0; overflow: hidden; touch-action: none; cursor: ew-resize; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+.ba-slider.on { opacity: 1; z-index: 1; pointer-events: auto; }
+.ba-img { position: absolute; top: 0; left: 0; width: 390px; height: 100%; object-fit: cover; object-position: center; display: block; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.ba-before-wrap { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; }
+.ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; z-index: 2; }
+.ba-handle {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+  width: 46px; height: 46px; border-radius: 50%; background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  display: grid; place-items: center;
+}
+.ba-handle .ic { width: 20px; height: 20px; color: var(--accent); }
+.ba-tag {
+  position: absolute; top: 64px; z-index: 2;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+  font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
+  background: rgba(20, 14, 10, 0.78); padding: 4px 12px; border-radius: var(--r-pill);
+}
+.ba-tag-before { left: 16px; }
+.ba-tag-after { right: 16px; }
+/* white overlay: photo fades into a solid-white content area so the welcome
+   flows into the app's white ground; dark text + maroon accents on white. */
+/* shorter white zone (fade starts lower) so more of the roof shows through */
+.ba-scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0) 52%, rgba(255,255,255,0.55) 68%,
+    rgba(255,255,255,0.94) 82%, var(--ground) 92%, var(--ground) 100%);
+}
+.ba-status { position: relative; z-index: 3; pointer-events: none; }
+.ba-spacer { flex: 1; pointer-events: none; }
+.ba-overlay { position: relative; z-index: 3; padding: 0 24px 16px; display: flex; flex-direction: column; pointer-events: none; }
+.ba-overlay .btn, .ba-overlay .ba-login { pointer-events: auto; }
+.ba-screen .home-ind { position: relative; z-index: 3; pointer-events: none; }
+/* pagination = navigational hint (not an action) → ink, not maroon */
+.ba-dots { display: flex; gap: 6px; margin-bottom: 14px; }
+.ba-dots i { width: 7px; height: 7px; border-radius: var(--r-pill); background: color-mix(in srgb, var(--link) 30%, transparent); transition: width 0.3s; }
+.ba-dots i.on { width: 22px; background: var(--link); }
+.ba-h { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.ba-sub { margin-top: 10px; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); max-width: 32ch; }
+.ba-overlay .btn { margin-top: 20px; }
+.ba-login { text-align: center; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); margin-top: 14px; }
+.ba-login b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- sample tile colours + layout utilities ----------
+   ONE place for all placeholder tile gradients (swatches, colour grid,
+   job thumbnails, visualiser). Swap these 12 lines for real tile photos. */
+.t-titan { background: linear-gradient(140deg, #8A2B26, #621A16); }       /* Titan Gloss */
+.t-barra { background: linear-gradient(140deg, #7A7E82, #5A5E63); }       /* Barramundi */
+.t-sambuca { background: linear-gradient(140deg, #3A3633, #241F1C); }     /* Sambuca */
+.t-saltspray { background: linear-gradient(140deg, #B9BDC1, #979CA1); }   /* Salt Spray */
+.t-soho { background: linear-gradient(140deg, #41444B, #2A2C31); }        /* Soho Night */
+.t-storm { background: linear-gradient(140deg, #6C7076, #4C5056); }       /* Storm Grey */
+.t-wallaroo { background: linear-gradient(140deg, #8C6B52, #6B4E3A); }    /* Wallaroo */
+.t-england { background: linear-gradient(140deg, #5E5347, #443B32); }     /* Old England */
+.t-heritage { background: linear-gradient(140deg, #6E4A3A, #4E3228); }    /* Heritage Brown */
+.t-terracotta { background: linear-gradient(140deg, #B4573F, #8E3D2B); }
+.t-slate { background: linear-gradient(140deg, #5A5E66, #3C4046); }
+.t-olive { background: linear-gradient(140deg, #7A7E6A, #5A5E4C); }
+
+/* bottom-anchored action group (auth + action screens) */
+.screen-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+
+/* ---------- 0G · Welcome (first run): dismissible onboarding, packed on purpose ----------
+   Rich because it's ephemeral: tap × and it's gone, so the daily hub stays calm. */
+.appbody-scroll { overflow-y: auto; scrollbar-width: none; }
+.appbody-scroll::-webkit-scrollbar { display: none; }
+
+/* auto-playing photo carousel: real restorations, each with its own informative caption */
+.fr-carousel { position: relative; overflow: hidden; border-radius: var(--r-structure); border: 1px solid var(--line-soft); flex: none; height: 220px; }
+.fr-car-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+.fr-car-slide.on { opacity: 1; z-index: 1; }
+.fr-car-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fr-car-slide::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(16,11,7,0.92) 0%, rgba(16,11,7,0.6) 32%, rgba(16,11,7,0.05) 62%, transparent 78%); }
+.fr-car-cap { position: absolute; left: 14px; right: 44px; bottom: 13px; margin: 0; z-index: 2; font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-heading); line-height: 1.4; color: #FFFFFF; text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+.fr-car-dots { position: absolute; right: 14px; bottom: 17px; z-index: 2; margin: 0; }
+
+/* how-it-works: swipeable, scroll-snapped, reusing the slate-blue dot language */
+.tour { display: flex; flex-direction: column; gap: 12px; }
+.tour-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+.tour-track::-webkit-scrollbar { display: none; }
+.tour-slide { scroll-snap-align: start; flex: 0 0 84%; box-sizing: border-box; padding: 18px; background: var(--surface); border: 1px solid var(--line-soft); }
+.tour-content { display: flex; flex-direction: column; gap: 7px; }
+/* step number as an outlined badge, corner marks reading as a measuring/targeting motif */
+.tour-step {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex: none;
+  border: 1px solid var(--accent-tint);
+  font-family: var(--font-display); font-variation-settings: 'wght' 600;
+  font-size: var(--t-heading); color: var(--accent);
+  margin-bottom: 4px;
+}
+.tour-step .tsq { position: absolute; width: 5px; height: 5px; background: var(--accent); }
+.tour-step .tsq.tl { top: -2px; left: -2px; }
+.tour-step .tsq.tr { top: -2px; right: -2px; }
+.tour-step .tsq.bl { bottom: -2px; left: -2px; }
+.tour-step .tsq.br { bottom: -2px; right: -2px; }
+/* connector arrow sits inline with the title: marks a step as following on from the
+   one before it. First step has none, matching the source pattern
+   (Measure  →  Quote  →  Preview colour  →  Request delivery). */
+.tour-head { display: flex; align-items: center; gap: 6px; }
+.tour-arrow { width: 18px; height: 18px; flex: none; color: var(--accent); }
+.tour-slide h6 { margin: 0; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.tour-slide p { margin: 0; font-family: var(--font-ui); font-size: var(--t-caption); line-height: 1.5; color: var(--body); }
+.tour-dots { margin: 0; justify-content: flex-start; }
+
+/* section label, reused above the tour and above the example job */
+.fr-label { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--muted); }
+
+/* preview of the real jobs list, one card per stage so it's concrete, not abstract */
+.fr-example { display: flex; flex-direction: column; gap: 8px; }
+
+/* quiet credibility facts, same green-check language as a completed stage */
+.fr-trust { display: flex; flex-direction: column; gap: 8px; }
+.fr-trust-row { display: flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.fr-trust-row .ic { width: 14px; height: 14px; flex: none; color: var(--ok); }
+
+/* pinned action bar — CTA stays put while the body scrolls */
+.fr-cta { flex: none; padding: 12px 16px; border-top: 1px solid var(--line-soft); background: var(--surface); }

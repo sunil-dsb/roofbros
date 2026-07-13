@@ -1,0 +1,2040 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoofBros — Mobile Design v1.0</title>
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="../styles/device.css" />
+    <link rel="stylesheet" href="../styles/docs.css" />
+    <link rel="stylesheet" href="../styles/mobile-design.css" />
+  </head>
+  <body>
+    <div class="doc-top">
+      <div class="in">
+        <span class="brandmark"
+          ><span class="tile"></span>RoofBros · Mobile Design</span
+        >
+        <nav>
+          <a href="#entry">Entry</a>
+          <a href="#home">Home</a>
+          <a href="#measure">Measure</a>
+          <a href="#quote">Quote</a>
+          <a href="#job">Job &amp; delivery</a>
+          <a href="#colours">Colours</a>
+          <a href="../01-style-guide/index.html">← Style guide</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="doc-hero">
+      <div class="doc-wrap">
+        <span class="eyebrow">Mobile design · v1.0 · client preview</span>
+        <h1 style="margin-top: 14px">
+          RoofBros Smart Quote<br />iOS + Android
+        </h1>
+        <p class="lede">
+          The roofer's phone app: measure a roof from an address, get a full
+          tile quote, try colours on the real roof, save the job, and book
+          recycled-tile delivery or pickup. Screens shown at real size (390px
+          wide) in the locked design language.
+        </p>
+      </div>
+    </header>
+
+    <section class="doc-section" id="entry">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">0</span>
+          <h2>Entry &mdash; first run &amp; auth</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          Minimum fields to sign up, then one first-run screen (0G) teaches the
+          whole flow before landing on the jobs hub &mdash; shown empty, then
+          filled, in Home next.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen" style="background: var(--accent)">
+              <div class="statusbar light">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="splash-center">
+                <div class="splash-badge">
+                  <img src="../assets/brand/favicon.png" alt="RoofBros" />
+                </div>
+                <div class="splash-word">RoofBros</div>
+              </div>
+              <div class="home-ind light"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0A &middot; Splash</b>Just the mark + wordmark on the maroon
+            field — nothing else (Wise/Revolut/Uber pattern). The product story
+            lives on the next screen, not here. Auto-advances in ~1.5s.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen ba-screen" id="baCarousel">
+              <div class="ba-slider on">
+                <img
+                  class="ba-img"
+                  src="../assets/photos/ba1-after.jpg"
+                  alt="Restored roof"
+                />
+                <div class="ba-before-wrap">
+                  <img
+                    class="ba-img"
+                    src="../assets/photos/ba1-before.jpg"
+                    alt="Tired roof"
+                  />
+                </div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+                <div class="ba-divider">
+                  <div class="ba-handle"><i class="ic ic-compare"></i></div>
+                </div>
+              </div>
+              <div class="ba-slider">
+                <img
+                  class="ba-img"
+                  src="../assets/photos/ba2-after.jpg"
+                  alt="Restored roof"
+                />
+                <div class="ba-before-wrap">
+                  <img
+                    class="ba-img"
+                    src="../assets/photos/ba2-before.jpg"
+                    alt="Tired roof"
+                  />
+                </div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+                <div class="ba-divider">
+                  <div class="ba-handle"><i class="ic ic-compare"></i></div>
+                </div>
+              </div>
+              <div class="ba-slider">
+                <img
+                  class="ba-img"
+                  src="../assets/photos/ba3-after.jpg"
+                  alt="Restored roof"
+                />
+                <div class="ba-before-wrap">
+                  <img
+                    class="ba-img"
+                    src="../assets/photos/ba3-before.jpg"
+                    alt="Tired roof"
+                  />
+                </div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+                <div class="ba-divider">
+                  <div class="ba-handle"><i class="ic ic-compare"></i></div>
+                </div>
+              </div>
+              <div class="ba-scrim"></div>
+              <div class="statusbar light ba-status">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="ba-spacer"></div>
+              <div class="ba-overlay">
+                <div class="ba-dots"><i class="on"></i><i></i><i></i></div>
+                <div class="ba-h">From tired to transformed.</div>
+                <p class="ba-sub">
+                  Measure a roof, quote it, and preview the new tile colour on
+                  the real thing.
+                </p>
+                <button class="btn btn-primary btn-full">Get started</button>
+                <div class="ba-login">
+                  Already have an account? <b>Log in</b>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0B &middot; Welcome (onboarding carousel)</b>Full-screen
+            before/after of three real RoofBros restorations, auto-advancing
+            every few seconds &mdash; drag any slide anywhere to reveal its
+            before/after. Before/After pills up top; one clear
+            <em>Get started</em> plus a quiet Log in link.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Create your account.</div>
+                  <p class="auth-sub">
+                    Your jobs and quotes, saved to every device.
+                  </p>
+                </div>
+                <div class="input-group" style="margin-top: 12px">
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Full name</label
+                      ><span class="val">Dave Robson</span>
+                    </div>
+                  </div>
+                  <div class="ig-row focus">
+                    <div class="ig-t">
+                      <label>Email</label
+                      ><span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Password</label
+                      ><span class="val"
+                        >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                      >
+                    </div>
+                    <i class="ic ic-eye"></i>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Create account
+                </button>
+                <div class="auth-divider">or continue with</div>
+                <div class="social-row">
+                  <button class="btn btn-secondary btn-full">
+                    <i class="ic ic-apple"></i>Apple
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#4285F4" d="M14.9 8.161c0-.476-.039-.954-.121-1.422h-6.64v2.695h3.802a3.24 3.24 0 01-1.407 2.127v1.75h2.269c1.332-1.22 2.097-3.02 2.097-5.15z"/><path fill="#34A853" d="M8.14 15c1.898 0 3.499-.62 4.665-1.69l-2.268-1.749c-.631.427-1.446.669-2.395.669-1.836 0-3.393-1.232-3.952-2.888H1.85v1.803A7.044 7.044 0 008.14 15z"/><path fill="#FBBC04" d="M4.187 9.342a4.17 4.17 0 010-2.68V4.859H1.849a6.97 6.97 0 000 6.286l2.338-1.803z"/><path fill="#EA4335" d="M8.14 3.77a3.837 3.837 0 012.7 1.05l2.01-1.999a6.786 6.786 0 00-4.71-1.82 7.042 7.042 0 00-6.29 3.858L4.186 6.66c.556-1.658 2.116-2.89 3.952-2.89z"/></svg>
+                    Google
+                  </button>
+                </div>
+                <div class="screen-foot">
+                  <p class="terms">
+                    By continuing you agree to the <u>Terms</u> and
+                    <u>Privacy Policy</u>.
+                  </p>
+                  <div class="link-line">
+                    Already have an account? <b>Sign in</b>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0C &middot; Create account</b>Fields first, then Apple and
+            Google side by side as the quick alternative, grouped with the
+            primary button instead of competing with it up top. Show-password
+            eye, 50px inputs, maroon focus ring.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Welcome back.</div>
+                  <p class="auth-sub">Sign in to your saved jobs and quotes.</p>
+                </div>
+                <div
+                  style="
+                    margin-top: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                  "
+                >
+                  <div class="input-group">
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Email</label
+                        ><span class="val ph">you@company.com.au</span>
+                      </div>
+                    </div>
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Password</label
+                        ><span class="val ph">Enter your password</span>
+                      </div>
+                      <i class="ic ic-eye"></i>
+                    </div>
+                  </div>
+                  <div class="forgot-link"><b>Forgot password?</b></div>
+                </div>
+                <button class="btn btn-primary btn-full" disabled>
+                  Sign in
+                </button>
+                <div class="auth-divider">or continue with</div>
+                <div class="social-row">
+                  <button class="btn btn-secondary btn-full">
+                    <i class="ic ic-apple"></i>Apple
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#4285F4" d="M14.9 8.161c0-.476-.039-.954-.121-1.422h-6.64v2.695h3.802a3.24 3.24 0 01-1.407 2.127v1.75h2.269c1.332-1.22 2.097-3.02 2.097-5.15z"/><path fill="#34A853" d="M8.14 15c1.898 0 3.499-.62 4.665-1.69l-2.268-1.749c-.631.427-1.446.669-2.395.669-1.836 0-3.393-1.232-3.952-2.888H1.85v1.803A7.044 7.044 0 008.14 15z"/><path fill="#FBBC04" d="M4.187 9.342a4.17 4.17 0 010-2.68V4.859H1.849a6.97 6.97 0 000 6.286l2.338-1.803z"/><path fill="#EA4335" d="M8.14 3.77a3.837 3.837 0 012.7 1.05l2.01-1.999a6.786 6.786 0 00-4.71-1.82 7.042 7.042 0 00-6.29 3.858L4.186 6.66c.556-1.658 2.116-2.89 3.952-2.89z"/></svg>
+                    Google
+                  </button>
+                </div>
+                <div class="screen-foot">
+                  <div class="link-line">
+                    New to RoofBros? <b>Create an account</b>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0D &middot; Sign in</b>Same pattern as 0C: fields first,
+            Apple/Google grouped with the primary button below. Session
+            persists &mdash; like EagleView&rsquo;s praised auto-login, this
+            screen appears once, not daily.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Reset your password.</div>
+                  <p class="auth-sub">
+                    Enter your email and we&rsquo;ll send a six-digit reset
+                    code. Codes expire after 15 minutes.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Reset code</label>
+                  <div class="otp disabled">
+                    <span class="box"></span><span class="box"></span
+                    ><span class="box"></span> <span class="box"></span
+                    ><span class="box"></span><span class="box"></span>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Send OTP</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; request code</b>Cross top-right (modal
+            dismiss). Six code boxes shown <em>disabled</em> as a preview of the
+            next step; button sends the code.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Enter the code.</div>
+                  <p class="auth-sub">
+                    We sent a six-digit code to your email. It expires in 15
+                    minutes.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Reset code</label>
+                  <div class="otp">
+                    <span class="box">7</span><span class="box">3</span
+                    ><span class="box">9</span>
+                    <span class="box active"><span class="caret"></span></span
+                    ><span class="box"></span><span class="box"></span>
+                  </div>
+                </div>
+                <div class="resend-link"><b>Resend code</b></div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full" disabled>
+                    Verify
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; enter code</b>Same field system as
+            every other screen: email locks (dimmed), the active box lifts to
+            white with the shared soft border, button becomes <em>Verify</em>.
+            Resend styled like the forgot link, in maroon.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Enter the code.</div>
+                  <p class="auth-sub">
+                    We sent a six-digit code to your email. It expires in 15
+                    minutes.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Reset code</label>
+                  <div class="otp error">
+                    <span class="box">7</span><span class="box">3</span
+                    ><span class="box">9</span><span class="box">1</span
+                    ><span class="box">4</span><span class="box">2</span>
+                  </div>
+                  <p class="field-error">
+                    That code&rsquo;s incorrect. Check it or resend below.
+                  </p>
+                </div>
+                <div class="resend-link"><b>Resend code</b></div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Verify</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; incorrect code</b>All six boxes lift
+            to white but outline in error red instead of the neutral hairline;
+            an inline message names the problem. <em>Verify</em> stays enabled
+            so retrying is one tap away.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Enter the code.</div>
+                  <p class="auth-sub">
+                    We sent a six-digit code to your email. It expires in 15
+                    minutes.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Reset code</label>
+                  <div class="otp disabled">
+                    <span class="box"></span><span class="box"></span
+                    ><span class="box"></span><span class="box"></span
+                    ><span class="box"></span><span class="box"></span>
+                  </div>
+                  <p class="field-error">
+                    That code expired. Tap resend to get a new one.
+                  </p>
+                </div>
+                <div class="resend-link"><b>Resend code</b></div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full" disabled>
+                    Verify
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; code expired</b>Boxes clear and
+            disable again, same as before a code was ever sent; the error
+            message explains why, and <em>Resend code</em> is the one clear
+            next step.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div>
+                  <div class="auth-h">Set a new password.</div>
+                  <p class="auth-sub">
+                    Choose a strong password at least 8 characters.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row focus">
+                    <div class="ig-t">
+                      <label>New password</label
+                      ><span class="val"
+                        >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                      >
+                    </div>
+                    <i class="ic ic-eye"></i>
+                  </div>
+                  <div class="ig-row focus">
+                    <div class="ig-t">
+                      <label>Re-type password</label>
+                      <span class="val"
+                        >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                      >
+                    </div>
+                    <i class="ic ic-eye"></i>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Reset password
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; new password</b>New password + re-type,
+            grouped like the sign-up fields. Clean finish to the reset flow.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="flex: 1; display: grid; place-items: center; text-align: center">
+                  <div>
+                    <div class="success-badge"><i class="ic ic-check"></i></div>
+                    <div class="auth-h" style="margin-top: 20px">
+                      Password reset.
+                    </div>
+                    <p class="auth-sub" style="margin: 8px auto 0; max-width: 26ch">
+                      You&rsquo;re all set. Sign in with your new password.
+                    </p>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Back to sign in</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0E &middot; Reset &mdash; success</b>The one moment in this
+            flow with no close button &mdash; there&rsquo;s nothing left to
+            cancel. A quiet green badge, not a takeover animation, matching
+            the flat, no-shadow system throughout.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <h5 class="greeting">Welcome, Dave.</h5>
+
+                <div class="fr-carousel" id="frCarousel">
+                  <div class="fr-car-slide on">
+                    <img
+                      class="fr-car-img"
+                      src="../assets/photos/ba1-after.jpg"
+                      alt="A restored RoofBros roof"
+                    />
+                    <p class="fr-car-cap">
+                      Satellite-accurate roof measurements.
+                    </p>
+                  </div>
+                  <div class="fr-car-slide">
+                    <img
+                      class="fr-car-img"
+                      src="../assets/photos/ba2-after.jpg"
+                      alt="A restored RoofBros roof"
+                    />
+                    <p class="fr-car-cap">Dozens of recycled tile colours.</p>
+                  </div>
+                  <div class="fr-car-slide">
+                    <img
+                      class="fr-car-img"
+                      src="../assets/photos/ba3-after.jpg"
+                      alt="A restored RoofBros roof"
+                    />
+                    <p class="fr-car-cap">
+                      Delivery Australia-wide, straight to site.
+                    </p>
+                  </div>
+                  <div class="ba-dots fr-car-dots">
+                    <i class="on"></i><i></i><i></i>
+                  </div>
+                </div>
+
+                <div class="tour" id="frTour">
+                  <div class="fr-label">How it works</div>
+                  <div class="tour-track">
+                    <article class="tour-slide">
+                      <div class="tour-content">
+                        <span class="tour-step"
+                          >1<i class="tsq tl"></i><i class="tsq tr"></i
+                          ><i class="tsq bl"></i><i class="tsq br"></i
+                        ></span>
+                        <div class="tour-head">
+                          <h6>Measure</h6>
+                        </div>
+                        <p>
+                          Drop a pin on the address and we&rsquo;ll trace the
+                          roofline for you.
+                        </p>
+                      </div>
+                    </article>
+                    <article class="tour-slide">
+                      <div class="tour-content">
+                        <span class="tour-step"
+                          >2<i class="tsq tl"></i><i class="tsq tr"></i
+                          ><i class="tsq bl"></i><i class="tsq br"></i
+                        ></span>
+                        <div class="tour-head">
+                          <i class="ic ic-arrow-right tour-arrow"></i>
+                          <h6>Quote</h6>
+                        </div>
+                        <p>
+                          Get an instant price based on your roof&rsquo;s
+                          measurements.
+                        </p>
+                      </div>
+                    </article>
+                    <article class="tour-slide">
+                      <div class="tour-content">
+                        <span class="tour-step"
+                          >3<i class="tsq tl"></i><i class="tsq tr"></i
+                          ><i class="tsq bl"></i><i class="tsq br"></i
+                        ></span>
+                        <div class="tour-head">
+                          <i class="ic ic-arrow-right tour-arrow"></i>
+                          <h6>Preview colour</h6>
+                        </div>
+                        <p>
+                          See how different recycled tile colours look on your
+                          actual roof.
+                        </p>
+                      </div>
+                    </article>
+                    <article class="tour-slide">
+                      <div class="tour-content">
+                        <span class="tour-step"
+                          >4<i class="tsq tl"></i><i class="tsq tr"></i
+                          ><i class="tsq bl"></i><i class="tsq br"></i
+                        ></span>
+                        <div class="tour-head">
+                          <i class="ic ic-arrow-right tour-arrow"></i>
+                          <h6>Request delivery</h6>
+                        </div>
+                        <p>
+                          Choose a date and we&rsquo;ll deliver straight to
+                          site.
+                        </p>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="ba-dots tour-dots">
+                    <i class="on"></i><i></i><i></i><i></i>
+                  </div>
+                </div>
+
+                <div class="fr-example">
+                  <div class="fr-label">What your jobs list will look like</div>
+                  <div class="job-card">
+                    <div class="thumb">
+                      <img
+                        src="../assets/photos/ba1-before.jpg"
+                        alt="88 Marion Rd, Auburn"
+                      />
+                    </div>
+                    <div class="jt">
+                      <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
+                    </div>
+                    <div class="jr">
+                      <span class="status measured">Measured</span
+                      ><span class="val">&mdash;</span>
+                    </div>
+                  </div>
+                  <div class="job-card">
+                    <div class="thumb">
+                      <img
+                        src="../assets/photos/ba2-before.jpg"
+                        alt="14 Banksia St, Ryde"
+                      />
+                    </div>
+                    <div class="jt">
+                      <b>14 Banksia St, Ryde</b
+                      ><span>Marseille &middot; Restoration</span>
+                    </div>
+                    <div class="jr">
+                      <span class="status quoted"
+                        >Quoted
+                        <span
+                          class="age-dot"
+                          style="background: var(--warn)"
+                        ></span></span
+                      ><span class="val">$18,940</span>
+                    </div>
+                  </div>
+                  <div class="job-card">
+                    <div class="thumb">
+                      <img
+                        src="../assets/photos/ba3-after.jpg"
+                        alt="3 Coral Ave, Cronulla"
+                      />
+                    </div>
+                    <div class="jt">
+                      <b>3 Coral Ave, Cronulla</b
+                      ><span>Swiss &middot; New roof</span>
+                    </div>
+                    <div class="jr">
+                      <span class="status delivery">Delivered</span
+                      ><span class="val">$24,120</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="fr-trust">
+                  <div class="fr-trust-row">
+                    <i class="ic ic-check"></i>Powered by Nearmap satellite
+                    imagery
+                  </div>
+                  <div class="fr-trust-row">
+                    <i class="ic ic-check"></i>Australian tile profiles built in
+                  </div>
+                </div>
+              </div>
+              <div class="fr-cta">
+                <button class="btn btn-primary btn-full">
+                  Measure your first roof
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0G &middot; Welcome (first run)</b>Shown once, straight after
+            sign-up, using the same greeting treatment as the jobs hub. An
+            auto-playing photo carousel with its own informative captions, a
+            swipeable <em>how&nbsp;it&nbsp;works</em> tour and a 3-card preview
+            of the real jobs list, one per stage (measured, quoted, delivery),
+            then <em>Measure your first roof</em>. Tapping <b>&times;</b>
+            dismisses to the clean jobs hub.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="home">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">A</span>
+          <h2>Home — the jobs hub</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          Every morning starts here: the pipeline as a list, one thumb-reach
+          from a new quote. Same screen shown twice below &mdash; empty, then
+          filled.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="welcome-card">
+                  <div class="wc-illustration">
+                    <video
+                      src="../assets/video/empty-hub-illustration.mp4"
+                      autoplay
+                      loop
+                      muted
+                      playsinline
+                    ></video>
+                  </div>
+                  <div class="wc-t">
+                    <h6>No jobs yet</h6>
+                    <p>
+                      Start your first job by dropping an address, we'll measure the
+                      roof, and you can quote it from there.
+                    </p>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Start a job <i class="ic ic-plus"></i>
+                </button> 
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>A0 &middot; Empty jobs hub</b>The same screen as A1, right next
+            to it &mdash; zero state. Same <em>Jobs</em> header, search and
+            filter chips, just no cards yet. A short looping illustration
+            video sits full-width up top, muted and autoplaying. Then
+            <em>Start a job</em>. All the teaching happens once on 0G, so this
+            stays uncluttered every day after too.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba2-before.jpg"
+                      alt="14 Banksia St, Ryde"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>14 Banksia St, Ryde</b
+                    ><span>Marseille · Restoration</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status quoted"
+                      >Quoted
+                      <span
+                        class="age-dot"
+                        style="background: var(--warn)"
+                      ></span></span
+                    ><span class="val">$18,940</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba3-after.jpg"
+                      alt="3 Coral Ave, Cronulla"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>3 Coral Ave, Cronulla</b><span>Swiss · New roof</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status delivery">Delivered</span
+                    ><span class="val">$24,120</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba1-before.jpg"
+                      alt="88 Marion Rd, Auburn"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status measured">Measured</span
+                    ><span class="val">—</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba1-after.jpg"
+                      alt="21 Hume Hwy, Chullora"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status delivery">Delivered</span
+                    ><span class="val">$9,480</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>A1 · Jobs hub (home)</b>Filter chips as the pipeline; aging dot
+            flags idle quotes; New Quote is a uniform maroon tab (4 flat tabs,
+            no raised FAB).
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <div class="search-field">
+                    <i class="ic ic-search"></i
+                    ><span>Search jobs, addresses&hellip;</span>
+                  </div>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba2-before.jpg"
+                      alt="14 Banksia St, Ryde"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>14 Banksia St, Ryde</b
+                    ><span>Marseille · Restoration</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status quoted"
+                      >Quoted
+                      <span
+                        class="age-dot"
+                        style="background: var(--warn)"
+                      ></span></span
+                    ><span class="val">$18,940</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba3-after.jpg"
+                      alt="3 Coral Ave, Cronulla"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>3 Coral Ave, Cronulla</b><span>Swiss · New roof</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status delivery">Delivered</span
+                    ><span class="val">$24,120</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba1-before.jpg"
+                      alt="88 Marion Rd, Auburn"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status measured">Measured</span
+                    ><span class="val">—</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba1-after.jpg"
+                      alt="21 Hume Hwy, Chullora"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status delivery">Delivered</span
+                    ><span class="val">$9,480</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>A1 · Jobs hub &mdash; search active</b>Tapping the search icon
+            swaps it for a full-width field at the same 52px height as every
+            other input, plus the same &times; used to dismiss every other
+            screen in the app &mdash; not a text &ldquo;Cancel&rdquo; link.
+            Chips and the list stay put, since with few jobs, search narrows
+            the same list rather than replacing it with a separate results
+            view.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="measure">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">B</span>
+          <h2>Measure — the golden path opens</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          Address → map confirm → the measuring reveal → figures the roofer
+          trusts at a glance.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>New quote</h5>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="field">
+                  <label>Site address</label>
+                  <div class="control focus">
+                    <i class="ic ic-search"></i> 14 banks…
+                  </div>
+                </div>
+                <div class="suggest">
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span>14 Banksia St, <b>Ryde</b> NSW 2112</span>
+                  </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Ave, Engadine NSW <small>· 24 km</small></span
+                    >
+                  </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Pde, Dee Why NSW <small>· 18 km</small></span
+                    >
+                  </div>
+                </div>
+                <div class="aerial" style="height: 300px">
+                  <div class="pin"></div>
+                  <div class="badge">Drag pin to adjust</div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Measure this roof
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B1 · Address &amp; map confirm</b>Places autocomplete, then a
+            draggable pin on aerial imagery. ~50m drag threshold before
+            re-geocoding.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Measuring…</h5>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="aerial" style="height: 300px">
+                  <div class="roof" style="opacity: 0.35"></div>
+                  <div class="scanline"></div>
+                  <div class="badge">14 Banksia St, Ryde</div>
+                </div>
+                <div class="progress"><i style="width: 56%"></i></div>
+                <div class="stage-list">
+                  <div class="stage done">
+                    <span class="m"
+                      ><i
+                        class="ic ic-check"
+                        style="width: 12px; height: 12px"
+                      ></i></span
+                    >Locating your roof
+                  </div>
+                  <div class="stage now">
+                    <span class="m"
+                      ><span
+                        style="
+                          width: 8px;
+                          height: 8px;
+                          border-radius: 50%;
+                          background: currentColor;
+                          display: inline-block;
+                        "
+                      ></span></span
+                    >Tracing roof edges…
+                  </div>
+                  <div class="stage">
+                    <span class="m"></span>Calculating area and pitch
+                  </div>
+                </div>
+                <p
+                  class="serif-note"
+                  style="text-align: center; padding: 0 20px"
+                >
+                  The outline draws itself on your roof as we trace it — every
+                  edge you see is measured.
+                </p>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B2 · The measuring reveal</b>Scan-line over the real roof, stages
+            narrating real work, polygon drawing itself. 5–12s of earned trust —
+            never a spinner.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Measurement</h5>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="aerial" style="height: 280px">
+                  <div class="roof"></div>
+                  <div class="badge">98% confidence</div>
+                </div>
+                <div class="hub">
+                  <div class="fig">
+                    <div class="v">230<small> m²</small></div>
+                    <div class="k">Roof area</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">22.4<small>°</small></div>
+                    <div class="k">Pitch</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">18.0<small> lm</small></div>
+                    <div class="k">Ridge</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">4</div>
+                    <div class="k">Roof faces</div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">Build quote</button>
+                <button class="btn btn-secondary btn-full">
+                  Re-check outline
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B3 · Measurement review</b>Image + polygon stay on top; big
+            tabular figures below; confidence is first-class. Below 85% an amber
+            banner explains what to check.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="quote">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">C</span>
+          <h2>Quote &amp; visualise — the close</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          The calculator fills every line; the roofer nudges by exception. Then
+          the wow: their actual roof, recoloured with a tap.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Quote</h5>
+                  <span class="status measured">Marseille · Restoration</span>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px 8px;
+                    flex: 1;
+                    overflow: hidden;
+                  "
+                >
+                  <div class="li-group">Roof tiles</div>
+                  <div class="li">
+                    <div class="n">
+                      Main tiles<small>incl. profile waste factor</small>
+                    </div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">2,875</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">60</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                  <div class="li-group">Substrate</div>
+                  <div class="li">
+                    <div class="n">Sarking rolls</div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">4</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Batten bundles</div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">12</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                  <div class="li-group">Coatings</div>
+                  <div class="li">
+                    <div class="n">Top coat buckets</div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">6</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                  <div class="li">
+                    <div class="n">High-build primer</div>
+                    <div class="mini-step"><i>−</i></div>
+                    <div class="q">3</div>
+                    <div class="mini-step"><i>+</i></div>
+                  </div>
+                </div>
+                <div class="total-bar">
+                  <span
+                    >11 items · from calculator<br />GST included: $1,722</span
+                  ><b>$18,940</b>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Choose tile colour
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C1 · Materials quote</b>AppliCad-style category groups, steppers
+            not keyboards, GST-inclusive total with the subline. Edits are
+            revertable overrides.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Visualiser</h5>
+                  <span class="icon-btn"><i class="ic ic-compare"></i></span>
+                </div>
+                <div
+                  class="aerial"
+                  style="height: 380px; --roof-colour: #4e3228"
+                >
+                  <div class="roof"></div>
+                  <div class="badge">Hold to compare</div>
+                </div>
+                <div style="text-align: center">
+                  <div
+                    style="
+                      font-family: var(--font-ui);
+                      font-variation-settings: &quot;wght&quot; 600;
+                      font-size: var(--t-heading);
+                      color: var(--ink);
+                    "
+                  >
+                    Heritage Brown
+                  </div>
+                  <div
+                    style="
+                      font-family: var(--font-ui);
+                      font-size: var(--t-caption);
+                      color: var(--muted);
+                    "
+                  >
+                    Recycled Marseille · in stock at yard
+                  </div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <span class="swatch t-terracotta"></span>
+                  <span class="swatch sel t-heritage"></span>
+                  <span class="swatch t-slate"></span>
+                  <span class="swatch t-titan"></span>
+                  <span class="swatch t-olive"></span>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Save colour to quote
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 · Colour visualiser</b>Tap a square tile swatch — the real
+            roof re-tints in under 250ms, shadows preserved. Press-and-hold
+            shows the original.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="job">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">D</span>
+          <h2>Job &amp; delivery — the moat</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          Everything about a site in one place, with the one button no
+          competitor can copy.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="align-items: flex-start">
+                  <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
+                  <span class="status quoted">Quoted</span>
+                </div>
+                <div
+                  class="aerial"
+                  style="height: 130px; --roof-colour: #4e3228"
+                >
+                  <div class="roof"></div>
+                </div>
+                <div class="hub">
+                  <div class="h">
+                    <b>Measurement</b><span>230 m² · 22.4° · 98%</span>
+                  </div>
+                  <div class="h">
+                    <b>Quotes (2)</b><span>$18,940 · Heritage Brown</span>
+                  </div>
+                  <div class="h">
+                    <b>Photos (4)</b><span>site + before shots</span>
+                  </div>
+                  <div class="h">
+                    <b>Notes</b><span>"access via rear lane"</span>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Request delivery or pickup
+                </button>
+                <div class="timeline">
+                  <div class="ev done"><b>Quote saved</b> · 6 Jul</div>
+                  <div class="ev now">
+                    <b>Delivery requested</b> · awaiting confirmation
+                  </div>
+                  <div class="ev">Scheduled</div>
+                  <div class="ev">Delivered · proof photo attached</div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1 · Job detail</b>The hub: measurement, quotes, photos, notes —
+            and the delivery button on every job, always. Status timeline
+            updates with push at every step.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5 style="font-size: var(--t-title)">Delivery request</h5>
+                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                </div>
+                <div class="seg">
+                  <span class="on">Deliver to site</span
+                  ><span>Pickup at yard</span>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Main tiles · Heritage Brown<small
+                        >from quote · recycled Marseille</small
+                      >
+                    </div>
+                    <div class="q">2,875</div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">60</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Preferred day (min. 24h ahead)</label>
+                  <div class="datewin">
+                    <div class="d"><b>Fri 11 Jul</b><span>tomorrow</span></div>
+                    <div
+                      class="d"
+                      style="
+                        border-color: var(--accent);
+                        outline: 1px solid var(--accent);
+                      "
+                    >
+                      <b>Mon 14 Jul</b><span>selected</span>
+                    </div>
+                    <div class="d"><b>Tue 15 Jul</b><span></span></div>
+                  </div>
+                </div>
+                <div class="seg" style="max-width: 240px">
+                  <span class="on">Morning</span><span>Afternoon</span>
+                </div>
+                <div class="field">
+                  <label>Drop-zone notes + photo (optional)</label>
+                  <div class="control placeholder">
+                    <i class="ic ic-camera"></i> "Driveway left of carport, no
+                    overhead wires…"
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">Submit request</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D2 · Delivery / pickup request</b>Pre-filled from the quote; date
+            with 24h lead + AM/PM window; drop-zone photo. Submission returns a
+            reference number instantly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="colours">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">E</span>
+          <h2>Colours &mdash; the tile library</h2>
+        </div>
+        <p class="sec-sub serif-note">
+          Structured the way AU roofers already browse (Monier's taxonomy):
+          Material &times; Profile &times; colour family &mdash; and every
+          colour carries the BASIX/NCC compliance data NSW quoting actually
+          needs.
+        </p>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Colours</h5>
+                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                </div>
+                <div class="seg">
+                  <span class="on">All</span><span>Terracotta</span
+                  ><span>Concrete</span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All profiles</span
+                  ><span class="chip">Flat</span
+                  ><span class="chip">Semi-flat</span
+                  ><span class="chip">Raised</span>
+                </div>
+                <div class="cl-grid">
+                  <div class="cl-card">
+                    <div class="ph t-titan"></div>
+                    <div class="nm">
+                      Titan Gloss<small>Marseille · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-barra"></div>
+                    <div class="nm">
+                      Barramundi<small>Elabana · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-sambuca"></div>
+                    <div class="nm">
+                      Sambuca<small>Elabana · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-saltspray"></div>
+                    <div class="nm">
+                      Salt Spray<small>Atura · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-soho"></div>
+                    <div class="nm">
+                      Soho Night<small>Madison · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-storm"></div>
+                    <div class="nm">
+                      Storm Grey<small>5XL · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-wallaroo"></div>
+                    <div class="nm">
+                      Wallaroo<small>Visum3 · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-england"></div>
+                    <div class="nm">
+                      Old England<small>Visum3 · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-heritage"></div>
+                    <div class="nm">
+                      Heritage Brown<small>Marseille · Recycled</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E1 &middot; Colour chart</b>Material segmented control, profile
+            chips, and real AU market names (Monier / Bristile / La Escandella).
+            Recycled stock badged in the range.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div
+                  class="screen-title"
+                  style="justify-content: flex-start; gap: 12px"
+                >
+                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                </div>
+                <div class="cl-hero t-titan"></div>
+                <div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      gap: 10px;
+                    "
+                  >
+                    <h5
+                      style="
+                        font-family: var(--font-ui);
+                        font-variation-settings: &quot;wght&quot; 600;
+                        font-size: var(--t-title);
+                        color: var(--ink);
+                        margin: 0;
+                      "
+                    >
+                      Marseille Titan Gloss
+                    </h5>
+                    <span class="basix">BASIX &middot; Dark</span>
+                  </div>
+                  <p class="auth-sub" style="margin-top: 4px">
+                    Terracotta &middot; raised profile &middot; in stock at the
+                    yard
+                  </p>
+                </div>
+                <div class="hub" style="grid-template-columns: 1fr 1fr 1fr">
+                  <div class="fig">
+                    <div class="v">0.72</div>
+                    <div class="k">Solar abs.</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">28</div>
+                    <div class="k">SRI</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">11</div>
+                    <div class="k">LRV</div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--surface);
+                    border: 1px solid var(--line-soft);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="spec-row">
+                    <span>Min. pitch</span
+                    ><b>15&deg; with sarking &middot; 20&deg; without</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Weight</span
+                    ><b>4.5 kg/tile &middot; 49.5 kg/m&sup2;</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Coverage</span><b>10.5 tiles/m&sup2;</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Coastal</span><b>Salt safe</b>
+                  </div>
+                </div>
+                <div
+                  style="
+                    margin-top: auto;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                  "
+                >
+                  <button class="btn btn-primary btn-full">
+                    Try on a roof
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    <i class="ic ic-file"></i> Data sheet (PDF)
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E2 &middot; Colour detail</b>The compliance trio (SA / SRI / LRV)
+            + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
+            "Try on a roof" jumps into the visualiser with the last measurement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer style="padding: 36px 0 60px; border-top: 1px solid var(--line-ink)">
+      <div class="doc-wrap">
+        <p class="note">
+          RoofBros Smart Quote · Mobile design v1.0 · July 2026 · 8 screens
+          shown; Colours library, Docs, Profile and auth screens follow in v1.1.
+          Design language and component specs:
+          <a href="../01-style-guide/index.html">style guide</a>. These are HTML
+          blueprints — the app ships as React Native/Expo using the same tokens.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // respect reduced-motion: pause the empty-hub illustration video,
+      // CSS can't gate autoplay on its own the way it can a keyframe animation
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        document.querySelectorAll(".wc-illustration video").forEach(function (v) {
+          v.pause();
+        });
+      }
+
+      document.querySelectorAll(".ba-slider").forEach(function (s) {
+        var wrap = s.querySelector(".ba-before-wrap"),
+          div = s.querySelector(".ba-divider");
+        function set(x) {
+          var r = s.getBoundingClientRect();
+          var pct = Math.max(4, Math.min(96, ((x - r.left) / r.width) * 100));
+          wrap.style.width = pct + "%";
+          div.style.left = pct + "%";
+        }
+        s.addEventListener("pointerdown", function (e) {
+          s.setPointerCapture(e.pointerId);
+          set(e.clientX);
+        });
+        s.addEventListener("pointermove", function (e) {
+          if (e.buttons) set(e.clientX);
+        });
+      });
+
+      // onboarding carousel: auto-advances through 3 real restorations,
+      // each still drag-to-reveal on its own before/after
+      document.querySelectorAll("#baCarousel").forEach(function (car) {
+        var slides = car.querySelectorAll(".ba-slider"),
+          dots = car.querySelectorAll(".ba-dots i"),
+          h = car.querySelector(".ba-h"),
+          sub = car.querySelector(".ba-sub"),
+          copy = [
+            {
+              h: "From tired to transformed.",
+              sub: "Measure a roof, quote it, and preview the new tile colour on the real thing.",
+            },
+            {
+              h: "See it before you commit.",
+              sub: "Preview dozens of recycled tile colours on your own roof photo.",
+            },
+            {
+              h: "Delivered, not just quoted.",
+              sub: "Book recycled-tile delivery or pickup, all from the same app.",
+            },
+          ],
+          i = 0,
+          interval = 4200,
+          fade = 600,
+          timer;
+
+        function resetSlide(s) {
+          var wrap = s.querySelector(".ba-before-wrap"),
+            div = s.querySelector(".ba-divider");
+          wrap.style.width = "50%";
+          div.style.left = "50%";
+        }
+
+        function advance() {
+          var prev = slides[i];
+          slides[i].classList.remove("on");
+          dots[i].classList.remove("on");
+          // wait for the crossfade to finish so the reveal snaps back to
+          // centre while fully invisible, never mid-fade
+          setTimeout(function () {
+            resetSlide(prev);
+          }, fade);
+          i = (i + 1) % slides.length;
+          slides[i].classList.add("on");
+          dots[i].classList.add("on");
+          h.textContent = copy[i].h;
+          sub.textContent = copy[i].sub;
+        }
+
+        function schedule() {
+          timer = setTimeout(function () {
+            advance();
+            schedule();
+          }, interval);
+        }
+        function pause() {
+          clearTimeout(timer);
+        }
+        function resume() {
+          pause();
+          schedule();
+        }
+
+        // a manual drag always takes priority: pause the clock the instant a
+        // drag starts here, and give a full fresh interval once it ends —
+        // scoped to this carousel's own drag, not any click on the page
+        var dragging = false;
+        car.addEventListener("pointerdown", function () {
+          dragging = true;
+          pause();
+        });
+        window.addEventListener("pointerup", function () {
+          if (!dragging) return;
+          dragging = false;
+          resume();
+        });
+
+        schedule();
+      });
+
+      // first-run tour: light up the dot for whichever slide is in view
+      document.querySelectorAll(".tour").forEach(function (t) {
+        var track = t.querySelector(".tour-track"),
+          dots = t.querySelectorAll(".tour-dots i"),
+          slides = track.querySelectorAll(".tour-slide");
+        track.addEventListener(
+          "scroll",
+          function () {
+            var i = Math.round(track.scrollLeft / slides[0].offsetWidth);
+            dots.forEach(function (d, n) {
+              d.classList.toggle("on", n === i);
+            });
+          },
+          { passive: true },
+        );
+      });
+
+      // first-run photo carousel: auto-advances on its own, no swipe needed
+      document.querySelectorAll(".fr-carousel").forEach(function (car) {
+        var slides = car.querySelectorAll(".fr-car-slide"),
+          dots = car.querySelectorAll(".fr-car-dots i"),
+          i = 0;
+        setInterval(function () {
+          slides[i].classList.remove("on");
+          dots[i].classList.remove("on");
+          i = (i + 1) % slides.length;
+          slides[i].classList.add("on");
+          dots[i].classList.add("on");
+        }, 3200);
+      });
+    </script>
+  </body>
+</html>

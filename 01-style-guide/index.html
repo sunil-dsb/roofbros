@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RoofBros — Style Guide v1.0</title>
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="../styles/docs.css" />
+  </head>
+  <body>
+    <div class="doc-top">
+      <div class="in">
+        <span class="brandmark"
+          ><span class="tile"></span>RoofBros · Style Guide</span
+        >
+        <nav>
+          <a href="#colour">Colour</a>
+          <a href="#type">Type</a>
+          <a href="#shape">Shape</a>
+          <a href="#buttons">Buttons</a>
+          <a href="#components">Components</a>
+          <a href="#rules">Rules</a>
+          <a href="../02-mobile-design/index.html">Mobile design →</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="doc-hero">
+      <div class="doc-wrap">
+        <span class="eyebrow">Style guide · v1.0 · July 2026</span>
+        <h1 style="margin-top: 14px">
+          RoofBros Smart Quote<br />Design language
+        </h1>
+        <p class="lede">
+          Flat colour planes, 1px hairline borders, no shadows. Two radii only:
+          square structure (cards, panels, inputs, tiles) and full-pill touch
+          controls (buttons, chips). A white ground with powder panels carrying
+          warm espresso ink, and a single accent — tile maroon. af Another Sans
+          sets the headings; Outfit carries the interface. These tokens map
+          one-to-one onto the React Native theme.
+        </p>
+      </div>
+    </header>
+
+    <section class="doc-section" id="colour">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">01</span>
+          <h2>Colour</h2>
+        </div>
+        <p class="sec-sub">
+          <strong>One accent: maroon</strong> #7D1017 — matching the client's own site (roofbros.com.au), which uses maroon + neutrals. Maroon does everything active: buttons, selection, focus, progress. Secondary links and pagination use a single harmonised slate-blue (the only blue in the system) — the familiar link convention, tuned to sit with the warm palette. Anything informational that isn't maroon uses ink/charcoal. Per screen this lands ~92% neutral, ~8% maroon. Semantic green/amber/red appear only as status — never decoration.
+        </p>
+        <div class="swg">
+          <div class="s">
+            <div class="c" style="background: #7d1017"></div>
+            <div class="t">
+              <b>accent · tile maroon</b>#7D1017 — all primary actions
+            </div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #5c0b11"></div>
+            <div class="t"><b>accent-press</b>#5C0B11</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #eddbd8"></div>
+            <div class="t"><b>accent-tint</b>#EDDBD8 — selected panels</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #2b4c8c"></div>
+            <div class="t"><b>link</b>#2B4C8C — secondary links &amp; pagination</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #2d2012"></div>
+            <div class="t"><b>ink</b>#2D2012 — headings, hairlines</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #55483b"></div>
+            <div class="t"><b>body</b>#55483B</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #807568"></div>
+            <div class="t"><b>muted · taupe</b>#807568 — 4.5:1 on white, verified</div>
+          </div>
+          <div class="s">
+            <div
+              class="c"
+              style="background: #ffffff; border-bottom: 1px solid #e2dcd4"
+            ></div>
+            <div class="t"><b>ground · white</b>#FFFFFF — app background</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #ecf1f4"></div>
+            <div class="t"><b>panel · powder</b>#ECF1F4 — tiles, chips</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #e2dcd4"></div>
+            <div class="t"><b>line-soft</b>#E2DCD4 — passive borders, warmed to match the espresso palette</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #ececec"></div>
+            <div class="t"><b>field · inactive</b>#ECECEC — every input field, everywhere, at rest</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #ffffff; border-bottom: 1px solid #e2dcd4"></div>
+            <div class="t"><b>field-active</b>#FFFFFF — the focused-field lift, no ring needed</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #6b6b6b"></div>
+            <div class="t"><b>placeholder</b>#6B6B6B — 4.51:1 on the inactive field, verified</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #1a7c4b"></div>
+            <div class="t"><b>success</b>#1A7C4B — 4.54:1 on its tint, verified</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #a7590a"></div>
+            <div class="t"><b>warning</b>#A7590A — 4.51:1 on its tint, verified</div>
+          </div>
+          <div class="s">
+            <div class="c" style="background: #d92d20"></div>
+            <div class="t">
+              <b>error</b>#D92D20 — leans orange, never confused with maroon. Also the one deliberate exception to the slate-blue link rule: "Forgot password?" stands alone in this colour, signalling an account-access problem, not neutral navigation.
+            </div>
+          </div>
+        </div>
+        <p class="note">
+          Every text/background pairing above is contrast-verified at
+          4.5:1&nbsp;(normal text) or better — not eyeballed. Several of these
+          exact values were corrected during a pass for this reason (muted,
+          placeholder, warning, success all shifted slightly darker from
+          earlier drafts). Dark theme inverts to deep espresso grounds
+          (#221B15) with pale warm ink and its own re-tuned accent (#8E141C)
+          and link colour (#8FA9D8) — light theme is the field default,
+          locked for these documents regardless of OS dark mode.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-section" id="type">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">02</span>
+          <h2>Typography</h2>
+        </div>
+        <p class="sec-sub">
+          Two faces, one weight each — mirroring the reference exactly:
+          headings, <strong>buttons</strong>, labels and numbers all run
+          <strong>af Another Sans</strong> (a.Foundry — the distinctive tekt neo-grotesk, and
+          the display face); body, UI, labels and data are set in <strong>Outfit</strong> — the client's own brand font (roofbros.com.au), free and fully variable, so every weight is available. Headings carry character; Outfit carries readability. af Another Sans is commercial (Albert Sans is the free fallback); Outfit is free.
+        </p>
+        <div class="spec">
+          <div class="row">
+            <span class="lab">--t-display · af Another Sans 600 · 28</span
+            ><span class="ex" style="font-family: var(--font-display); font-variation-settings: &quot;wght&quot; 600; font-size: var(--t-display); letter-spacing: -0.01em;"
+              >Welcome back.</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-data · af Another Sans 600 · 26 · tabular</span
+            ><span class="ex" style="font-family: var(--font-display); font-variation-settings: &quot;wght&quot; 600; font-size: var(--t-data); letter-spacing: -0.01em; font-variant-numeric: tabular-nums;"
+              >230 m² · 22°</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-title · af Another Sans 600 · 22</span
+            ><span class="ex" style="font-family: var(--font-display); font-variation-settings: &quot;wght&quot; 600; font-size: var(--t-title);"
+              >Materials quote</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-heading · Outfit 600 · 17</span
+            ><span class="ex" style="font-family: var(--font-ui); font-variation-settings: &quot;wght&quot; 600; font-size: var(--t-heading);"
+              >Ridge &amp; hip capping</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-body · Outfit 400 · 15</span
+            ><span class="ex" style="font-family: var(--font-ui); font-size: var(--t-body);"
+              >Quantities come from the RoofBros calculator and include the
+              profile's waste factor.</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-caption · Outfit 500 · 13</span
+            ><span class="ex" style="font-family: var(--font-ui); font-variation-settings: &quot;wght&quot; 500; font-size: var(--t-caption);"
+              >List rows, captions, secondary text and links.</span
+            >
+          </div>
+          <div class="row">
+            <span class="lab">--t-micro · Outfit 600 · 11 · caps +6%</span
+            ><span class="ex" style="font-family: var(--font-ui); font-variation-settings: &quot;wght&quot; 600; font-size: var(--t-micro); letter-spacing: 0.06em; text-transform: uppercase;"
+              >Roof area</span
+            >
+          </div>
+        </div>
+        <p class="note">
+          <strong>af Another Sans</strong> (600) sets headings, screen titles,
+          the wordmark and the big measurement figures — the character.
+          <strong>Outfit</strong> (400–600, variable) sets everything else —
+          body, buttons, labels, data. Its full weight range is what gives real
+          hierarchy. All figures set <code>tabular-nums</code>.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-section" id="shape">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">03</span>
+          <h2>Shape, space, elevation</h2>
+        </div>
+        <div class="grid g3" style="margin-top: 18px">
+          <div class="tile-card">
+            <h3>Radius: a balanced scale</h3>
+            <p>
+              Just <strong>two radii</strong>: <strong>0</strong> for everything structural — cards, panels, inputs, imagery, tiles — and <strong>full-pill</strong> for touch controls: buttons, chips, status pills. (Bottom sheets keep a rounded top by OS convention.) Square inputs give the construction feel; the pill CTA against square content is the emphasis trick (Fitts + Von Restorff).
+              Never invent in-between values — pick from the scale.
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>No shadows</h3>
+            <p>
+              Zero box-shadows on any in-app surface, at any state, ever.
+              Structure comes from 1px hairline borders — ink (#2D2012) on
+              interactive edges, the warm neutral #E2DCD4 on passive ones —
+              and flat plane changes. The only bezel in this whole package is
+              the phone-mockup chrome itself, which is presentational, not
+              app UI.
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>4-pt grid</h3>
+            <p>
+              Spacing steps 4 / 8 / 12 / 16 / 24 / 32. Screen gutters 16, card
+              padding 12–20, section gaps 24.
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>Touch targets</h3>
+            <p>
+              44&times;44px is the hard floor for <em>every</em> interactive
+              control, not just buttons — icon buttons, filter chips, tab bar
+              cells. Primary CTAs go further, ≥48px. Compact inline controls
+              may be 36px visually with the touch area expanded via hitSlop.
+              Roofers wear gloves.
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>Iconography</h3>
+            <p>
+              <strong>Locked: one outline family only</strong> — 24 viewBox,
+              2px stroke, round caps, no solid icons mixed in. Sourced from
+              open-licence packs plus hand-drawn paths (tracked in README),
+              unified at 20&ndash;28px via CSS masks so every icon inherits
+              <code>currentColor</code>. No emoji in UI chrome. The one
+              deliberate exception: Apple and Google's sign-in marks, which
+              stay at their real trademarked shape/colour rather than being
+              reskinned into our system — a mockup approximation only, to be
+              swapped for each platform's official button component before
+              shipping.
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>Imagery</h3>
+            <p>
+              The aerial roof photo is the hero of every job — full-bleed with
+              the measurement polygon always drawn. Never remove the overlay.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="buttons">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">04</span>
+          <h2>Buttons</h2>
+        </div>
+        <p class="sec-sub">
+          Text is Outfit 500 (Medium), 15px on every button, set in a full-pill shape — the rounded CTA against square content is what makes the action unmissable. Medium weight reads cleaner than SemiBold on a filled surface while staying confident. Every primary action is maroon. Hierarchy comes from fill vs hairline-outline vs plain text.
+        </p>
+        <div class="grid g2" style="margin-top: 18px">
+          <div class="stagebox">
+            <div class="cl">Live</div>
+            <div class="st">
+              <button class="btn btn-primary btn-full">Build quote</button>
+              <button class="btn btn-primary btn-full">
+                Request delivery or pickup
+              </button>
+              <button class="btn btn-secondary">Save for later</button>
+              <button class="btn btn-secondary btn-compact">
+                Re-check outline
+              </button>
+            </div>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Spec</div>
+            <div class="tablewrap">
+              <table class="spec-t">
+                <tr>
+                  <th>Variant</th>
+                  <th>Padding</th>
+                  <th>Height</th>
+                </tr>
+                <tr>
+                  <td>Primary</td>
+                  <td>14px 20px, full-width</td>
+                  <td>≥48px</td>
+                </tr>
+                <tr>
+                  <td>Secondary (hairline)</td>
+                  <td>12px 18px</td>
+                  <td>44px</td>
+                </tr>
+                <tr>
+                  <td>Compact inline</td>
+                  <td>8px 14px</td>
+                  <td>36px visual + hitSlop to 44px</td>
+                </tr>
+              </table>
+            </div>
+            <p class="note">
+              Press state: background darkens to accent-press + scale 0.97 over
+              150ms. Never ship a primary CTA under 48px.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="components">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">05</span>
+          <h2>Core components</h2>
+        </div>
+        <div class="grid g2" style="margin-top: 18px">
+          <div class="stagebox">
+            <div class="cl">Job statuses (3, auto-transitioning)</div>
+            <div
+              class="st"
+              style="flex-direction: row; flex-wrap: wrap; gap: 8px"
+            >
+              <span class="status measured">Measured</span>
+              <span class="status quoted"
+                >Quoted
+                <span class="age-dot" style="background: var(--warn)"></span
+              ></span>
+              <span class="status delivery">Delivered</span>
+              <span class="status error">Failed</span>
+            </div>
+            <p class="note">
+              ServiceM8 model: fixed colour + label per status, advanced by
+              events (quote saved, delivery requested), never manual fiddling.
+              Aging dot on Quoted: amber at 7 idle days, red at 14 — a
+              distinct signal from the status colour itself, meant to vary
+              independently of it. <strong>Delivered is green and is the
+              terminal state</strong> — there's no separate "Complete" status;
+              the job-detail timeline already treats "Delivered" as the true
+              end of the job, so a second terminal status was redundant and
+              has been removed.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Filter chips</div>
+            <div
+              class="st"
+              style="flex-direction: row; flex-wrap: wrap; gap: 8px"
+            >
+              <span class="chip on">All</span><span class="chip">Measured</span
+              ><span class="chip">Quoted</span
+              ><span class="chip">Delivered</span>
+            </div>
+            <p class="note">
+              Active chip inverts to ink. Pill-shaped, hairline-bordered, 44px
+              min-height (touch floor, not just the 12.5px sans 600 label) —
+              chips, status pills and buttons are all pills; every touch
+              control is rounded.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Job card</div>
+            <div class="job-card">
+              <div class="thumb"><img src="../assets/photos/ba2-before.jpg" alt="14 Banksia St, Ryde"></div>
+              <div class="jt">
+                <b>14 Banksia St, Ryde</b><span>Marseille · Restoration</span>
+              </div>
+              <div class="jr">
+                <span class="status quoted">Quoted</span
+                ><span class="val">$18,940</span>
+              </div>
+            </div>
+            <p class="note">
+              Roof thumbnail from the measurement image; address leads; value
+              right-aligned, tabular. Whole card is one tap target.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Measurement figures</div>
+            <div
+              class="st"
+              style="flex-direction: row; flex-wrap: wrap; gap: 10px"
+            >
+              <div class="fig">
+                <div class="v">230<small> m²</small></div>
+                <div class="k">Roof area</div>
+              </div>
+              <div class="fig">
+                <div class="v">22.4<small>°</small></div>
+                <div class="k">Pitch</div>
+              </div>
+              <div class="fig">
+                <div class="v">98<small>%</small></div>
+                <div class="k">Confidence</div>
+              </div>
+            </div>
+            <p class="note">
+              Powder panel, oversized tabular numerals, caps label. Exact values
+              with stated tolerance — never round away precision.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Quote line item</div>
+            <div style="width: 100%">
+              <div class="li">
+                <div class="n">
+                  Main tiles<small
+                    >Marseille profile · incl. waste factor</small
+                  >
+                </div>
+                <div class="mini-step"><i>−</i></div>
+                <div class="q">2,875</div>
+                <div class="mini-step"><i>+</i></div>
+              </div>
+              <div class="li">
+                <div class="n">Ridge caps<small>18.0 lm ridge</small></div>
+                <div class="mini-step"><i>−</i></div>
+                <div class="q">60</div>
+                <div class="mini-step"><i>+</i></div>
+              </div>
+            </div>
+            <p class="note">
+              Steppers, never free-text numerics. Edited lines get an "adjusted"
+              marker with one-tap revert to the calculator value. Quantities are
+              transactionally safe.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Tile swatches (square — they are tiles)</div>
+            <div class="st" style="flex-direction: row; gap: 10px">
+              <span
+                class="swatch"
+                style="background: linear-gradient(140deg, #b4573f, #8e3d2b)"
+              ></span>
+              <span
+                class="swatch sel"
+                style="background: linear-gradient(140deg, #6e4a3a, #4e3228)"
+              ></span>
+              <span
+                class="swatch"
+                style="background: linear-gradient(140deg, #5a5e66, #3c4046)"
+              ></span>
+              <span
+                class="swatch"
+                style="background: linear-gradient(140deg, #8a2b26, #621a16)"
+              ></span>
+              <span
+                class="swatch"
+                style="background: linear-gradient(140deg, #7a7e6a, #5a5e4c)"
+              ></span>
+            </div>
+            <p class="note">
+              Real tile photos in production. Tap = apply instantly; long-press
+              = favourite; shortlist capped at 8. Names follow AU convention:
+              "Marseille Titan Gloss", "Elabana Barramundi".
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Input</div>
+            <div class="field" style="width: 100%; max-width: 340px">
+              <label>Site address</label>
+              <div class="control focus">
+                <i class="ic ic-search"></i> 14 Banksia St, Ryde NSW…
+              </div>
+            </div>
+            <p class="note">
+              50px min height, square flat field on a neutral grey (#F5F5F5). On focus the field <strong>lifts to pure white with a thin, low-opacity ink border</strong> — soft enough to stay quiet, but a real edge (not just a fill shift) so it still reads in direct sunlight.
+              Autocomplete over typing wherever possible.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Grouped input ("construction")</div>
+            <div class="st" style="align-self: stretch">
+              <div class="input-group" style="width: 100%">
+                <div class="ig-row"><div class="ig-t"><label>Full name</label><span class="val">Dave Robson</span></div></div>
+                <div class="ig-row focus"><div class="ig-t"><label>Email</label><span class="val">dave@robsonroofing.com.au</span></div></div>
+                <div class="ig-row"><div class="ig-t"><label>Password</label><span class="val">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></div><i class="ic ic-eye"></i></div>
+              </div>
+            </div>
+            <p class="note">
+              Related fields bound into one grey unit with hairline dividers
+              (Gestalt common region) — the active row lifts to white with the same thin, low-opacity border used by every field. Use for any multi-field form; single fields stay flat.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Segmented choice</div>
+            <div class="seg" style="width: 100%; max-width: 340px">
+              <span class="on">Deliver to site</span><span>Pickup at yard</span>
+            </div>
+            <p class="note">
+              Binary choices as full-width segments — used for delivery method,
+              job type, ground drop vs rooftop load.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Tab bar (4 uniform tabs)</div>
+            <div class="tabbar" style="width: 100%; position: static">
+              <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+              <span class="t"><i class="ic ic-plus"></i>New</span>
+              <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+              <span class="t"><i class="ic ic-user"></i>Profile</span>
+            </div>
+            <p class="note">
+              Flat and uniform — no raised FAB, no square-tile exception for
+              "New." Inactive tabs are ink (never a lighter grey), both icon
+              and label. The active tab turns <em>only its icon</em> maroon;
+              the label stays ink, keeping the one accent as small as
+              possible even in navigation.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">OTP code entry — 3 states</div>
+            <div class="st" style="width: 100%; gap: 16px">
+              <div style="width: 100%">
+                <div class="otp disabled">
+                  <span class="box"></span><span class="box"></span
+                  ><span class="box"></span><span class="box"></span
+                  ><span class="box"></span><span class="box"></span>
+                </div>
+              </div>
+              <div style="width: 100%">
+                <div class="otp">
+                  <span class="box">7</span><span class="box">3</span
+                  ><span class="box">9</span
+                  ><span class="box active"
+                    ><span class="caret"></span></span
+                  ><span class="box"></span><span class="box"></span>
+                </div>
+              </div>
+              <div style="width: 100%">
+                <div class="otp error">
+                  <span class="box">7</span><span class="box">3</span
+                  ><span class="box">9</span><span class="box">1</span
+                  ><span class="box">4</span><span class="box">2</span>
+                </div>
+                <p class="field-error">
+                  That code&rsquo;s incorrect. Check it or resend below.
+                </p>
+              </div>
+            </div>
+            <p class="note">
+              Same field system as everything else: grey at rest, white +
+              soft hairline when active. Error state lifts to white too, but
+              outlines in status-red with an inline message — never just a
+              colour change with no explanation.
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Social sign-in</div>
+            <div class="social-row" style="width: 100%">
+              <button class="btn btn-secondary btn-full">
+                <i class="ic ic-apple"></i>Apple
+              </button>
+              <button class="btn btn-secondary btn-full">
+                <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#4285F4" d="M14.9 8.161c0-.476-.039-.954-.121-1.422h-6.64v2.695h3.802a3.24 3.24 0 01-1.407 2.127v1.75h2.269c1.332-1.22 2.097-3.02 2.097-5.15z"/><path fill="#34A853" d="M8.14 15c1.898 0 3.499-.62 4.665-1.69l-2.268-1.749c-.631.427-1.446.669-2.395.669-1.836 0-3.393-1.232-3.952-2.888H1.85v1.803A7.044 7.044 0 008.14 15z"/><path fill="#FBBC04" d="M4.187 9.342a4.17 4.17 0 010-2.68V4.859H1.849a6.97 6.97 0 000 6.286l2.338-1.803z"/><path fill="#EA4335" d="M8.14 3.77a3.837 3.837 0 012.7 1.05l2.01-1.999a6.786 6.786 0 00-4.71-1.82 7.042 7.042 0 00-6.29 3.858L4.186 6.66c.556-1.658 2.116-2.89 3.952-2.89z"/></svg>
+                Google
+              </button>
+            </div>
+            <p class="note">
+              The one deliberate exception to our own icon system: both marks
+              stay at their real trademarked shape/colour rather than being
+              reskinned into the one-outline-family rule. Grouped with the
+              primary button below the form, not competing with it above —
+              two columns to keep the row compact. Placeholder logos only;
+              swap for each platform's official button component before
+              shipping (Apple's Human Interface Guidelines and Google's
+              Sign-In branding are both enforced, not optional).
+            </p>
+          </div>
+          <div class="stagebox">
+            <div class="cl">Search field (icon → field, in place)</div>
+            <div
+              class="screen-title"
+              style="width: 100%; padding-top: 0"
+            >
+              <div class="search-field">
+                <i class="ic ic-search"></i
+                ><span>Search jobs, addresses&hellip;</span>
+              </div>
+              <span class="icon-btn"><i class="ic ic-close"></i></span>
+            </div>
+            <p class="note">
+              Tapping the search icon swaps it for a full-width field at the
+              same 52px height as every other input, plus the same &times;
+              used to dismiss every other screen — not a text
+              &ldquo;Cancel&rdquo; link, and not the OS-native rounded search
+              bar.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="rules">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">06</span>
+          <h2>Non-negotiable build rules</h2>
+        </div>
+        <p class="sec-sub">
+          Each exists because a competitor shipped the opposite and paid in
+          1-star reviews. Full evidence in the research document.
+        </p>
+        <div class="grid g2" style="margin-top: 18px">
+          <div class="tile-card">
+            <h3>1 · Quantities never mutate</h3>
+            <p>
+              Line items are transactionally safe (RoofSnap's "resets to 25"
+              bug).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>2 · Autosave everything</h3>
+            <p>
+              Drafts persist locally on every change (QuoteIQ's data-eating
+              update).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>3 · Exact values</h3>
+            <p>22.4°, not 22° — rounded pitch forces site visits (RoofSnap).</p>
+          </div>
+          <div class="tile-card">
+            <h3>4 · Errors name the fix</h3>
+            <p>
+              What went wrong + the next action (Hover's "No good corner shot").
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>5 · No silent async failures</h3>
+            <p>Status always visible; failure notifies loudly (Hover, QXO).</p>
+          </div>
+          <div class="tile-card">
+            <h3>6 · Never remove the overlay</h3>
+            <p>
+              The roof polygon on imagery is permanent UI (EagleView's
+              backlash).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>7 · Cache field essentials</h3>
+            <p>
+              Last jobs, images and swatches readable without signal (iRoofing
+              mid-pitch drops).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>8 · Native feel or nothing</h3>
+            <p>
+              Native nav, sheets, haptics, 60fps lists (Roofr's web-wrapper
+              complaints).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>9 · Structured input over typing</h3>
+            <p>Steppers, chips, pickers; free text only for notes. Gloves.</p>
+          </div>
+          <div class="tile-card">
+            <h3>10 · Sunlight-legible</h3>
+            <p>AA contrast minimum; test outdoors on a phone.</p>
+          </div>
+          <div class="tile-card">
+            <h3>11 · GST-inclusive, never recomputed</h3>
+            <p>
+              Totals inclusive, "GST included: $X" subline (ServiceM8
+              convention).
+            </p>
+          </div>
+          <div class="tile-card">
+            <h3>12 · Photo uploads queue and survive</h3>
+            <p>
+              Background sync with per-photo status; never add taps to capture.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="padding: 36px 0 60px; border-top: 1px solid var(--line-ink)">
+      <div class="doc-wrap">
+        <p class="note">
+          RoofBros Smart Quote · Style guide v1.0 · July 2026 · Design language:
+          flat, square, hairline, one maroon accent. Typefaces: af Another Sans
+          (headings, commercial — Albert Sans is the free fallback) + Outfit
+          (body/UI — the client's own brand font, free). Next:
+          <a href="../02-mobile-design/index.html">mobile design screens →</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

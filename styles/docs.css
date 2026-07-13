@@ -1,0 +1,77 @@
+/* ============================================================
+   RoofBros — docs.css
+   Documentation-page chrome for the style guide, design pages and landing.
+   Load order: tokens → base → components → device → docs/page.
+   ============================================================ */
+
+/* ---------- doc scaffolding (style guide + design pages) ---------- */
+.doc-wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 44px); }
+.doc-top {
+position: sticky; top: 0; z-index: 50;
+background: color-mix(in srgb, var(--ground) 92%, transparent);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid var(--line-ink);
+}
+.doc-top .in { max-width: 1160px; margin: 0 auto; padding: 12px clamp(18px, 4vw, 44px); display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.brandmark { display: flex; align-items: center; gap: 10px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: 16px; }
+.brandmark .tile { width: 22px; height: 22px; background: url('../assets/brand/favicon.png') center / contain no-repeat; flex: none; }
+.doc-top nav { margin-left: auto; display: flex; gap: 2px; flex-wrap: wrap; }
+.doc-top nav a { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: 13px; color: var(--body); padding: 6px 11px; }
+.doc-top nav a:hover { background: var(--panel); color: var(--ink); text-decoration: none; }
+.doc-hero { padding: clamp(40px, 7vw, 80px) 0 clamp(28px, 4vw, 48px); border-bottom: 1px solid var(--line-ink); }
+.doc-hero h1 { font-size: clamp(30px, 5vw, 46px); }
+.doc-hero .lede { max-width: 62ch; margin-top: 18px; font-size: 17px; }
+.eyebrow {
+font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+}
+.doc-section { padding: clamp(36px, 6vw, 64px) 0; border-bottom: 1px solid var(--line-soft); }
+.doc-section:last-of-type { border-bottom: none; }
+.sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 10px; }
+.sec-num { font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--accent); font-size: 15px; flex: none; }
+.sec-head h2 { font-size: clamp(22px, 3vw, 30px); }
+.sec-sub { max-width: 68ch; margin-top: 8px; }
+.grid { display: grid; gap: 14px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tile-card { background: var(--surface); border: 1px solid var(--line-soft); padding: 20px; }
+.tile-card h3 { font-size: 17px; margin-bottom: 8px; }
+.tile-card p { font-size: 14.5px; }
+.note { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+
+/* ---------- screen gallery presentation ---------- */
+.screens-row { display: flex; gap: 26px; flex-wrap: wrap; justify-content: center; padding: 24px 0; }
+/* slot width tracks the scaled phone so the grid packs tightly */
+.screen-slot { width: calc(var(--device-w) * var(--device-scale)); max-width: 100%; }
+.screen-slot .cap { margin-top: 10px; text-align: center; font-size: 13.5px; color: var(--muted); padding: 0 12px; }
+.screen-slot .cap b { display: block; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: 14.5px; margin-bottom: 2px; }
+
+/* ---------- style-guide specimens ---------- */
+/* page-local: swatch grid + type specimen */
+.swg { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); margin-top: 20px; }
+.swg .s { border: 1px solid var(--line-soft); background: var(--surface); }
+.swg .s .c { height: 62px; }
+.swg .s .t { padding: 9px 12px; font-family: var(--font-ui); font-size: 12px; color: var(--muted); }
+.swg .s .t b { display: block; color: var(--ink); font-variation-settings: 'wght' 600; font-size: 12.5px; }
+.spec { border: 1px solid var(--line-soft); background: var(--surface); padding: 4px 22px; margin-top: 20px; }
+.spec .row { display: flex; align-items: baseline; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--line-soft); flex-wrap: wrap; }
+.spec .row:last-child { border-bottom: none; }
+.spec .lab { flex: none; width: 210px; font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: var(--muted); }
+.spec .ex { color: var(--ink); }
+.stagebox { border: 1px solid var(--line-soft); background: var(--surface); padding: 20px; }
+.stagebox .cl { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.stagebox .st { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+table.spec-t { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 14px; background: var(--surface); border: 1px solid var(--line-soft); }
+table.spec-t th, table.spec-t td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line-soft); font-family: var(--font-ui); }
+table.spec-t th { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); background: var(--panel); }
+table.spec-t td:first-child { color: var(--ink); font-variation-settings: 'wght' 600; }
+table.spec-t tr:last-child td { border-bottom: none; }
+.tablewrap { overflow-x: auto; }
+
+/* ---------- landing page ---------- */
+.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 32px; }
+.doc-link { display: block; border: 1px solid var(--line-ink); background: var(--surface); padding: 28px; text-decoration: none; }
+.doc-link:hover { background: var(--panel); text-decoration: none; }
+.doc-link .n { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: 13px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+.doc-link h2 { font-size: 24px; margin: 10px 0 8px; }
+.doc-link p { font-size: 14.5px; color: var(--body); }
