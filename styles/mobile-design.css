@@ -214,22 +214,32 @@
 .ba-login { text-align: center; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); margin-top: 14px; }
 .ba-login b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
 
-/* ---------- sample tile colours + layout utilities ----------
-   ONE place for all placeholder tile gradients (swatches, colour grid,
-   job thumbnails, visualiser). Swap these 12 lines for real tile photos. */
-.t-titan { background: linear-gradient(140deg, #8A2B26, #621A16); }       /* Titan Gloss */
-.t-barra { background: linear-gradient(140deg, #7A7E82, #5A5E63); }       /* Barramundi */
-.t-sambuca { background: linear-gradient(140deg, #3A3633, #241F1C); }     /* Sambuca */
-.t-saltspray { background: linear-gradient(140deg, #B9BDC1, #979CA1); }   /* Salt Spray */
-.t-soho { background: linear-gradient(140deg, #41444B, #2A2C31); }        /* Soho Night */
-.t-storm { background: linear-gradient(140deg, #6C7076, #4C5056); }       /* Storm Grey */
-.t-wallaroo { background: linear-gradient(140deg, #8C6B52, #6B4E3A); }    /* Wallaroo */
-.t-england { background: linear-gradient(140deg, #5E5347, #443B32); }     /* Old England */
-.t-heritage { background: linear-gradient(140deg, #6E4A3A, #4E3228); }    /* Heritage Brown */
-.t-terracotta { background: linear-gradient(140deg, #B4573F, #8E3D2B); }
-.t-slate { background: linear-gradient(140deg, #5A5E66, #3C4046); }
-.t-olive { background: linear-gradient(140deg, #7A7E6A, #5A5E4C); }
-.t-cream { background: linear-gradient(140deg, #E8DFC8, #CBB98F); }       /* coating colour, Restoration */
+/* ---------- tile & paint colours — REAL catalogue data ----------
+   Tile names + hexes from the live calculator's colorMapping.ts
+   (PROFILE_COLORS, Monier); paint names + hexes from PAINT_BRAND_COLORS.
+   Each gradient is the real hex ± a shade for the barrel-tile light.
+   Swap for real tile photos in build. */
+.t-titan { background: linear-gradient(140deg, #424445, #2b2d2d); }       /* Titan Gloss — Marseille #373939 */
+.t-barra { background: linear-gradient(140deg, #33352f, #1e201b); }       /* Barramundi — Elabana #292a27 */
+.t-sambuca { background: linear-gradient(140deg, #24282a, #0e1112); }     /* Sambucca — Elabana #171b1c */
+.t-saltspray { background: linear-gradient(140deg, #e4e8dd, #cbd1c2); }   /* Salt Spray — Atura #dce1d6 */
+.t-soho { background: linear-gradient(140deg, #4c4b4b, #353434); }        /* Soho Night — Madison #424141 */
+.t-storm { background: linear-gradient(140deg, #6a7075, #4d5357); }       /* Mist Grey — Elabana #5e6468 */
+.t-wallaroo { background: linear-gradient(140deg, #d0cbc4, #b0a99e); }    /* Wild Rice — Atura #c7c2bc */
+.t-england { background: linear-gradient(140deg, #6f5d45, #4e4030); }     /* Aniseed — Horizon #64533d */
+.t-heritage { background: linear-gradient(140deg, #574b47, #3c3330); }    /* Pottery Brown — Marseille #4d423f, the recycled hero */
+.t-terracotta { background: linear-gradient(140deg, #a34428, #7a2f1a); }  /* Florence Red — Marseille #953c24 */
+.t-slate { background: linear-gradient(140deg, #665e63, #48413f); }       /* Bedrock — Marseille #5e565b */
+.t-olive { background: linear-gradient(140deg, #a1968a, #7d7266); }       /* Riverstone — Marseille #978d7e */
+.t-cream { background: linear-gradient(140deg, #E8DFC8, #CBB98F); }       /* unused — kept for drafts */
+/* paint swatches — Industrial roof coatings card (Restoration path).
+   Paint is not tile: its own p-* set so retinting one never breaks the other. */
+.p-coastal { background: linear-gradient(140deg, #A0522D, #7d3a1e); }     /* Coastal Terracotta */
+.p-manor { background: linear-gradient(140deg, #8B0000, #660000); }       /* Manor Red */
+.p-slategrey { background: linear-gradient(140deg, #444444, #2c2c2c); }   /* Slate Grey #3A3A3A */
+.p-cream { background: linear-gradient(140deg, #F5E6D3, #dcc9ae); }       /* Classic Cream */
+.p-gully { background: linear-gradient(140deg, #6B7A6B, #4f5c4f); }       /* Gully */
+.p-monument { background: linear-gradient(140deg, #333333, #1d1d1d); }    /* Monument #2A2A2A */
 
 /* bottom-anchored action group (auth + action screens) */
 .screen-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }

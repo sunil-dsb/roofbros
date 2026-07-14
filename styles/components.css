@@ -355,7 +355,7 @@
 .li:last-child { border-bottom: none; }
 .li .n { flex: 1; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .li .n small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); }
-.li > .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
+.li .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
 .li > .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }  /* trailing chevron on tappable rows (D1a quotes) */
 /* editable quantity — a tap-to-edit field that opens a numeric keypad. Steppers
    were dropped: nudging a calculator-derived count like 2,875 by ±1 is unusable,
