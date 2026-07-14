@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RoofBros — Mobile Design v1.0</title>
+    <title>RoofBros: Mobile Design</title>
     <link rel="stylesheet" href="../styles/tokens.css" />
     <link rel="stylesheet" href="../styles/base.css" />
     <link rel="stylesheet" href="../styles/components.css" />
@@ -44,17 +44,16 @@
       </div>
     </header>
 
-    <section class="doc-section" id="entry">
+    <section class="doc-section" id="flow1">
       <div class="doc-wrap">
         <div class="sec-head">
-          <span class="sec-num">0</span>
-          <h2>Entry &mdash; first run &amp; auth</h2>
+          <span class="sec-num">1</span>
+          <h2>Sign in &amp; setup</h2>
         </div>
-        <p class="sec-sub serif-note">
-          Minimum fields to sign up, then one first-run screen (0G) teaches the
-          whole flow before landing on the jobs hub &mdash; shown empty, then
-          filled, in Home next.
-        </p>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>the app launches</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>lands on the Jobs hub</b></span>
+        </div>
       </div>
       <div class="screens-row">
         <div class="screen-slot">
@@ -83,7 +82,40 @@
             lives on the next screen, not here. Auto-advances in ~1.5s.
           </p>
         </div>
-
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody" style="padding: 0; position: relative">
+                <div class="loader-wrap">
+                  <section class="loader">
+                    <div><div><span class="one h6"></span><span class="two h3"></span></div></div>
+                    <div><div><span class="one h1"></span></div></div>
+                    <div><div><span class="two h2"></span></div></div>
+                    <div><div><span class="one h4"></span></div></div>
+                  </section>
+                </div>
+                <p class="load-label" style="position: absolute; top: 50%; left: 0; right: 0; margin: 92px 0 0; text-align: center">One moment…</p>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0A2 &middot; Loading</b>The plain async loader — a maroon
+            hexagon-drawing animation on a clean white screen, used for the
+            generic waits (app boot, saving a quote, fetching jobs). Kept
+            deliberately distinct from B2's measuring theatre: that one
+            narrates real work with staged labels; this one just says "hang
+            on a second." Has a reduced-motion fallback (static shape).
+          </p>
+        </div>
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -163,7 +195,7 @@
                 </p>
                 <button class="btn btn-primary btn-full">Get started</button>
                 <div class="ba-login">
-                  Already have an account? <b>Log in</b>
+                  Already have an account? <b>Sign in</b>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -174,10 +206,11 @@
             before/after of three real RoofBros restorations, auto-advancing
             every few seconds &mdash; drag any slide anywhere to reveal its
             before/after. Before/After pills up top; one clear
-            <em>Get started</em> plus a quiet Log in link.
+            <em>Get started</em> plus a quiet Sign in link (one term
+            everywhere — never "Log in" on one screen and "Sign in" on the
+            next).
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -249,10 +282,89 @@
             <b>0C &middot; Create account</b>Fields first, then Apple and
             Google side by side as the quick alternative, grouped with the
             primary button instead of competing with it up top. Show-password
-            eye, 50px inputs, maroon focus ring.
+            eye; the fields sit as one grouped unit, and the active row lifts
+            to white with a soft warm-ink outline.
           </p>
         </div>
 
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Create your account.</div>
+                  <p class="auth-sub">
+                    Your jobs and quotes, saved to every device.
+                  </p>
+                </div>
+                <div style="margin-top: 12px">
+                  <div class="input-group">
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Full name</label
+                        ><span class="val">Dave Robson</span>
+                      </div>
+                    </div>
+                    <div
+                      class="ig-row"
+                      style="
+                        background: var(--field-active);
+                        outline: 1.5px solid var(--err);
+                        outline-offset: -1.5px;
+                      "
+                    >
+                      <div class="ig-t">
+                        <label>Email</label
+                        ><span class="val">dave@robsonroofing</span>
+                      </div>
+                    </div>
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Password</label
+                        ><span class="val"
+                          >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                        >
+                      </div>
+                      <i class="ic ic-eye"></i>
+                    </div>
+                  </div>
+                  <p class="field-error">
+                    That email looks incomplete: add its ending, like .com.au.
+                  </p>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Create account
+                </button>
+                <div class="screen-foot">
+                  <p class="terms">
+                    By continuing you agree to the <u>Terms</u> and
+                    <u>Privacy Policy</u>.
+                  </p>
+                  <div class="link-line">
+                    Already have an account? <b>Sign in</b>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0C &middot; Create account &mdash; validation error</b>Checked
+            on blur, not on submit: the offending row outlines in error red
+            (the same language as the OTP error), everything typed is kept,
+            and the message names the fix, not just the problem
+            (&ldquo;add its ending&rdquo;, never &ldquo;invalid
+            input&rdquo;). The button stays enabled so retrying is one tap.
+          </p>
+        </div>
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -336,8 +448,76 @@
                 ></span>
               </div>
               <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Welcome back.</div>
+                  <p class="auth-sub">Sign in to your saved jobs and quotes.</p>
+                </div>
+                <div
+                  style="
+                    margin-top: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                  "
+                >
+                  <div>
+                    <div class="input-group">
+                      <div class="ig-row">
+                        <div class="ig-t">
+                          <label>Email</label
+                          ><span class="val">dave@robsonroofing.com.au</span>
+                        </div>
+                      </div>
+                      <div class="ig-row">
+                        <div class="ig-t">
+                          <label>Password</label
+                          ><span class="val"
+                            >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                          >
+                        </div>
+                        <i class="ic ic-eye"></i>
+                      </div>
+                    </div>
+                    <p class="field-error">
+                      Email or password doesn&rsquo;t match. Check them, or
+                      reset your password below.
+                    </p>
+                  </div>
+                  <div class="forgot-link"><b>Forgot password?</b></div>
+                </div>
+                <button class="btn btn-primary btn-full">Sign in</button>
+                <div class="screen-foot">
+                  <div class="link-line">
+                    New to RoofBros? <b>Create an account</b>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0D &middot; Sign in &mdash; failed</b>Wrong credentials
+            don&rsquo;t wipe the form (Nielsen #9 &mdash; recovery preserves
+            work): both values stay, the message says what didn&rsquo;t match
+            and points at the recovery route, and <em>Forgot password?</em>
+            sits directly below it. Deliberately does NOT say which of the
+            two was wrong &mdash; standard credential-security practice.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div>
                   <div class="auth-h">Reset your password.</div>
@@ -363,7 +543,7 @@
                   </div>
                 </div>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Send OTP</button>
+                  <button class="btn btn-primary btn-full">Send code</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -375,7 +555,6 @@
             next step; button sends the code.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -389,7 +568,7 @@
               </div>
               <div class="appbody">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div>
                   <div class="auth-h">Enter the code.</div>
@@ -418,7 +597,7 @@
                 <div class="resend-link"><b>Resend code</b></div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full" disabled>
-                    Verify
+                    Verify code
                   </button>
                 </div>
               </div>
@@ -428,11 +607,12 @@
           <p class="cap">
             <b>0E &middot; Reset &mdash; enter code</b>Same field system as
             every other screen: email locks (dimmed), the active box lifts to
-            white with the shared soft border, button becomes <em>Verify</em>.
-            Resend styled like the forgot link, in maroon.
+            white with the shared soft border, button becomes <em>Verify
+            code</em>.
+            Resend styled like the forgot link &mdash; slate, underlined,
+            right-aligned.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -446,7 +626,7 @@
               </div>
               <div class="appbody">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div>
                   <div class="auth-h">Enter the code.</div>
@@ -476,7 +656,7 @@
                 </div>
                 <div class="resend-link"><b>Resend code</b></div>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Verify</button>
+                  <button class="btn btn-primary btn-full">Verify code</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -485,11 +665,10 @@
           <p class="cap">
             <b>0E &middot; Reset &mdash; incorrect code</b>All six boxes lift
             to white but outline in error red instead of the neutral hairline;
-            an inline message names the problem. <em>Verify</em> stays enabled
+            an inline message names the problem. <em>Verify code</em> stays enabled
             so retrying is one tap away.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -503,7 +682,7 @@
               </div>
               <div class="appbody">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div>
                   <div class="auth-h">Enter the code.</div>
@@ -534,7 +713,7 @@
                 <div class="resend-link"><b>Resend code</b></div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full" disabled>
-                    Verify
+                    Verify code
                   </button>
                 </div>
               </div>
@@ -548,7 +727,6 @@
             next step.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -562,16 +740,16 @@
               </div>
               <div class="appbody">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div>
                   <div class="auth-h">Set a new password.</div>
                   <p class="auth-sub">
-                    Choose a strong password at least 8 characters.
+                    Choose a strong password: at least 8 characters.
                   </p>
                 </div>
                 <div class="input-group">
-                  <div class="ig-row focus">
+                  <div class="ig-row">
                     <div class="ig-t">
                       <label>New password</label
                       ><span class="val"
@@ -604,7 +782,6 @@
             grouped like the sign-up fields. Clean finish to the reset flow.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -638,11 +815,12 @@
           <p class="cap">
             <b>0E &middot; Reset &mdash; success</b>The one moment in this
             flow with no close button &mdash; there&rsquo;s nothing left to
-            cancel. A quiet green badge, not a takeover animation, matching
-            the flat, no-shadow system throughout.
+            cancel. A quiet green badge, not a takeover: it settles in once
+            (450ms ease-out scale, check a beat behind, success haptic) and
+            then sits still &mdash; reduced-motion gets the static badge.
+            Matching the flat, no-shadow system throughout.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -656,7 +834,7 @@
               </div>
               <div class="appbody appbody-scroll">
                 <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <h5 class="greeting">Welcome, Dave.</h5>
 
@@ -792,13 +970,15 @@
                     </div>
                     <div class="jt">
                       <b>14 Banksia St, Ryde</b
-                      ><span>Marseille &middot; Restoration</span>
+                      ><span>Marseille &middot; New Install</span>
                     </div>
                     <div class="jr">
                       <span class="status quoted"
                         >Quoted
                         <span
                           class="age-dot"
+                          role="img"
+                          aria-label="No activity for 5 days"
                           style="background: var(--warn)"
                         ></span></span
                       ><span class="val">$18,940</span>
@@ -813,7 +993,7 @@
                     </div>
                     <div class="jt">
                       <b>3 Coral Ave, Cronulla</b
-                      ><span>Swiss &middot; New roof</span>
+                      ><span>Elabana &middot; New Install</span>
                     </div>
                     <div class="jr">
                       <span class="status delivery">Delivered</span
@@ -853,17 +1033,16 @@
       </div>
     </section>
 
-    <section class="doc-section" id="home">
+    <section class="doc-section" id="flow2">
       <div class="doc-wrap">
         <div class="sec-head">
-          <span class="sec-num">A</span>
-          <h2>Home — the jobs hub</h2>
+          <span class="sec-num">2</span>
+          <h2>Jobs &amp; deliveries</h2>
         </div>
-        <p class="sec-sub serif-note">
-          Every morning starts here: the pipeline as a list, one thumb-reach
-          from a new quote. Same screen shown twice below &mdash; empty, then
-          filled.
-        </p>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>the Jobs tab (home)</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>a delivery or pickup is requested</b></span>
+        </div>
       </div>
       <div class="screens-row">
         <div class="screen-slot">
@@ -880,7 +1059,7 @@
               <div class="appbody">
                 <div class="screen-title">
                   <h5>Jobs</h5>
-                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
                 <div class="chip-row">
                   <span class="chip on">All</span
@@ -901,8 +1080,8 @@
                   <div class="wc-t">
                     <h6>No jobs yet</h6>
                     <p>
-                      Start your first job by dropping an address, we'll measure the
-                      roof, and you can quote it from there.
+                      Drop in an address and we'll measure the roof.
+                      Your quote starts from there.
                     </p>
                   </div>
                 </div>
@@ -913,7 +1092,7 @@
               <div class="tabbar">
                 <span class="t on"><i class="ic ic-home"></i>Jobs</span>
                 <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
                 <span class="t"><i class="ic ic-user"></i>Profile</span>
               </div>
               <div class="home-ind"></div>
@@ -928,7 +1107,6 @@
             stays uncluttered every day after too.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -943,7 +1121,7 @@
               <div class="appbody">
                 <div class="screen-title">
                   <h5>Jobs</h5>
-                  <span class="icon-btn"><i class="ic ic-search"></i></span>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
                 <div class="chip-row">
                   <span class="chip on">All</span
@@ -967,6 +1145,8 @@
                       >Quoted
                       <span
                         class="age-dot"
+                        role="img"
+                        aria-label="No activity for 5 days"
                         style="background: var(--warn)"
                       ></span></span
                     ><span class="val">$18,940</span>
@@ -980,7 +1160,7 @@
                     />
                   </div>
                   <div class="jt">
-                    <b>3 Coral Ave, Cronulla</b><span>Swiss · New roof</span>
+                    <b>3 Coral Ave, Cronulla</b><span>Elabana · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status delivery">Delivered</span
@@ -1021,7 +1201,7 @@
               <div class="tabbar">
                 <span class="t on"><i class="ic ic-home"></i>Jobs</span>
                 <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
                 <span class="t"><i class="ic ic-user"></i>Profile</span>
               </div>
               <div class="home-ind"></div>
@@ -1030,10 +1210,9 @@
           <p class="cap">
             <b>A1 · Jobs hub (home)</b>Filter chips as the pipeline; aging dot
             flags idle quotes; New Quote is a uniform maroon tab (4 flat tabs,
-            no raised FAB).
+            no raised FAB). Tapping any job card opens its job detail (D1).
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1051,7 +1230,7 @@
                     <i class="ic ic-search"></i
                     ><span>Search jobs, addresses&hellip;</span>
                   </div>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div class="chip-row">
                   <span class="chip on">All</span
@@ -1075,6 +1254,8 @@
                       >Quoted
                       <span
                         class="age-dot"
+                        role="img"
+                        aria-label="No activity for 5 days"
                         style="background: var(--warn)"
                       ></span></span
                     ><span class="val">$18,940</span>
@@ -1088,7 +1269,7 @@
                     />
                   </div>
                   <div class="jt">
-                    <b>3 Coral Ave, Cronulla</b><span>Swiss · New roof</span>
+                    <b>3 Coral Ave, Cronulla</b><span>Elabana · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status delivery">Delivered</span
@@ -1129,7 +1310,7 @@
               <div class="tabbar">
                 <span class="t on"><i class="ic ic-home"></i>Jobs</span>
                 <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
                 <span class="t"><i class="ic ic-user"></i>Profile</span>
               </div>
               <div class="home-ind"></div>
@@ -1145,21 +1326,685 @@
             view.
           </p>
         </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <button class="icon-btn" aria-label="Search jobs">
+                    <i class="ic ic-search"></i>
+                  </button>
+                </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>You&rsquo;re offline.</b> Saved jobs still work;
+                    anything new syncs when you&rsquo;re back.
+                  </p>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba2-before.jpg"
+                      alt="14 Banksia St, Ryde"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>14 Banksia St, Ryde</b
+                    ><span>Marseille · New Install</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status quoted"
+                      >Quoted
+                      <span
+                        class="age-dot"
+                        role="img"
+                        aria-label="No activity for 5 days"
+                        style="background: var(--warn)"
+                      ></span></span
+                    ><span class="val">$18,940</span>
+                  </div>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba3-after.jpg"
+                      alt="3 Coral Ave, Cronulla"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>3 Coral Ave, Cronulla</b><span>Elabana · New Install</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status delivery">Delivered</span
+                    ><span class="val">$24,120</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>A1 &middot; Jobs hub &mdash; offline</b>Build rule 7 (cache
+            field essentials), finally visible: on a roof with no signal the
+            saved jobs, measurements and swatches still open, the amber
+            banner names the state and the promise (&ldquo;will sync&rdquo;),
+            and nothing is disabled that doesn&rsquo;t have to be &mdash;
+            only actions needing the network (new measurement, submit
+            delivery) wait.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
+                  <span class="status quoted">Quoted</span>
+                </div>
+                <div class="aerial photo" style="height: 130px"></div>
+                <div class="hub">
+                  <button class="h">
+                    <b>Measurement</b><span>230 m² · 22.4° · 98%</span>
+                  </button>
+                  <button class="h">
+                    <b>Quotes (2)</b><span>$18,940 · Heritage Brown</span>
+                  </button>
+                  <button class="h">
+                    <b>Photos (4)</b><span>site + before shots</span>
+                  </button>
+                  <button class="h">
+                    <b>Notes</b><span>"access via rear lane"</span>
+                  </button>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Request delivery or pickup
+                </button>
+                <button class="btn btn-secondary btn-full">
+                  Send quote to customer
+                </button>
+                <div class="timeline">
+                  <div class="ev done"><b>Quote saved</b> · 6 Jul</div>
+                  <div class="ev now">
+                    <b>Delivery requested</b> · #DR-2481 · awaiting
+                    confirmation
+                  </div>
+                  <div class="ev">Scheduled</div>
+                  <div class="ev">Delivered · proof photo attached</div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1 · Job detail</b>The hub: measurement, quotes, photos, notes —
+            and the delivery button on every job, always. Every tile is a
+            real button opening its own screen: Measurement &rarr; the B3
+            review, Quotes &rarr; D1a, Photos &rarr; D1b, Notes &rarr; D1c
+            (all three follow). <b>Send quote to customer</b> is the
+            deliberate share step C3 refers to (SMS/email a customer-facing
+            copy; never automatic). The delivery timeline row is tappable and
+            opens the delivery detail (D4, further on), and the whole screen
+            scrolls now that it's grown. Status timeline updates with push at
+            every step.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Quotes</div>
+                  <p class="auth-sub">14 Banksia St, Ryde</p>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Heritage Brown · New Install<small
+                        >#Q-10235 · saved 6 Jul</small
+                      >
+                    </div>
+                    <span class="q">$18,940</span>
+                    <i class="ic ic-chevron"></i>
+                  </div>
+                  <div class="li">
+                    <div class="n">
+                      Terracotta · Restoration<small
+                        >#Q-10234 · saved 3 Jul</small
+                      >
+                    </div>
+                    <span class="q">$2,145</span>
+                    <i class="ic ic-chevron"></i>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-secondary btn-full">
+                  Start another quote
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1a &middot; Quotes</b>Both saved quotes for the site &mdash;
+            the restore price and the full-reroof price, the classic
+            side-by-side a roofer gives a customer. Rows open the saved quote
+            read-only (quote versions are snapshots, never overwritten
+            &mdash; build rule 1). <b>Start another quote</b> begins a new
+            quote with the address and measurement already attached: B0
+            &rarr; straight to colours, no re-entry (Hover&rsquo;s
+            &ldquo;no reentry&rdquo; rule, and a power-user shortcut).
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Photos</div>
+                  <p class="auth-sub">14 Banksia St, Ryde</p>
+                </div>
+                <div class="fr-label">Tue 14 Jul</div>
+                <div class="ph-grid">
+                  <div class="ph-cell">
+                    <img
+                      src="../assets/photos/ba2-before.jpg"
+                      alt="Site photo, front elevation"
+                    />
+                    <span class="ph-stamp">9:12am</span>
+                  </div>
+                  <div class="ph-cell">
+                    <img
+                      src="../assets/photos/ba1-before.jpg"
+                      alt="Before shot, ridge line"
+                    />
+                    <span class="ph-stamp">9:14am</span>
+                  </div>
+                </div>
+                <div class="fr-label">Fri 3 Jul</div>
+                <div class="ph-grid">
+                  <div class="ph-cell">
+                    <img
+                      src="../assets/photos/ba3-before.jpg"
+                      alt="Before shot, rear valley"
+                    />
+                    <span class="ph-stamp">2:31pm</span>
+                  </div>
+                  <div class="ph-cell">
+                    <img
+                      src="../assets/photos/aerial-suburb.jpg"
+                      alt="Aerial view of the site"
+                    />
+                    <span class="ph-stamp">2:33pm</span>
+                  </div>
+                </div>
+              </div>
+              <div class="fr-cta">
+                <button class="btn btn-primary btn-full">
+                  <i class="ic ic-camera"></i> Take photo
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1b &middot; Photos</b>The CompanyCam pattern from the
+            research: <b>one tap to capture</b> (pinned button, gloves-first),
+            GPS auto-attaches the shot to this job, and the time stamp is
+            burned on &mdash; the before/after evidence trail that wins
+            disputes. Grouped by day, newest first; markup (arrows, circles)
+            happens after the shutter, never before. Uploads queue offline
+            and survive signal drops, per build rule 12.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Notes</div>
+                  <p class="auth-sub">14 Banksia St, Ryde</p>
+                </div>
+                <div class="note-card">
+                  <p>Access via rear lane; gate code 4187.</p>
+                  <span class="when">Tue 14 Jul, 9:20am</span>
+                </div>
+                <div class="note-card">
+                  <p>
+                    Owner wants the arvo for any site visits; dog in the
+                    yard, friendly.
+                  </p>
+                  <span class="when">Fri 3 Jul, 2:40pm</span>
+                </div>
+                <div style="flex: 1"></div>
+                <div class="field">
+                  <div class="control placeholder">Add a note&hellip;</div>
+                </div>
+                <button class="btn btn-primary btn-full">Save note</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1c &middot; Notes</b>Timestamped free-text pinned to the job,
+            newest first &mdash; gate codes, access, the dog. The newest note
+            is the one D1&rsquo;s tile previews, and D2&rsquo;s drop-zone
+            field suggests recent notes so &ldquo;access via rear lane&rdquo;
+            never has to be typed twice. Searchable from the jobs-hub search
+            along with addresses.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="auth-h">Delivery request</div>
+                <div class="seg">
+                  <span class="on">Deliver to site</span
+                  ><span>Pickup at yard</span>
+                </div>
+                <div class="field">
+                  <label>Deliver to</label>
+                  <button class="control addr-field">
+                    <span class="addr-l"><i class="ic ic-pin"></i><span>14 Banksia St, Ryde</span></span>
+                    <span class="addr-change">Change</span>
+                  </button>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Main tiles · Heritage Brown<small
+                        >from quote · recycled Marseille</small
+                      >
+                    </div>
+                    <div class="q">2,875</div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">60</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Preferred day (min. 24h ahead)</label>
+                  <div class="datewin">
+                    <button class="d" aria-label="Wednesday 15 July">
+                      <span class="dow">Wed</span
+                      ><span class="day">15</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                    <button class="d on" aria-label="Thursday 16 July, selected">
+                      <span class="dow">Thu</span
+                      ><span class="day">16</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                    <button class="d" aria-label="Friday 17 July">
+                      <span class="dow">Fri</span
+                      ><span class="day">17</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Time window</label>
+                  <div class="seg">
+                    <span class="on">Morning</span><span>Afternoon</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Drop-zone notes + photo (optional)</label>
+                  <div class="control placeholder">
+                    <i class="ic ic-camera"></i> "Driveway left of carport, no
+                    overhead wires…"
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Additional notes (optional)</label>
+                  <div class="control placeholder" style="align-items: flex-start; min-height: 54px; padding-top: 12px">
+                    Anything else the driver should know&hellip;
+                  </div>
+                </div>
+              </div>
+              <div class="fr-cta">
+                <button class="btn btn-primary btn-full">Submit request</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D2 · Delivery request — deliver to site</b>Header now stacks
+            (close on its own row, title below) like every other flow screen.
+            The delivery address is shown with a <b>Change</b> link so a wrong
+            address is fixable. Pre-filled from the quote; 24h-lead date +
+            AM/PM window; drop-zone photo/notes plus a general notes field.
+            Long form, so it scrolls with a pinned Submit. The &times; here
+            confirms before discarding once anything&rsquo;s entered &mdash;
+            the same dialog as the quote flow. →
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="auth-h">Delivery request</div>
+                <div class="seg">
+                  <span>Deliver to site</span
+                  ><span class="on">Pickup at yard</span>
+                </div>
+                <div class="field">
+                  <label>Pick up from</label>
+                  <button class="control addr-field">
+                    <span class="addr-l"><i class="ic ic-pin"></i><span>RoofBros yard · 8 Kellogg Rd, Rooty Hill</span></span>
+                    <span class="addr-change">Change</span>
+                  </button>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Main tiles · Heritage Brown<small
+                        >from quote · recycled Marseille</small
+                      >
+                    </div>
+                    <div class="q">2,875</div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">60</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Preferred day (min. 24h ahead)</label>
+                  <div class="datewin">
+                    <button class="d" aria-label="Wednesday 15 July">
+                      <span class="dow">Wed</span
+                      ><span class="day">15</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                    <button class="d on" aria-label="Thursday 16 July, selected">
+                      <span class="dow">Thu</span
+                      ><span class="day">16</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                    <button class="d" aria-label="Friday 17 July">
+                      <span class="dow">Fri</span
+                      ><span class="day">17</span
+                      ><span class="mon">Jul</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Time window</label>
+                  <div class="seg">
+                    <span class="on">Morning</span><span>Afternoon</span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Pickup notes (optional)</label>
+                  <div class="control placeholder" style="align-items: flex-start; min-height: 54px; padding-top: 12px">
+                    Ute or truck? Anything we should have ready&hellip;
+                  </div>
+                </div>
+              </div>
+              <div class="fr-cta">
+                <button class="btn btn-primary btn-full">Submit request</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D2 · Delivery request — pickup at yard</b>The other segment
+            state (the missing screen). Shows the RoofBros <b>yard address</b>
+            to collect from (also editable via Change), swaps drop-zone for
+            <b>Pickup notes</b> since you're collecting, and keeps the same
+            materials, date and window.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="flex: 1; display: grid; place-items: center; text-align: center">
+                  <div>
+                    <div class="success-badge"><i class="ic ic-check"></i></div>
+                    <div class="auth-h" style="margin-top: 20px">
+                      Request submitted.
+                    </div>
+                    <p class="auth-sub" style="margin: 8px auto 0; max-width: 26ch">
+                      Request #DR-2481 &middot; Thu 16 Jul, morning. We&rsquo;ll text you when it&rsquo;s on the way.
+                    </p>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">View job</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D3 &middot; Request submitted</b>Delivers on the reference number D2 always promised but never showed. One shared success screen for both Deliver-to-site and Pickup-at-yard &mdash; the copy above is the only thing that would vary by path.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                  <span class="status delivery">Delivered</span>
+                </div>
+                <div>
+                  <div class="auth-h">Delivery #DR-2481</div>
+                  <p class="auth-sub">
+                    14 Banksia St, Ryde &middot; Thu 16 Jul, morning
+                  </p>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Main tiles · Heritage Brown<small
+                        >recycled Marseille</small
+                      >
+                    </div>
+                    <div class="q">2,875</div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">60</div>
+                  </div>
+                </div>
+                <div class="timeline">
+                  <div class="ev done"><b>Requested</b> · Tue 14 Jul, 9:41am</div>
+                  <div class="ev done"><b>Scheduled</b> · Thu 16 Jul, AM window</div>
+                  <div class="ev done"><b>Out for delivery</b> · 8:05am</div>
+                  <div class="ev done"><b>Delivered</b> · 10:42am</div>
+                </div>
+                <div class="field">
+                  <label>Proof of delivery</label>
+                  <div style="border: 1px solid var(--line-soft)">
+                    <img
+                      src="../assets/photos/ba2-after.jpg"
+                      alt="Tiles stacked on the driveway at 14 Banksia St"
+                      style="display: block; width: 100%; height: 118px; object-fit: cover"
+                    />
+                  </div>
+                  <p class="serif-note" style="margin-top: 6px">
+                    Left on the driveway, clear of the carport &middot; 10:42am
+                  </p>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D4 &middot; Delivery detail</b>Opened from the delivery row on
+            the job timeline (D1). The full status ladder the D1 timeline
+            only names &mdash; Requested &rarr; Scheduled &rarr; Out for
+            delivery &rarr; Delivered, each stamped &mdash; plus the
+            driver&rsquo;s <b>proof-of-delivery photo</b> and drop note, so
+            &ldquo;where are my tiles?&rdquo; is answered without a phone
+            call (the whole point of the delivery moat). Shown here in its
+            end state; earlier states are the same screen with fewer green
+            dots and no photo yet.
+          </p>
+        </div>
+
       </div>
     </section>
 
-    <section class="doc-section" id="measure">
+    <section class="doc-section" id="flow3">
       <div class="doc-wrap">
         <div class="sec-head">
-          <span class="sec-num">B</span>
-          <h2>Measure — the golden path opens</h2>
+          <span class="sec-num">3</span>
+          <h2>New quote &mdash; measure by address</h2>
         </div>
-        <p class="sec-sub serif-note">
-          Job type → address → map confirm, then a real fork: AI measuring
-          reveal when imagery is available, manual entry when it isn't or
-          the roofer already has the numbers — either way, figures the
-          roofer trusts at a glance.
-        </p>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>tap New &middot; job type Restoration</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>the quote is saved &amp; visualised</b></span>
+        </div>
       </div>
       <div class="screens-row">
         <div class="screen-slot">
@@ -1174,10 +2019,67 @@
                 ></span>
               </div>
               <div class="appbody">
-                <div class="screen-title" style="justify-content: flex-end">
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i></i><i></i><i></i></div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="welcome-card">
+                  <div class="wc-illustration">
+                    <video
+                      src="../assets/video/empty-hub-illustration.mp4"
+                      autoplay
+                      loop
+                      muted
+                      playsinline
+                    ></video>
+                  </div>
+                  <div class="wc-t">
+                    <h6>No jobs yet</h6>
+                    <p>
+                      Drop in an address and we'll measure the roof.
+                      Your quote starts from there.
+                    </p>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Start a job <i class="ic ic-plus"></i>
+                </button> 
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t on"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>Start here &middot; tap New</b>Every new quote begins at the jobs hub. Tapping the <b>New</b> tab (highlighted) opens this flow &mdash; shown here as the entry point so the journey reads from the very first tap.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 1 of 4"><i class="on"></i><i></i><i></i><i></i></div>
                 <div>
                   <div class="auth-h">New quote</div>
                   <p class="auth-sub">What kind of job is this?</p>
@@ -1186,7 +2088,7 @@
                   <div class="opt-card sel">
                     <i class="ic ic-roller"></i>
                     <div class="ot">
-                      <b>Roof Restoration/Replacement</b>
+                      <b>Roof Restoration</b>
                       <span>Clean, repair and recoat an existing roof</span>
                     </div>
                   </div>
@@ -1194,7 +2096,7 @@
                     <i class="ic ic-tiles"></i>
                     <div class="ot">
                       <b>New Roof Installation</b>
-                      <span>New tiles for new construction</span>
+                      <span>New tiles: new builds and full replacements</span>
                     </div>
                   </div>
                 </div>
@@ -1214,7 +2116,6 @@
             either job type.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1228,10 +2129,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i></div>
                 <div>
                   <div class="auth-h">Site address</div>
                   <p class="auth-sub">Where's the job?</p>
@@ -1269,7 +2170,7 @@
                   <div class="pin"></div>
                   <div class="badge">Drag pin to adjust</div>
                 </div>
-                <p class="link-line">
+                <p class="link-line manual">
                   Already have your measurements?
                   <b>Enter them manually</b>
                 </p>
@@ -1295,7 +2196,6 @@
             illustration of a colour, not a location.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1309,58 +2209,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i></i><i></i></div>
-                <div>
-                  <div class="auth-h">Site address</div>
-                  <p class="auth-sub">Where's the job?</p>
-                </div>
-                <div class="field">
-                  <div class="control">14 Wattle Ct, Orange NSW 2800</div>
-                </div>
-                <div class="banner">
-                  <i class="ic ic-warn"></i>
-                  <p>
-                    <b>Aerial imagery not available for this address.</b>
-                    You can proceed with manual measurements instead.
-                  </p>
-                </div>
-                <div style="flex: 1"></div>
-                <button class="btn btn-primary btn-full">
-                  Continue with manual measurements
-                </button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>B1 · Measurement-failed state</b>The real failure mode we
-            traced from the live reference tool, finally built instead of
-            just logged as a backlog item. Same amber tint/border as every
-            other warning — no separate "error illustration." Available to
-            either job type; not exclusive to New Installation.
-          </p>
-        </div>
-
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
-                </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Measuring…</div>
                 <div class="aerial photo" style="height: 300px">
                   <div class="roof" style="opacity: 0.35"></div>
@@ -1398,8 +2250,8 @@
                   class="serif-note"
                   style="text-align: center; padding: 0 20px"
                 >
-                  The outline draws itself on your roof as we trace it — every
-                  edge you see is measured.
+                  The outline draws itself on your roof as we trace it.
+                  Every edge you see is measured.
                 </p>
               </div>
               <div class="home-ind"></div>
@@ -1411,7 +2263,6 @@
             never a spinner.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1425,10 +2276,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Measurement</div>
                 <div class="aerial photo" style="height: 280px">
                   <div class="roof" style="opacity: 0.5"></div>
@@ -1456,7 +2307,7 @@
                   Choose paint &amp; colour
                 </button>
                 <button class="btn btn-secondary btn-full">
-                  Re-check outline
+                  Adjust outline
                 </button>
               </div>
               <div class="home-ind"></div>
@@ -1464,10 +2315,84 @@
           </div>
           <p class="cap">
             <b>B3 · Measurement review</b>Image + polygon stay on top; big
-            tabular figures below; confidence is first-class. Below 85% this
-            would show an amber banner explaining what to check — that
-            specific state is still on the backlog, not built here (98%
-            shown needs no banner).
+            tabular figures below; confidence is first-class. The primary
+            names the next step for the job type chosen at B0 — <b>Choose
+            paint &amp; colour</b> here (Restoration); a New Installation
+            that measured by AI reads <b>Choose tile</b> (→ E1) instead.
+            <b>Adjust outline</b> opens the corner editor (B3a) — the button
+            says exactly what the screen does. This is
+            the happy path (98% — no banner needed); the low-confidence
+            state is next →
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="auth-h">Measurement</div>
+                <div class="aerial photo" style="height: 168px">
+                  <div class="roof" style="opacity: 0.5"></div>
+                  <div class="badge low">78% confidence</div>
+                </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>Low confidence (78%).</b> Trees or shadow may be hiding
+                    edges. Check the outline against the image before you
+                    quote: a wrong area throws off the whole price.
+                  </p>
+                </div>
+                <div class="hub">
+                  <div class="fig">
+                    <div class="v">230<small> m²</small></div>
+                    <div class="k">Roof area</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">22.4<small>°</small></div>
+                    <div class="k">Pitch</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">18.0<small> lm</small></div>
+                    <div class="k">Ridge</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">4</div>
+                    <div class="k">Roof faces</div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Adjust outline
+                </button>
+                <button class="btn btn-secondary btn-full">
+                  Use these figures anyway
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B3 · Low-confidence state (&lt;85%)</b>The real state the
+            measurement API can return (it hands back a confidence value).
+            Amber badge on the image + an amber banner that names the likely
+            cause and the fix — never a silent bad number. The CTAs flip:
+            <b>Adjust outline</b> becomes the primary (recommended), with
+            "Use these figures anyway" kept as the secondary so the roofer
+            still has control (Postel's law). Distinct from the
+            measurement-failed state (no imagery at all → manual entry); here
+            the imagery exists but the AI is unsure.
           </p>
         </div>
 
@@ -1484,10 +2409,668 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div>
+                  <div class="auth-h">Adjust outline</div>
+                  <p class="auth-sub">
+                    Drag a corner until the outline hugs the roof.
+                  </p>
+                </div>
+                <div class="aerial photo" style="height: 360px">
+                  <div class="roof" style="opacity: 0.45"></div>
+                  <button class="vx" style="left: 15%; top: 36%" aria-label="Corner 1"></button>
+                  <button class="vx" style="left: 52%; top: 15%" aria-label="Corner 2"></button>
+                  <button class="vx" style="left: 87%; top: 28%" aria-label="Corner 3"></button>
+                  <button class="vx" style="left: 87%; top: 65%" aria-label="Corner 4"></button>
+                  <button class="vx active" style="left: 57%; top: 82%" aria-label="Corner 5, selected"></button>
+                  <button class="vx" style="left: 15%; top: 70%" aria-label="Corner 6"></button>
+                  <div class="badge">14 Banksia St, Ryde</div>
+                </div>
+                <p class="serif-note" style="text-align: center">
+                  Area and pitch recalculate as you drag.
+                </p>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">Save outline</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B3a &middot; Adjust outline</b>Where <b>Adjust outline</b>
+            (B3, both states) goes &mdash; it was a dead end before.
+            Each corner of the measured polygon is a draggable handle (white
+            dot, maroon ring; the grabbed one swells); figures recompute live,
+            and <b>Save outline</b> returns to B3 with the updated numbers.
+            Handles are 20px visual with a 44px hitSlop in RN, same
+            compact-control rule as the style guide. Back-only header: this
+            is a sub-edit of B3, not a wizard step, so no &times; and no
+            stepbar (same rule as E2).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div>
+                  <div class="auth-h">Paint &amp; colour</div>
+                  <p class="auth-sub">Pick a brand, then the finish colour.</p>
+                </div>
+                <div class="field">
+                  <label>Paint brand</label>
+                  <div style="display: flex; flex-direction: column; gap: 10px">
+                    <div class="opt-card sel">
+                      <div class="ot">
+                        <b>Industrial roof coatings</b>
+                        <span>Heavy-duty acrylic, 15-year rating</span>
+                      </div>
+                    </div>
+                    <div class="opt-card">
+                      <div class="ot">
+                        <b>Shield coat</b>
+                        <span>Reflective membrane, budget option</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Colour</label>
+                  <div style="display: flex; flex-wrap: wrap; gap: 10px">
+                    <button class="swatch t-heritage" aria-label="Heritage Brown"></button>
+                    <button class="swatch sel t-terracotta" aria-label="Terracotta, selected"></button>
+                    <button class="swatch t-slate" aria-label="Slate"></button>
+                    <button class="swatch t-titan" aria-label="Titan"></button>
+                    <button class="swatch t-olive" aria-label="Olive"></button>
+                    <button class="swatch t-cream" aria-label="Cream"></button>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">Build quote</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C0 · Paint &amp; colour — Restoration</b>Two brand tiers, then a
+            curated six-colour range — not the live tool's 24-swatch wall.
+            Fewer, larger targets beat an exhaustive grid (Hick's law).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div>
+                  <div class="auth-h">Quote</div>
+                  <p class="auth-sub">
+                    Terracotta · Restoration · 14 Banksia St, Ryde
+                  </p>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px 8px;
+                    flex: 1;
+                    overflow: hidden;
+                  "
+                >
+                  <div class="li-group">Coatings</div>
+                  <div class="li">
+                    <div class="n">Top coat buckets</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">6</button>
+                      <span class="lp">× $240 · <b>$1,440</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">High-build primer</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">3</button>
+                      <span class="lp">× $235 · <b>$705</b></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="total-bar">
+                  <span
+                    >2 items · from calculator<br />GST included: $195</span
+                  ><b>$2,145</b>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Try on a roof
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C1 · Materials quote — Restoration</b>Coatings only; tiles and
+            substrate belong to the other job type, never shown together.
+            AppliCad-style category groups. Every quantity is pre-filled by the
+            calculator and rarely touched (edited-by-exception) — so each is a
+            tap-to-edit field opening a numeric keypad, NOT a ±1 stepper: you
+            can't nudge a derived count like 2,875 into shape, and a big keypad
+            is more glove-friendly than tiny +/−. Every line now carries its
+            unit price and line total — the roofer can defend the figure at
+            the kitchen table line by line, not just quote one number. The
+            subtitle keeps the job context (colour · type · address) visible,
+            so an interrupted roofer never wonders which site this is.
+            GST-inclusive total with the subline; edits are revertable
+            overrides.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div class="seg">
+                  <span class="on">One colour</span><span>Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #B4573F">
+                  <div class="roof tiled"></div>
+                  <div class="badge">Hold to see original</div>
+                </div>
+                <div class="vis-label">
+                  <div class="vl">
+                    <b>Terracotta</b>
+                    <span>Industrial roof coatings · 15-year rating</span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch t-heritage" aria-label="Heritage Brown"></button>
+                  <button class="swatch sel t-terracotta" aria-label="Terracotta, selected"></button>
+                  <button class="swatch t-slate" aria-label="Slate"></button>
+                  <button class="swatch t-titan" aria-label="Titan"></button>
+                  <button class="swatch t-olive" aria-label="Olive"></button>
+                  <button class="swatch t-cream" aria-label="Cream"></button>
+                </div>
+                <button class="btn btn-primary btn-full">Save quote</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 · Colour visualiser</b>The "kitchen-table close": a tile
+            sample on a neutral grey stage (#ECECEC), a clean rectangle,
+            recoloured live in the chosen coating colour (this is the
+            Restoration path — the tiles stay, the coat changes). Tap a
+            swatch and the tiles re-tint in
+            under 250ms with shadows preserved (the mockup fakes it with
+            translucent shading; the build uses Skia's luminance-preserving
+            recolour). Press-and-hold shows the original. The "One colour /
+            Compare two" toggle swaps ONLY the preview below it — header,
+            swatches and button stay put →
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div class="seg">
+                  <span>One colour</span><span class="on">Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #B4573F">
+                  <div class="roof tiled"></div>
+                  <div class="roof tiled side-b" style="--roof-colour: #5A5E66"></div>
+                  <div class="cmp-divider"></div>
+                  <div class="cmp-handle"><i class="ic ic-compare"></i></div>
+                </div>
+                <div class="vis-label pair">
+                  <div class="vl"><b>Terracotta</b><span>saved to quote</span></div>
+                  <div class="vl b"><b>Slate</b><span>comparing</span></div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch t-heritage" aria-label="Heritage Brown"></button>
+                  <button class="swatch t-terracotta" aria-label="Terracotta"></button>
+                  <button class="swatch sel t-slate" aria-label="Slate, selected"></button>
+                  <button class="swatch t-titan" aria-label="Titan"></button>
+                  <button class="swatch t-olive" aria-label="Olive"></button>
+                  <button class="swatch t-cream" aria-label="Cream"></button>
+                </div>
+                <button class="btn btn-primary btn-full">Save quote</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 · Compare two colours</b>Same screen, same controls — only the
+            preview changed (exactly your point about the toggle). The tile
+            sample is now split by a draggable slider: the saved colour on the
+            left, a second colour on the right. Drag the handle to reveal more
+            of either; tap a swatch to change the right side. The kitchen-table
+            moment, weighing two colours on one roof.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="flex: 1; display: grid; place-items: center; text-align: center">
+                  <div>
+                    <div class="success-badge"><i class="ic ic-check"></i></div>
+                    <div class="auth-h" style="margin-top: 20px">
+                      Quote saved.
+                    </div>
+                    <p class="auth-sub" style="margin: 8px auto 0; max-width: 26ch">
+                      Quote #Q-10234 &middot; $2,145 attached to 14 Banksia St, Ryde.
+                    </p>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Send quote to customer
+                  </button>
+                  <button class="btn btn-secondary btn-full">View job</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C3 &middot; Quote saved</b>Closes the loop &mdash; &ldquo;Save
+            quote&rdquo; had no confirmation before. The badge settles in
+            once (450ms ease-out pop + success haptic; reduced-motion gets
+            the static badge) &mdash; the one celebratory motion in the app,
+            spent on the peak. Primary is <b>Send quote to customer</b>: the
+            kitchen-table close just happened, so the highest-value next
+            action is one tap away &mdash; still deliberate, never automatic.
+            <b>View job</b> is the quiet secondary. No close/back button,
+            matching 0E &mdash; there&rsquo;s nothing left to cancel.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div>
+                  <div class="auth-h">Roof dimensions</div>
+                  <p class="auth-sub">Enter the figures you already have.</p>
+                </div>
+                <div style="display: flex; gap: 12px">
+                  <div class="field" style="flex: 1">
+                    <label>Total area (m²)</label>
+                    <div class="control">150</div>
+                  </div>
+                  <div class="field" style="flex: 1">
+                    <label>Pitch (°)</label>
+                    <div class="control">24</div>
+                  </div>
+                </div>
+              </div>
+              <div class="scrim">
+                <div class="dialog">
+                  <h4>Discard this quote?</h4>
+                  <p>
+                    You've entered measurements that aren't saved yet.
+                    Closing now discards them.
+                  </p>
+                  <div class="dialog-actions">
+                    <button class="btn btn-danger btn-full">
+                      <i class="ic ic-trash"></i>Discard quote
+                    </button>
+                    <button class="btn btn-primary btn-full">
+                      <i class="ic ic-back"></i>Keep editing
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>Discard confirmation — the × on any step</b>Back (chevron)
+            is instant, it's non-destructive. But × exits the whole flow and
+            would bin everything entered, so it confirms first (Nielsen #3,
+            error prevention). The safe action, <b>Keep editing</b>, is the
+            prominent primary and sits thumb-closest; the destructive
+            <b>Discard</b> is an err-outline button held separate above it,
+            never a matching filled twin next to the primary.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="flow4">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">4</span>
+          <h2>New quote &mdash; enter manually</h2>
+        </div>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>tap New &middot; job type New Installation</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>the quote is saved</b></span>
+        </div>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All</span
+                  ><span class="chip">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="welcome-card">
+                  <div class="wc-illustration">
+                    <video
+                      src="../assets/video/empty-hub-illustration.mp4"
+                      autoplay
+                      loop
+                      muted
+                      playsinline
+                    ></video>
+                  </div>
+                  <div class="wc-t">
+                    <h6>No jobs yet</h6>
+                    <p>
+                      Drop in an address and we'll measure the roof.
+                      Your quote starts from there.
+                    </p>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Start a job <i class="ic ic-plus"></i>
+                </button> 
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t on"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>Start here &middot; tap New</b>Every new quote begins at the jobs hub. Tapping the <b>New</b> tab (highlighted) opens this flow &mdash; shown here as the entry point so the journey reads from the very first tap.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title" style="justify-content: flex-end">
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 1 of 4"><i class="on"></i><i></i><i></i><i></i></div>
+                <div>
+                  <div class="auth-h">New quote</div>
+                  <p class="auth-sub">What kind of job is this?</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <div class="opt-card">
+                    <i class="ic ic-roller"></i>
+                    <div class="ot">
+                      <b>Roof Restoration</b>
+                      <span>Clean, repair and recoat an existing roof</span>
+                    </div>
+                  </div>
+                  <div class="opt-card sel">
+                    <i class="ic ic-tiles"></i>
+                    <div class="ot">
+                      <b>New Roof Installation</b>
+                      <span>New tiles: new builds and full replacements</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B0 · Job type &mdash; New Installation</b>A leading icon per card (roller, tile grid) —
+            same outline family as the rest of the app, not a one-off
+            illustration — for faster recognition on repeat use. Tapping a
+            card selects it and advances immediately; one exclusive choice
+            with nothing else on screen doesn't need a separate Continue tap.
+            Decides materials only — Coatings for Restoration, Tiles +
+            Substrate for New Installation. Measurement method is a separate,
+            later choice on B1 (AI measuring or manual entry), open to
+            either job type.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                <div>
+                  <div class="auth-h">Site address</div>
+                  <p class="auth-sub">Where's the job?</p>
+                </div>
+                <div class="field">
+                  <div class="control focus">
+                    <i class="ic ic-search"></i> 14 banks…
+                  </div>
+                </div>
+                <div class="suggest">
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span>14 Banksia St, <b>Ryde</b> NSW 2112</span>
+                  </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Ave, Engadine NSW <small>· 24 km</small></span
+                    >
+                  </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Pde, Dee Why NSW <small>· 18 km</small></span
+                    >
+                  </div>
+                  <div class="s-row">
+                    <i class="ic ic-pin"></i>
+                    <span
+                      >14 Banksia Cl, Castle Hill NSW <small>· 31 km</small></span
+                    >
+                  </div>
+                </div>
+                <div class="aerial photo" style="height: 168px">
+                  <div class="pin"></div>
+                  <div class="badge">Drag pin to adjust</div>
+                </div>
+                <p class="link-line manual">
+                  Already have your measurements?
+                  <b>Enter them manually</b>
+                </p>
+                <button class="btn btn-primary btn-full">
+                  Confirm address
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B1 · Address &amp; map confirm &mdash; manual path</b>Places autocomplete, then a
+            draggable pin on aerial imagery. ~50m drag threshold before
+            re-geocoding. Shared by both job types, so the button says
+            "Confirm address," not "Measure this roof" — Restoration takes
+            this into AI measuring (B2→B3); New Installation takes it into
+            Manual measurements instead, and nothing here should imply
+            a scan that isn't coming. The "Enter them manually" link is the
+            other route in, for either job type, any time the roofer already
+            has the numbers. Real aerial photo now, not the flat gradient —
+            only here and B2/B3, where it's standing in for actual Nearmap
+            imagery; C2/D1 keep the abstract version since that one's an
+            illustration of a colour, not a location.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                <div>
+                  <div class="auth-h">Site address</div>
+                  <p class="auth-sub">Where's the job?</p>
+                </div>
+                <div class="field">
+                  <div class="control">14 Wattle Ct, Orange NSW 2800</div>
+                </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>Aerial imagery isn&rsquo;t available for this
+                    address.</b> Enter your measurements manually instead.
+                  </p>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">
+                  Enter measurements manually
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B1 · Measurement-failed state</b>The real failure mode we
+            traced from the live reference tool, finally built instead of
+            just logged as a backlog item. Same amber tint/border as every
+            other warning — no separate "error illustration." Available to
+            either job type; not exclusive to New Installation.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div>
                   <div class="auth-h">Roof dimensions</div>
                   <p class="auth-sub">Enter the figures you already have.</p>
@@ -1514,13 +3097,13 @@
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label>Starters (qty)</label
+                      <label><span class="term">Starters</span> (qty)</label
                       ><span class="val ph">e.g., 56</span>
                     </div>
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label>Three ways (qty)</label
+                      <label><span class="term">Three ways</span> (qty)</label
                       ><span class="val ph">e.g., 10</span>
                     </div>
                   </div>
@@ -1539,7 +3122,10 @@
             "Continue": <b>Choose tile</b> here (New Installation → E1), or
             <b>Choose paint &amp; colour</b> on the Restoration instance
             (→ C0). Either way it skips B2/B3 — nothing to review when the
-            roofer just typed the numbers.
+            roofer just typed the numbers. Trade terms (<span
+            class="term">Starters</span>, <span class="term">Three
+            ways</span>) carry a dotted underline: tap to learn, next
+            frame. →
           </p>
         </div>
 
@@ -1556,10 +3142,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div>
                   <div class="auth-h">Roof dimensions</div>
                   <p class="auth-sub">Enter the figures you already have.</p>
@@ -1575,16 +3161,16 @@
                   </div>
                 </div>
               </div>
-              <div class="scrim">
+              <div class="scrim sheet">
                 <div class="dialog">
-                  <h4>Discard this quote?</h4>
+                  <h4>Three ways</h4>
                   <p>
-                    You've entered measurements that aren't saved yet.
-                    Closing now discards them.
+                    The Y-shaped cap that covers the point where three ridge
+                    lines meet. Walk the roof and count the junctions;
+                    most hip roofs have two.
                   </p>
                   <div class="dialog-actions">
-                    <button class="btn btn-danger btn-full">Discard quote</button>
-                    <button class="btn btn-primary btn-full">Keep editing</button>
+                    <button class="btn btn-primary btn-full">Got it</button>
                   </div>
                 </div>
               </div>
@@ -1592,30 +3178,16 @@
             </div>
           </div>
           <p class="cap">
-            <b>Discard confirmation — the × on any step</b>Back (chevron)
-            is instant, it's non-destructive. But × exits the whole flow and
-            would bin everything entered, so it confirms first (Nielsen #3,
-            error prevention). The safe action, <b>Keep editing</b>, is the
-            prominent primary and sits thumb-closest; the destructive
-            <b>Discard</b> is an err-outline button held separate above it,
-            never a matching filled twin next to the primary.
+            <b>Term explainer &mdash; tap any dotted term</b>A bottom sheet,
+            not a tooltip: big enough to read in sunlight, one tap to
+            dismiss, and it never navigates away from the half-filled form.
+            The same pattern covers every naked trade term in the app
+            &mdash; <em>sarking</em> (C1), <em>BASIX / SRI / LRV</em> (E2)
+            and the <em>confidence %</em> badge (B3). Plain language, no
+            diagram needed; an expert never has to see it (Jordan learns,
+            Alex is never interrupted).
           </p>
         </div>
-      </div>
-    </section>
-
-    <section class="doc-section" id="quote">
-      <div class="doc-wrap">
-        <div class="sec-head">
-          <span class="sec-num">C</span>
-          <h2>Quote &amp; visualise — the close</h2>
-        </div>
-        <p class="sec-sub serif-note">
-          The calculator fills every line; the roofer nudges by exception. Then
-          the wow: their actual roof, recoloured with a tap.
-        </p>
-      </div>
-      <div class="screens-row">
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1629,466 +3201,10 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
-                <div>
-                  <div class="auth-h">Paint &amp; colour</div>
-                  <p class="auth-sub">Pick a brand, then the finish colour.</p>
-                </div>
-                <div class="field">
-                  <label>Paint brand</label>
-                  <div style="display: flex; flex-direction: column; gap: 10px">
-                    <div class="opt-card sel">
-                      <div class="ot">
-                        <b>Industrial roof coatings</b>
-                        <span>Heavy-duty acrylic, 15-year rating</span>
-                      </div>
-                    </div>
-                    <div class="opt-card">
-                      <div class="ot">
-                        <b>Shield coat</b>
-                        <span>Reflective membrane, budget option</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="field">
-                  <label>Colour</label>
-                  <div style="display: flex; flex-wrap: wrap; gap: 10px">
-                    <span class="swatch t-heritage"></span>
-                    <span class="swatch sel t-terracotta"></span>
-                    <span class="swatch t-slate"></span>
-                    <span class="swatch t-titan"></span>
-                    <span class="swatch t-olive"></span>
-                    <span class="swatch t-cream"></span>
-                  </div>
-                </div>
-                <div style="flex: 1"></div>
-                <button class="btn btn-primary btn-full">Build quote</button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>C0 · Paint &amp; colour — Restoration</b>Two brand tiers, then a
-            curated six-colour range — not the live tool's 24-swatch wall.
-            Fewer, larger targets beat an exhaustive grid (Hick's law).
-          </p>
-        </div>
-
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
-                </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
-                  <div class="auth-h">Quote</div>
-                  <span class="status measured">Terracotta · Restoration</span>
-                </div>
-                <div
-                  style="
-                    border: 1px solid var(--line-soft);
-                    background: var(--surface);
-                    padding: 2px 14px 8px;
-                    flex: 1;
-                    overflow: hidden;
-                  "
-                >
-                  <div class="li-group">Coatings</div>
-                  <div class="li">
-                    <div class="n">Top coat buckets</div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">6</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                  <div class="li">
-                    <div class="n">High-build primer</div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">3</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="total-bar">
-                  <span
-                    >2 items · from calculator<br />GST included: $194</span
-                  ><b>$2,140</b>
-                </div>
-                <button class="btn btn-primary btn-full">
-                  Try on a roof
-                </button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>C1 · Materials quote — Restoration</b>Coatings only; tiles and
-            substrate belong to the other job type, never shown together.
-            AppliCad-style category groups, steppers not keyboards,
-            GST-inclusive total with the subline. Edits are revertable
-            overrides.
-          </p>
-        </div>
-
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
-                </div>
-                <div class="stepbar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
-                  <div class="auth-h">Quote</div>
-                  <span class="status measured">Titan Gloss · New Install</span>
-                </div>
-                <div
-                  style="
-                    border: 1px solid var(--line-soft);
-                    background: var(--surface);
-                    padding: 2px 14px 8px;
-                    flex: 1;
-                    overflow: hidden;
-                  "
-                >
-                  <div class="li-group">Roof tiles</div>
-                  <div class="li">
-                    <div class="n">
-                      Main tiles<small>incl. profile waste factor</small>
-                    </div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">2,875</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                  <div class="li">
-                    <div class="n">Ridge caps</div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">60</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                  <div class="li-group">Substrate</div>
-                  <div class="li">
-                    <div class="n">Sarking rolls</div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">4</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                  <div class="li">
-                    <div class="n">Batten bundles</div>
-                    <div class="stepper">
-                      <span class="mini-step"><i>−</i></span>
-                      <span class="q">12</span>
-                      <span class="mini-step"><i>+</i></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="total-bar">
-                  <span
-                    >4 items · from calculator<br />GST included: $1,722</span
-                  ><b>$18,940</b>
-                </div>
-                <button class="btn btn-primary btn-full">Save quote</button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>C1 · Materials quote — New Installation</b>Tiles and substrate
-            only; no coatings. Colour was already chosen and previewed via
-            E1 → E2 → C2 earlier in this path, so the primary action here is
-            just saving, not another colour step.
-          </p>
-        </div>
-
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <h5>Visualiser</h5>
-                  <span class="icon-btn"><i class="ic ic-compare"></i></span>
-                </div>
-                <div
-                  class="aerial"
-                  style="height: 380px; --roof-colour: #4e3228"
-                >
-                  <div class="roof"></div>
-                  <div class="badge">Hold to compare</div>
-                </div>
-                <div style="text-align: center">
-                  <div
-                    style="
-                      font-family: var(--font-ui);
-                      font-variation-settings: &quot;wght&quot; 600;
-                      font-size: var(--t-heading);
-                      color: var(--ink);
-                    "
-                  >
-                    Heritage Brown
-                  </div>
-                  <div
-                    style="
-                      font-family: var(--font-ui);
-                      font-size: var(--t-caption);
-                      color: var(--muted);
-                    "
-                  >
-                    Recycled Marseille · in stock at yard
-                  </div>
-                </div>
-                <div style="display: flex; gap: 10px; justify-content: center">
-                  <span class="swatch t-terracotta"></span>
-                  <span class="swatch sel t-heritage"></span>
-                  <span class="swatch t-slate"></span>
-                  <span class="swatch t-titan"></span>
-                  <span class="swatch t-olive"></span>
-                </div>
-                <button class="btn btn-primary btn-full">
-                  Save colour to quote
-                </button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>C2 · Colour visualiser</b>Tap a square tile swatch — the real
-            roof re-tints in under 250ms, shadows preserved. Press-and-hold
-            shows the original. One shared screen, two entry points: from C1
-            (Restoration, quote already built) "Save colour to quote"
-            finalises that quote; from E2 (New Installation, arriving before
-            a quote exists yet) the same button carries the choice forward
-            into C1 for the first time.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="doc-section" id="job">
-      <div class="doc-wrap">
-        <div class="sec-head">
-          <span class="sec-num">D</span>
-          <h2>Job &amp; delivery — the moat</h2>
-        </div>
-        <p class="sec-sub serif-note">
-          Everything about a site in one place, with the one button no
-          competitor can copy.
-        </p>
-      </div>
-      <div class="screens-row">
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
-                  <span class="status quoted">Quoted</span>
-                </div>
-                <div
-                  class="aerial"
-                  style="height: 130px; --roof-colour: #4e3228"
-                >
-                  <div class="roof"></div>
-                </div>
-                <div class="hub">
-                  <div class="h">
-                    <b>Measurement</b><span>230 m² · 22.4° · 98%</span>
-                  </div>
-                  <div class="h">
-                    <b>Quotes (2)</b><span>$18,940 · Heritage Brown</span>
-                  </div>
-                  <div class="h">
-                    <b>Photos (4)</b><span>site + before shots</span>
-                  </div>
-                  <div class="h">
-                    <b>Notes</b><span>"access via rear lane"</span>
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-full">
-                  Request delivery or pickup
-                </button>
-                <div class="timeline">
-                  <div class="ev done"><b>Quote saved</b> · 6 Jul</div>
-                  <div class="ev now">
-                    <b>Delivery requested</b> · awaiting confirmation
-                  </div>
-                  <div class="ev">Scheduled</div>
-                  <div class="ev">Delivered · proof photo attached</div>
-                </div>
-              </div>
-              <div class="tabbar">
-                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
-                <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-truck"></i>Deliveries</span>
-                <span class="t"><i class="ic ic-user"></i>Profile</span>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>D1 · Job detail</b>The hub: measurement, quotes, photos, notes —
-            and the delivery button on every job, always. Status timeline
-            updates with push at every step.
-          </p>
-        </div>
-
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <h5 style="font-size: var(--t-title)">Delivery request</h5>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
-                </div>
-                <div class="seg">
-                  <span class="on">Deliver to site</span
-                  ><span>Pickup at yard</span>
-                </div>
-                <div
-                  style="
-                    border: 1px solid var(--line-soft);
-                    background: var(--surface);
-                    padding: 2px 14px;
-                  "
-                >
-                  <div class="li">
-                    <div class="n">
-                      Main tiles · Heritage Brown<small
-                        >from quote · recycled Marseille</small
-                      >
-                    </div>
-                    <div class="q">2,875</div>
-                  </div>
-                  <div class="li">
-                    <div class="n">Ridge caps</div>
-                    <div class="q">60</div>
-                  </div>
-                </div>
-                <div class="field">
-                  <label>Preferred day (min. 24h ahead)</label>
-                  <div class="datewin">
-                    <div class="d"><b>Fri 11 Jul</b><span>tomorrow</span></div>
-                    <div
-                      class="d"
-                      style="
-                        border-color: var(--accent);
-                        outline: 1px solid var(--accent);
-                      "
-                    >
-                      <b>Mon 14 Jul</b><span>selected</span>
-                    </div>
-                    <div class="d"><b>Tue 15 Jul</b><span></span></div>
-                  </div>
-                </div>
-                <div class="seg" style="max-width: 240px">
-                  <span class="on">Morning</span><span>Afternoon</span>
-                </div>
-                <div class="field">
-                  <label>Drop-zone notes + photo (optional)</label>
-                  <div class="control placeholder">
-                    <i class="ic ic-camera"></i> "Driveway left of carport, no
-                    overhead wires…"
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-full">Submit request</button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>D2 · Delivery / pickup request</b>Pre-filled from the quote; date
-            with 24h lead + AM/PM window; drop-zone photo. Submission returns a
-            reference number instantly.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="doc-section" id="colours">
-      <div class="doc-wrap">
-        <div class="sec-head">
-          <span class="sec-num">E</span>
-          <h2>Colours &mdash; the tile library</h2>
-        </div>
-        <p class="sec-sub serif-note">
-          Structured the way AU roofers already browse (Monier's taxonomy):
-          Material &times; Profile &times; colour family &mdash; and every
-          colour carries the BASIX/NCC compliance data NSW quoting actually
-          needs.
-        </p>
-      </div>
-      <div class="screens-row">
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
-                  <span class="icon-btn"><i class="ic ic-close"></i></span>
-                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Choose a tile</div>
                 <div class="seg">
                   <span class="on">All</span><span>Terracotta</span
@@ -2150,9 +3266,11 @@
                     </div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-heritage"></div>
+                    <div class="ph t-heritage">
+                      <span class="rec">Recycled</span>
+                    </div>
                     <div class="nm">
-                      Heritage Brown<small>Marseille · Recycled</small>
+                      Heritage Brown<small>Marseille · Terracotta</small>
                     </div>
                   </div>
                 </div>
@@ -2161,14 +3279,18 @@
             </div>
           </div>
           <p class="cap">
-            <b>E1 &middot; Choose a tile</b>Reached contextually from Manual
-            measurements (New Installation path), not a standalone tab — the
-            tab bar is gone, back returns there. Material segmented control,
-            profile chips, and real AU market names (Monier / Bristile / La
-            Escandella). Recycled stock badged in the range.
+            <b>E1 &middot; Colours — the tile chart &mdash; in the quote flow</b>The fourth tab
+            (restored from Deliveries): "browse the tile colour chart," which
+            the brief asks for as a standalone capability — not only mid-quote.
+            Material segmented control, profile chips, real AU market names
+            (Monier / Bristile / La Escandella), recycled stock badged. The
+            New Installation flow enters this same library contextually (from
+            Manual measurements), where it shows a back button instead of the
+            tab bar &mdash; and now carries the <b>stepbar</b> too (3 of 4,
+            same stage as Manual measurements and Restoration's C0), which had
+            gone missing when this screen was reused here.
           </p>
         </div>
-
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -2185,7 +3307,411 @@
                   class="screen-title"
                   style="justify-content: flex-start; gap: 12px"
                 >
-                  <span class="icon-btn"><i class="ic ic-back"></i></span>
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="cl-hero t-heritage"></div>
+                <div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      gap: 10px;
+                    "
+                  >
+                    <h5 style="font-size: var(--t-title); margin: 0">
+                      Marseille Heritage Brown
+                    </h5>
+                    <span class="basix">BASIX &middot; Dark</span>
+                  </div>
+                  <p class="auth-sub" style="margin-top: 4px">
+                    Recycled terracotta &middot; raised profile &middot; in
+                    stock at the yard
+                  </p>
+                </div>
+                <div class="hub" style="grid-template-columns: 1fr 1fr 1fr">
+                  <div class="fig">
+                    <div class="v">0.72</div>
+                    <div class="k">Solar abs.</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">28</div>
+                    <div class="k">SRI</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">11</div>
+                    <div class="k">LRV</div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--surface);
+                    border: 1px solid var(--line-soft);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="spec-row">
+                    <span>Min. pitch</span
+                    ><b>15&deg; with sarking &middot; 20&deg; without</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Weight</span
+                    ><b>4.5 kg/tile &middot; 49.5 kg/m&sup2;</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Coverage</span><b>10.5 tiles/m&sup2;</b>
+                  </div>
+                  <div class="spec-row">
+                    <span>Coastal</span><b>Salt safe</b>
+                  </div>
+                </div>
+                <div
+                  style="
+                    margin-top: auto;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                  "
+                >
+                  <button class="btn btn-primary btn-full">
+                    Build quote
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    <i class="ic ic-file"></i> Data sheet (PDF)
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E2 &middot; Colour detail &mdash; in the quote flow</b>The compliance trio (SA / SRI / LRV)
+            + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
+            "Build quote" carries the chosen tile into C1 (the quote); the
+            visualiser (C2) comes after, so New Installation now runs
+            colour &rarr; quote &rarr; visualise, exactly like Restoration.
+            Stepbar added at 3 of 4 to match &mdash; it was missing before,
+            breaking the progress indicator&rsquo;s promise part-way through
+            the flow.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div>
+                  <div class="auth-h">Quote</div>
+                  <p class="auth-sub">
+                    Heritage Brown · New Install · 14 Banksia St, Ryde
+                  </p>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px 8px;
+                    flex: 1;
+                    overflow: hidden;
+                  "
+                >
+                  <div class="li-group">Roof tiles</div>
+                  <div class="li">
+                    <div class="n">
+                      Main tiles<small>incl. profile waste factor</small>
+                    </div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">2,875</button>
+                      <span class="lp">× $5.20 · <b>$14,950</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">60</button>
+                      <span class="lp">× $28.50 · <b>$1,710</b></span>
+                    </div>
+                  </div>
+                  <div class="li-group">Substrate</div>
+                  <div class="li">
+                    <div class="n"><span class="term">Sarking rolls</span></div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">4</button>
+                      <span class="lp">× $210 · <b>$840</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Batten bundles</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">12</button>
+                      <span class="lp">× $120 · <b>$1,440</b></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="total-bar">
+                  <span
+                    >4 items · from calculator<br />GST included: $1,722</span
+                  ><b>$18,940</b>
+                </div>
+                <button class="btn btn-primary btn-full">Try on a roof</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C1 · Materials quote — New Installation</b>Tiles and substrate
+            only; no coatings. Tile colour was chosen at E1 → E2; the roofer
+            sees the price here — per line, unit × qty = line total, summing
+            exactly to the $18,940 — then visualises it on the roof (C2) as
+            the final step, same order as Restoration now. Job context
+            (colour · type · address) stays in the subtitle.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div class="seg">
+                  <span class="on">One colour</span><span>Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #4e3228">
+                  <div class="roof tiled"></div>
+                  <div class="badge">Hold to see original</div>
+                </div>
+                <div class="vis-label">
+                  <div class="vl">
+                    <b>Heritage Brown</b>
+                    <span>Recycled Marseille · in stock at the yard</span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch t-terracotta" aria-label="Terracotta"></button>
+                  <button class="swatch sel t-heritage" aria-label="Heritage Brown, selected"></button>
+                  <button class="swatch t-slate" aria-label="Slate"></button>
+                  <button class="swatch t-titan" aria-label="Titan"></button>
+                  <button class="swatch t-olive" aria-label="Olive"></button>
+                </div>
+                <button class="btn btn-primary btn-full">Save quote</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 · Colour visualiser &mdash; New Install path</b>The "kitchen-table close": a
+            recycled-tile sample on a neutral grey stage (#ECECEC), a clean
+            rectangle, recoloured live. Tap a swatch and the tiles re-tint in
+            under 250ms with shadows preserved (the mockup fakes it with
+            translucent shading; the build uses Skia's luminance-preserving
+            recolour). Press-and-hold shows the original. The "One colour /
+            Compare two" toggle swaps ONLY the preview below it — header,
+            swatches and button stay put →
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="flex: 1; display: grid; place-items: center; text-align: center">
+                  <div>
+                    <div class="success-badge"><i class="ic ic-check"></i></div>
+                    <div class="auth-h" style="margin-top: 20px">
+                      Quote saved.
+                    </div>
+                    <p class="auth-sub" style="margin: 8px auto 0; max-width: 26ch">
+                      Quote #Q-10235 &middot; $18,940 attached to 14 Banksia St, Ryde.
+                    </p>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Send quote to customer
+                  </button>
+                  <button class="btn btn-secondary btn-full">View job</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C3 &middot; Quote saved</b>Same terminal screen as the
+            Restoration path &mdash; one success state shared by both quote
+            flows, same pop-in and same two actions: send now (deliberate,
+            never automatic) or view the job. D1 keeps its own send button
+            for quotes saved earlier.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="doc-section" id="flow5">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">5</span>
+          <h2>Colours &mdash; browse the range</h2>
+        </div>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>the Colours tab</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>a data sheet / Try on a roof</b></span>
+        </div>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Colours</h5>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
+                </div>
+                <div class="seg">
+                  <span class="on">All</span><span>Terracotta</span
+                  ><span>Concrete</span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All profiles</span
+                  ><span class="chip">Flat</span
+                  ><span class="chip">Semi-flat</span
+                  ><span class="chip">Raised</span>
+                </div>
+                <div class="cl-grid">
+                  <div class="cl-card">
+                    <div class="ph t-titan"></div>
+                    <div class="nm">
+                      Titan Gloss<small>Marseille · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-barra"></div>
+                    <div class="nm">
+                      Barramundi<small>Elabana · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-sambuca"></div>
+                    <div class="nm">
+                      Sambuca<small>Elabana · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-saltspray"></div>
+                    <div class="nm">
+                      Salt Spray<small>Atura · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-soho"></div>
+                    <div class="nm">
+                      Soho Night<small>Madison · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-storm"></div>
+                    <div class="nm">
+                      Storm Grey<small>5XL · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-wallaroo"></div>
+                    <div class="nm">
+                      Wallaroo<small>Visum3 · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-england"></div>
+                    <div class="nm">
+                      Old England<small>Visum3 · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-heritage">
+                      <span class="rec">Recycled</span>
+                    </div>
+                    <div class="nm">
+                      Heritage Brown<small>Marseille · Terracotta</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t on"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E1 &middot; Colours — the tile chart</b>The fourth tab
+            (restored from Deliveries): "browse the tile colour chart," which
+            the brief asks for as a standalone capability — not only mid-quote.
+            Material segmented control, profile chips, real AU market names
+            (Monier / Bristile / La Escandella), recycled stock badged. The
+            New Installation flow enters this same library contextually (from
+            Manual measurements), where it shows a back button instead of the
+            tab bar.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div
+                  class="screen-title"
+                  style="justify-content: flex-start; gap: 12px"
+                >
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                 </div>
                 <div class="cl-hero t-titan"></div>
                 <div>
@@ -2197,15 +3723,7 @@
                       gap: 10px;
                     "
                   >
-                    <h5
-                      style="
-                        font-family: var(--font-ui);
-                        font-variation-settings: &quot;wght&quot; 600;
-                        font-size: var(--t-title);
-                        color: var(--ink);
-                        margin: 0;
-                      "
-                    >
+                    <h5 style="font-size: var(--t-title); margin: 0">
                       Marseille Titan Gloss
                     </h5>
                     <span class="basix">BASIX &middot; Dark</span>
@@ -2260,7 +3778,7 @@
                   "
                 >
                   <button class="btn btn-primary btn-full">
-                    Try on a roof
+                    Start a quote with this tile
                   </button>
                   <button class="btn btn-secondary btn-full">
                     <i class="ic ic-file"></i> Data sheet (PDF)
@@ -2273,9 +3791,256 @@
           <p class="cap">
             <b>E2 &middot; Colour detail</b>The compliance trio (SA / SRI / LRV)
             + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
-            "Try on a roof" jumps into C2 (Visualiser); its "Save colour to
-            quote" then carries the choice into C1 &mdash; no separate
-            confirm step needed.
+            Browsing has no job yet, so the CTA can&rsquo;t jump into a quote
+            &mdash; <b>Start a quote with this tile</b> begins a New Quote
+            with the tile already attached: job type, address and
+            measurements follow as normal, and the flow lands on C1 with the
+            colour step already done (the in-flow E2 keeps &ldquo;Build
+            quote&rdquo; because there the measurements exist). <b>Data
+            sheet (PDF)</b> opens the viewer, next.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Data sheet</div>
+                  <p class="auth-sub">
+                    Marseille Titan Gloss &middot; PDF &middot; 2 pages
+                  </p>
+                </div>
+                <div class="pdf-page">
+                  <div class="row">
+                    <span class="brand-tile"></span>
+                    <span class="ttl">Marseille Titan Gloss</span>
+                  </div>
+                  <div class="row"><span class="bar s"></span><span class="bar"></span></div>
+                  <div class="row"><span class="bar"></span></div>
+                  <div class="row"><span class="bar tall"></span><span class="bar tall"></span></div>
+                  <div class="row"><span class="bar"></span><span class="bar s"></span></div>
+                  <div class="row"><span class="bar s"></span><span class="bar"></span></div>
+                  <div class="row"><span class="bar"></span></div>
+                  <div class="row"><span class="bar tall"></span></div>
+                  <div class="row"><span class="bar"></span><span class="bar s"></span></div>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Share data sheet
+                </button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E3 &middot; Data sheet viewer</b>Where <b>Data sheet
+            (PDF)</b> on E2 actually opens &mdash; it was a dead-end button
+            before. The PDF renders in-app (skeleton shown here; the build
+            uses a native PDF view), and <b>Share data sheet</b> opens the OS
+            share sheet: email it to the certifier for BASIX sign-off, print
+            it, AirDrop it to the customer, save to Files &mdash; one button,
+            every destination, no custom viewer chrome to maintain.
+            Back-only header, same sub-detail rule as E2.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="flow6">
+      <div class="doc-wrap">
+        <div class="sec-head">
+          <span class="sec-num">6</span>
+          <h2>Profile &amp; account</h2>
+        </div>
+        <div class="flow-se">
+          <span class="s"><span class="dot"></span>Starts: <b>the Profile tab</b></span>
+          <span class="e"><span class="dot"></span>Ends: <b>sign out</b></span>
+        </div>
+      </div>
+      <div class="screens-row">
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <h5>Profile</h5>
+                </div>
+                <div class="prof-card">
+                  <div class="prof-avatar">
+                    <span>DR</span>
+                    <button class="prof-edit" aria-label="Change logo">
+                      <i class="ic ic-camera"></i>
+                    </button>
+                  </div>
+                  <div class="prof-id">
+                    <b>Dave Robson</b>
+                    <span>Robson Roofing</span>
+                    <span>dave@robsonroofing.com.au</span>
+                  </div>
+                </div>
+
+                <div class="set-group">Account</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Business details</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Change password</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+
+                <div class="set-group">Support</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Email us</span>
+                    <span class="val">help@roofbros.com.au</span>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Call us</span>
+                    <span class="val">1800 766 327</span>
+                  </button>
+                </div>
+
+                <div class="set-group">About</div>
+                <div class="set-box">
+                  <div class="set-row">
+                    <span class="lbl">Version</span>
+                    <span class="val">1.0.0</span>
+                  </div>
+                  <button class="set-row">
+                    <span class="lbl">Privacy policy</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Terms of use</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+
+                <div style="height: 16px"></div>
+                <div class="set-box">
+                  <button class="set-row danger">
+                    <span class="lbl">Sign out</span>
+                  </button>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t on"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>F · Profile &amp; settings</b>Fills the Profile tab that had no
+            screen behind it. Identity sits in a bordered card up top &mdash; a
+            <b>maroon monogram tile</b> (square, echoing a roof tile; tap the
+            badge to set a business logo) beside name, business and email, the
+            details that print on a quote. Then only what a roofer actually
+            touches: business details (opens F1, next), <b>change
+            password</b> (routes into the same reset flow as 0E), support
+            contact, legal, and a separated <b>Sign out</b>. Flat rows with
+            hairline dividers &mdash; the one spot of accent is the avatar,
+            staying in our system.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Business details</div>
+                  <p class="auth-sub">
+                    These print on every quote and delivery docket.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Full name</label
+                      ><span class="val">Dave Robson</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Business name</label
+                      ><span class="val">Robson Roofing</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Phone</label
+                      ><span class="val">0412 345 678</span>
+                    </div>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>ABN</label
+                      ><span class="val">51 824 753 556</span>
+                    </div>
+                  </div>
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <label>Email (sign-in)</label
+                      ><span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-primary btn-full">Save details</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>F1 &middot; Business details</b>The last chevron on F, now with
+            a screen behind it. Same grouped-input pattern as sign-up; name,
+            business, phone and <b>ABN</b> are what a quote header legally
+            carries in AU. The sign-in email is shown but locked (dimmed, the
+            0E treatment) &mdash; it&rsquo;s the account credential, and
+            changing it is a support action in v1, not a field edit.
+            <b>Save details</b> uses the standard button loading state, then
+            returns to F.
           </p>
         </div>
       </div>
@@ -2284,9 +4049,12 @@
     <footer style="padding: 36px 0 60px; border-top: 1px solid var(--line-ink)">
       <div class="doc-wrap">
         <p class="note">
-          RoofBros Smart Quote · Mobile design v1.0 · July 2026 · 8 screens
-          shown; Colours library, Docs, Profile and auth screens follow in v1.1.
-          Design language and component specs:
+          RoofBros Smart Quote · Mobile design v1.0 · July 2026 · organised as
+          6 end-to-end flows: 1 Sign in · 2 Jobs &amp; deliveries · 3 New quote
+          (measure by address) · 4 New quote (enter manually) · 5 Colours ·
+          6 Profile. Each flow reads start→end; screens shared by flows 3 &amp; 4
+          appear in both. Tabs: Jobs · New · Colours · Profile. Design language
+          and component specs:
           <a href="../01-style-guide/index.html">style guide</a>. These are HTML
           blueprints — the app ships as React Native/Expo using the same tokens.
         </p>

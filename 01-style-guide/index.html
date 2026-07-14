@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RoofBros — Style Guide v1.0</title>
+    <title>RoofBros: Style Guide</title>
     <link rel="stylesheet" href="../styles/tokens.css" />
     <link rel="stylesheet" href="../styles/base.css" />
     <link rel="stylesheet" href="../styles/components.css" />
@@ -293,7 +293,10 @@
               </button>
               <button class="btn btn-secondary">Save for later</button>
               <button class="btn btn-secondary btn-compact">
-                Re-check outline
+                Adjust outline
+              </button>
+              <button class="btn btn-primary btn-full loading" aria-label="Saving quote" aria-busy="true">
+                Saving<span class="dot"></span><span class="dot"></span><span class="dot"></span>
               </button>
             </div>
           </div>
@@ -325,7 +328,11 @@
             </div>
             <p class="note">
               Press state: background darkens to accent-press + scale 0.97 over
-              150ms. Never ship a primary CTA under 48px.
+              150ms. Never ship a primary CTA under 48px. Loading state
+              (above): the label names the work ("Saving") + three pulsing
+              dots, same size, input blocked &mdash; every commit action
+              confirms within 400ms; in RN it&rsquo;s a label +
+              ActivityIndicator with <code>accessibilityState.busy</code>.
             </p>
           </div>
         </div>
@@ -348,7 +355,12 @@
               <span class="status measured">Measured</span>
               <span class="status quoted"
                 >Quoted
-                <span class="age-dot" style="background: var(--warn)"></span
+                <span
+                  class="age-dot"
+                  role="img"
+                  aria-label="No activity for 5 days"
+                  style="background: var(--warn)"
+                ></span
               ></span>
               <span class="status delivery">Delivered</span>
               <span class="status error">Failed</span>
@@ -488,7 +500,7 @@
               </div>
             </div>
             <p class="note">
-              50px min height, square flat field on a neutral grey (#F5F5F5). On focus the field <strong>lifts to pure white with a thin, low-opacity ink border</strong> — soft enough to stay quiet, but a real edge (not just a fill shift) so it still reads in direct sunlight.
+              52px min height, square flat field on the brand grey (#ECECEC, <code>--field</code>). On focus the field <strong>lifts to pure white with a thin, low-opacity ink border</strong> — soft enough to stay quiet, but a real edge (not just a fill shift) so it still reads in direct sunlight.
               Autocomplete over typing wherever possible.
             </p>
           </div>
@@ -617,7 +629,7 @@
               <div class="opt-card sel">
                 <i class="ic ic-roller"></i>
                 <div class="ot">
-                  <b>Roof Restoration/Replacement</b>
+                  <b>Roof Restoration</b>
                   <span>Clean, repair and recoat an existing roof</span>
                 </div>
               </div>

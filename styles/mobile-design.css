@@ -9,18 +9,39 @@
   border-radius: 0 0 var(--r-structure) var(--r-structure);
   max-height: 146px; overflow-y: auto;
 }
-  .suggest::-webkit-scrollbar { width: 3px; }
-  .suggest::-webkit-scrollbar-track { background: transparent; margin: 4px 0; }
-  .suggest::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 2px; }
+  /* native thin scrollbar, not a custom-drawn one (product-register rule:
+     don't reinvent standard affordances) — RN gets FlatList's own indicator */
+  .suggest { scrollbar-width: thin; }
   .suggest .s-row { padding: 12px 14px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); border-bottom: 1px solid var(--line-soft); display: flex; gap: 10px; align-items: center; }
   .suggest .s-row:last-child { border-bottom: none; }
   .suggest .s-row small { color: var(--muted); font-size: var(--t-caption); }
-  .scanline { position: absolute; left: 0; right: 0; top: 38%; height: 2px; background: #fff; opacity: 0.9; box-shadow: 0 0 12px 2px rgba(255,255,255,0.7); }
+  /* the glow is a gradient (an image effect on the photo, same class as the
+     legibility scrims), not a box-shadow — keeps the no-shadow rule intact */
+  .scanline {
+    position: absolute; left: 0; right: 0; top: 38%; height: 16px; margin-top: -8px; opacity: 0.9;
+    background: linear-gradient(to bottom,
+      transparent, rgba(255,255,255,0.55) 38%, #fff 44%, #fff 56%, rgba(255,255,255,0.55) 62%, transparent);
+  }
   .serif-note { font-size: var(--t-body); color: var(--body); }
+  /* date picker = balanced calendar tiles: weekday / day / month, identical
+     structure across all three; soft hairline, selected = tint + maroon outline
+     + maroon number (same selection language as the option cards).
+     Real <button>s so screen readers announce them (same rule as .swatch). */
   .datewin { display: flex; gap: 10px; }
-  .datewin .d { flex: 1; border: 1px solid var(--line-ink); border-radius: var(--r-structure); padding: 12px; text-align: center; font-family: var(--font-ui); }
-  .datewin .d b { display: block; color: var(--ink); font-variation-settings: 'wght' 600; font-size: var(--t-body); }
-  .datewin .d span { font-size: var(--t-micro); color: var(--muted); }
+  .datewin .d {
+    flex: 1; border: 1px solid var(--line-soft); border-radius: var(--r-structure);
+    padding: 12px 6px; font-family: var(--font-ui);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    background: var(--surface); appearance: none; -webkit-appearance: none; cursor: pointer;
+  }
+  .datewin .d .dow { font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-variation-settings: 'wght' 600; }
+  .datewin .d .day { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-data); color: var(--ink); line-height: 1; }
+  .datewin .d .mon { font-size: var(--t-caption); color: var(--muted); }
+  .datewin .d.on { background: var(--accent-tint); border-color: var(--accent); outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+  .datewin .d.on .day { color: var(--accent); }
+  /* on the tint, --muted measures ~3.3:1 (fails AA) — lift to --body (6.6:1),
+     the same fix .opt-card.sel span already uses */
+  .datewin .d.on .dow, .datewin .d.on .mon { color: var(--body); }
 
 /* ---------- entry flow: splash, welcome, auth, empty hub ----------
    Splash = mark + wordmark only (Wise/Revolut/Uber pattern). White badge
@@ -42,13 +63,16 @@
 .link-line b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
 .terms { text-align: center; font-size: var(--t-caption); line-height: 1.55; color: var(--muted); padding: 0 12px; }
 .terms u { text-decoration-color: var(--line-soft); text-underline-offset: 2px; }
-/* forgot-password link — larger, danger colour (draws attention) */
+/* forgot-password link — larger, slate link colour. It was error-red once
+   ("draws attention"), but red means error/destructive everywhere else in the
+   system (field-error, btn-danger, OTP error) — a benign navigation link in
+   red trains that meaning away. Superseded 2026-07-14, logged in DECISIONS. */
 .forgot-link { text-align: right; }
-.forgot-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--err); text-decoration: underline; text-underline-offset: 2px; }
+.forgot-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 
 
 /* home greeting (Jobs tab only) */
-.greeting { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-data); letter-spacing: -0.01em; color: var(--ink); }
+.greeting { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); letter-spacing: -0.01em; color: var(--ink); }  /* --t-display: tokens.css assigns the greeting to the display role — was off-role at --t-data */
 
 /* welcome card: explains the empty jobs list, no tour or carousel needed.
    A looping illustration video bleeds full-width at the top; text below it. */
@@ -69,21 +93,71 @@
 .ig-row.locked { opacity: 0.55; }
 
 /* success confirmation: a quiet green badge, not a full takeover — matches the
-   flat, no-shadow system (a tinted circle, not an animated checkmark burst) */
-.success-badge { width: 72px; height: 72px; border-radius: 50%; background: var(--ok-tint); display: grid; place-items: center; margin: 0 auto; }
-.success-badge .ic { width: 32px; height: 32px; color: var(--ok); }
+   flat, no-shadow system (a tinted circle, not an animated checkmark burst).
+   ENTRANCE: the app's one celebratory motion (brief: "premium, animated feel")
+   — the badge settles in with an ease-out-quint scale, the check lands a beat
+   later. No bounce, no confetti; it plays once and sits still. RN spec:
+   Reanimated spring (scale 0.85→1, ~450ms) + delayed check opacity,
+   haptic = notificationSuccess on mount, and announceForAccessibility with
+   the heading text so the confirmation is heard, not just seen. */
+.success-badge { width: 72px; height: 72px; border-radius: 50%; background: var(--ok-tint); display: grid; place-items: center; margin: 0 auto; animation: success-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.success-badge .ic { width: 32px; height: 32px; color: var(--ok); animation: success-check 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+@keyframes success-pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes success-check { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .success-badge, .success-badge .ic { animation: none; }
+}
 
-/* resend link — same treatment as the forgot link, but maroon (an action, not danger) */
+/* resend link — same treatment and slate link colour as the forgot link */
 .resend-link { text-align: right; }
 .resend-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 
+/* ---------- text-link tap targets (Fitts / WCAG 2.5.5) ----------
+   Every inline text link is a real ≥44px target: the visual stays a small
+   underlined word, padding grows the hit area, and the negative margin gives
+   the extra size back so the layout doesn't move. RN: hitSlop to ≥44px.
+   (.addr-change needs none of this — its whole 52px .addr-field row is the button.) */
+.link-line b, .ba-login b, .forgot-link b, .resend-link b {
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 8px; margin: -12px -8px;
+  cursor: pointer;
+}
+/* B1's manual-measurements fork: a primary route for gloved hands (and the
+   measurement-failed recovery path) shouldn't be the smallest text on the
+   screen — body size, not caption */
+.link-line.manual { font-size: var(--t-body); }
+
 /* ---------- colours library ---------- */
 .cl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow: hidden; align-content: start; flex: 1; }
-.cl-card { border: 1px solid var(--line-soft); background: var(--surface); }
-.cl-card .ph { height: 72px; border-radius: var(--r-structure) var(--r-structure) 0 0; }
-.cl-card .nm { padding: 8px 10px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro); color: var(--ink); line-height: 1.25; }
-.cl-card .nm small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); margin-top: 1px; }
-.cl-hero { height: 210px; border-radius: var(--r-structure); }
+.cl-card { border: 1px solid var(--line-soft); background: var(--surface); overflow: hidden; }
+.cl-card:active { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+/* the swatch now reads as an actual tiled sample: the .t-* colour + a barrel-tile
+   shading overlay (same language as the visualiser), so the range looks like
+   roof tiles, not flat paint chips */
+.cl-card .ph { height: 84px; position: relative; }
+.cl-card .ph::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 13px, rgba(0,0,0,0.15) 13px 16px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.03) 3px, rgba(255,255,255,0.13) 7px, rgba(0,0,0,0.03) 11px, rgba(0,0,0,0.20) 14px);
+}
+/* recycled-stock badge — RoofBros' whole USP is tile recycling, so flag it */
+.cl-card .ph .rec {
+  position: absolute; top: 6px; left: 6px; z-index: 1;
+  background: rgba(45,32,18,0.86); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+  font-size: var(--t-micro); letter-spacing: 0.03em; line-height: 1;
+  padding: 3px 7px; border-radius: var(--r-pill);
+}
+.cl-card .nm { padding: 9px 10px 11px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-caption); color: var(--ink); line-height: 1.2; }
+.cl-card .nm small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); margin-top: 3px; line-height: 1.3; }
+.cl-hero { height: 210px; position: relative; overflow: hidden; }
+.cl-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 20px, rgba(0,0,0,0.15) 20px 24px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.03) 4px, rgba(255,255,255,0.13) 10px, rgba(0,0,0,0.03) 16px, rgba(0,0,0,0.20) 20px);
+}
 .spec-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line-soft); font-family: var(--font-ui); font-size: var(--t-caption); }
 .spec-row:last-child { border-bottom: none; }
 .spec-row span { color: var(--muted); }
@@ -171,7 +245,9 @@
 .fr-car-slide.on { opacity: 1; z-index: 1; }
 .fr-car-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .fr-car-slide::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(16,11,7,0.92) 0%, rgba(16,11,7,0.6) 32%, rgba(16,11,7,0.05) 62%, transparent 78%); }
-.fr-car-cap { position: absolute; left: 14px; right: 44px; bottom: 13px; margin: 0; z-index: 2; font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-heading); line-height: 1.4; color: #FFFFFF; text-shadow: 0 1px 4px rgba(0,0,0,0.45); }
+/* no text-shadow: the slide's dark gradient scrim (::after above) already
+   guarantees legibility — belt without the braces, per the no-shadow rule */
+.fr-car-cap { position: absolute; left: 14px; right: 44px; bottom: 13px; margin: 0; z-index: 2; font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-heading); line-height: 1.4; color: #FFFFFF; }
 .fr-car-dots { position: absolute; right: 14px; bottom: 17px; z-index: 2; margin: 0; }
 
 /* how-it-works: swipeable, scroll-snapped, reusing the slate-blue dot language */
@@ -217,3 +293,84 @@
 
 /* pinned action bar — CTA stays put while the body scrolls */
 .fr-cta { flex: none; padding: 12px 16px; border-top: 1px solid var(--line-soft); background: var(--surface); }
+
+/* ---------- plain loader (app boot / saving / fetching) — a hexagon-drawing
+   line loader (adapted from Uiverse.io by RafaM-dev), recoloured to the maroon
+   accent and scoped/namespaced so nothing leaks. Distinct from the B2 measuring
+   theatre, which narrates real work; this is the generic async wait. ---------- */
+.loader { position: relative; width: 90px; height: 103px; }
+.loader > div { position: absolute; width: 50px; height: 31px; }
+.loader > div:nth-of-type(2) { transform: rotate(60deg); }
+.loader > div:nth-of-type(3) { transform: rotate(-60deg); }
+.loader > div > div { width: 100%; height: 100%; position: relative; }
+.loader > div > div > span { position: absolute; width: 4px; height: 0%; background: var(--accent); z-index: 1; }
+.loader .h1 { left: 0; animation: load1 3.2s ease infinite; }
+.loader .h2 { right: 0; animation: load2 3.2s ease 0.4s infinite; }
+.loader .h3 { right: 0; animation: load3 3.2s ease 0.8s infinite; }
+.loader .h4 { top: 10px; left: 23px; animation: load4 3.2s ease 1s infinite; transform: rotate(90deg); }
+.loader .h6 { left: 0; animation: load6 3.2s ease 1.3s infinite; }
+@keyframes load1 { 0% { bottom: 0; height: 0; } 6.944444444% { bottom: 0; height: 100%; } 50% { top: 0; height: 100%; } 59.944444433% { top: 0; height: 0; } }
+@keyframes load2 { 0% { top: 0; height: 0; } 6.944444444% { top: 0; height: 100%; } 50% { bottom: 0; height: 100%; } 59.944444433% { bottom: 0; height: 0; } }
+@keyframes load3 { 0% { top: 0; height: 0; } 6.944444444% { top: 0; height: 100%; } 50% { bottom: 0; height: 100%; } 59.94444443% { bottom: 0; height: 0; } }
+@keyframes load4 { 0% { top: 37px; left: 23px; height: 134%; } 6.944444444% { top: 10px; height: 134%; } 50% { bottom: 10px; height: 134%; } 59.94444443% { bottom: 0; height: 0; } }
+@keyframes load6 { 0% { bottom: 0; height: 0; } 6.944444444% { bottom: 0; height: 100%; } 50% { top: 0; height: 100%; } 59.94444443% { top: 0; height: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader > div > div > span { animation: none !important; height: 100%; opacity: 0.5; }
+}
+.load-label { margin-top: 26px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--muted); }
+
+/* Reusable centred loader. The animated shape sits toward the TOP-LEFT of its own
+   90×103 box (empty margin on the right & bottom), so centring the box alone
+   leaves the shape off-centre. This wrapper centres the box, then the offset
+   re-centres the visible shape. Drop any .loader inside .loader-wrap to centre it. */
+.loader-wrap { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.loader-wrap .loader { transform: translate(20px, 32px); }
+
+/* ---------- B3a · outline editor: draggable polygon vertices ----------
+   White dot + maroon ring on each corner of the measured outline; the active
+   (grabbed) corner swells. 20px visual — RN pans with a 44px hitSlop per the
+   compact-control rule. Positions are % of the aerial box, matching the
+   .roof polygon's six corners. */
+.vx {
+  position: absolute; width: 20px; height: 20px; margin: -10px;
+  border-radius: 50%; background: #fff; border: 2.5px solid var(--accent);
+  padding: 0; appearance: none; -webkit-appearance: none; cursor: grab;
+}
+.vx.active { width: 26px; height: 26px; margin: -13px; background: var(--accent-tint); }
+
+/* ---------- E3 · data sheet: PDF page mock + skeleton lines ----------
+   A real A4-ish page preview (white, hairline edge), skeleton bars standing in
+   for the PDF body — swap for a real react-native-pdf page render in build. */
+.pdf-page { background: #fff; border: 1px solid var(--line-soft); padding: 20px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.pdf-page .ttl { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.pdf-page .row { display: flex; gap: 8px; align-items: center; }
+.pdf-page .bar { height: 8px; background: var(--panel); flex: 1; }
+.pdf-page .bar.s { flex: 0 0 38%; }
+.pdf-page .bar.tall { height: 52px; }
+.pdf-page .brand-tile { width: 22px; height: 22px; background: var(--accent); flex: none; }
+
+/* ---------- D1b · photos timeline (CompanyCam pattern) ----------
+   Date-grouped 2-up grid; every shot carries its stamp (time + GPS implied)
+   burned into a pill overlay, same badge language as the aerial views. */
+.ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ph-cell { position: relative; border: 1px solid var(--line-soft); aspect-ratio: 4 / 3; overflow: hidden; }
+.ph-cell img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ph-stamp {
+  position: absolute; left: 6px; bottom: 6px;
+  background: rgba(45,32,18,0.82); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro);
+  padding: 2px 8px; border-radius: var(--r-pill);
+}
+
+/* ---------- D1c · job notes ---------- */
+.note-card { border: 1px solid var(--line-soft); background: var(--surface); padding: 12px 14px; }
+.note-card p { font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--ink); }
+.note-card .when { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
+
+/* editable delivery/pickup address row — a tappable field showing the target
+   address with a "Change" affordance so a wrong address can be corrected */
+.addr-field { width: 100%; justify-content: space-between; cursor: pointer; appearance: none; -webkit-appearance: none; text-align: left; }
+.addr-field .addr-l { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.addr-field .addr-l > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.addr-field .addr-l .ic { flex: none; color: var(--muted); }
+.addr-field .addr-change { flex: none; color: var(--link); font-variation-settings: 'wght' 600; font-size: var(--t-caption); text-decoration: underline; text-underline-offset: 2px; }

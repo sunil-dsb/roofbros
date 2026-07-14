@@ -25,6 +25,19 @@
 .btn-danger:active { background: var(--err-tint); }
 .btn-full { width: 100%; }
 .btn:disabled { opacity: 0.38; cursor: not-allowed; }
+/* async/loading state — every commit action ("Create account", "Save quote",
+   "Submit request") confirms within 400ms (Doherty): the label names the work
+   ("Saving") and three dots pulse. Button keeps its size so layout never jumps;
+   input is blocked while busy. RN: label + <ActivityIndicator>, with
+   accessibilityState={{ busy: true }}. Full-screen waits use .loader (0A2);
+   this is button-local feedback. */
+.btn.loading { pointer-events: none; }
+.btn.loading .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: btn-dot 1s ease-in-out infinite; }
+.btn.loading .dot + .dot { margin-left: -3px; }
+.btn.loading .dot:nth-of-type(2) { animation-delay: 0.16s; }
+.btn.loading .dot:nth-of-type(3) { animation-delay: 0.32s; }
+@keyframes btn-dot { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .btn.loading .dot { animation: none; opacity: 0.7; } }
 
 /* ---------- chips, pills, status ---------- */
 .chip {
@@ -34,7 +47,7 @@
   border: 1px solid var(--line-ink); color: var(--body); background: var(--surface);
   border-radius: var(--r-pill);
 }
-.chip.on { background: var(--ink); color: var(--ground); }
+.chip.on { background: var(--accent-tint); color: var(--accent); border-color: var(--accent); }  /* selected = light maroon touch (tint + text), NOT a solid fill — a solid fill would compete with the CTA. Matches swatch.sel / opt-card.sel */
 .status {
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-ui); font-variation-settings: 'wght' 600;
@@ -46,6 +59,8 @@
 .status.quoted { background: var(--warn-tint); color: var(--warn); }
 .status.delivery { background: var(--ok-tint); color: var(--ok); } /* delivered = job done, green */
 .status.error { background: var(--err-tint); color: var(--err); }
+/* age-dot is never colour-alone (WCAG 1.4.1): every instance carries
+   role="img" + aria-label naming the idle state; RN uses accessibilityLabel */
 .age-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
 
 /* ---------- inputs ---------- */
@@ -76,9 +91,8 @@
 .ig-row .ig-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .ig-row .ig-t label {
   font-family: var(--font-ui); font-variation-settings: 'wght' 500;
-  font-size: var(--t-body); color: var(--muted);
+  font-size: var(--t-body); color: var(--body);  /* on the grey field: --muted measured 3.81:1 (fails AA), --body = 7.5:1 — matches .field label */
 }
-.ig-row.focus .ig-t label { color: var(--body); }
 .ig-row .ig-t .val {
   font-family: var(--font-ui); font-size: var(--t-heading); color: var(--ink);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -138,7 +152,7 @@
 }
 
 /* ---------- tile swatch (square — they read as tiles) ---------- */
-.swatch { width: 44px; height: 44px; border: 1px solid var(--line-soft); cursor: pointer; position: relative; flex: none; }
+.swatch { width: 44px; height: 44px; border: 1px solid var(--line-soft); cursor: pointer; position: relative; flex: none; appearance: none; -webkit-appearance: none; padding: 0; }
 .swatch.sel { outline: 2px solid var(--accent); outline-offset: 1px; }
 .swatch.sel::after {
   content: ''; position: absolute; inset: 0;
@@ -181,8 +195,20 @@
   width: 44px; height: 44px; display: grid; place-items: center;
   border: 1px solid var(--line-ink); background: var(--surface); color: var(--ink); font-size: var(--t-body);
   border-radius: var(--r-pill);
+  appearance: none; -webkit-appearance: none; padding: 0; cursor: pointer;  /* works as <button> — real element, so screen readers announce it */
 }
-.chip-row { display: flex; gap: 8px; overflow: hidden; }
+/* horizontally scrollable (was overflow:hidden, which silently clipped any
+   status added later); scrollbar hidden like .tour-track — the cut-off chip
+   at the edge is the scroll affordance */
+.chip-row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.chip-row::-webkit-scrollbar { display: none; }
+
+/* tappable trade term — dotted underline marks "tap to learn" (three ways,
+   sarking, BASIX, SRI, confidence %); opens a bottom-sheet explainer
+   (.scrim.sheet). Jargon should never be naked in-app for a first-year
+   roofer, but explainers must stay out of the expert's way (one tap, quiet
+   affordance). RN: onPress on the label span. */
+.term { text-decoration: underline dotted; text-decoration-color: var(--muted); text-underline-offset: 3px; cursor: help; }
 
 /* step indicator — 4 thin segments (Job · Site · Details · Quote) filled up to
    the current phase. Visibility of status (Nielsen #1) across the wizard spine;
@@ -193,7 +219,11 @@
 
 /* modal scrim + confirm dialog (discard-on-close). Scrim is a backdrop, not a
    drop-shadow, so it doesn't break the flat/no-shadow rule. */
-.scrim { position: absolute; inset: 0; z-index: 40; background: rgba(45, 32, 18, 0.55); display: grid; place-items: center; padding: 0 20px; }
+.scrim { position: absolute; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; padding: 0 20px; }
+/* bottom-sheet variant — jargon explainers ("three ways", BASIX…): slides from
+   the bottom, rounded top only (OS sheet convention, --r-sheet) */
+.scrim.sheet { place-items: end stretch; padding: 0; }
+.scrim.sheet .dialog { border-radius: var(--r-sheet) var(--r-sheet) 0 0; padding-bottom: 28px; }
 .dialog { width: 100%; background: var(--surface); border-radius: var(--r-sheet); padding: 22px 20px 18px; }
 .dialog h4 { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-title); color: var(--ink); margin: 0; }
 .dialog p { margin: 8px 0 0; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); }
@@ -254,6 +284,42 @@
   clip-path: polygon(0 32%, 52% 0, 100% 20%, 100% 74%, 58% 100%, 0 82%);
   background: linear-gradient(160deg, rgba(255,255,255,0.30), transparent 45%, rgba(0,0,0,0.20));
 }
+/* recolourable TILE TEXTURE for the visualiser: base colour + barrel-tile ridges
+   (course shadows + rounded highlights) painted in translucent black/white — so
+   ANY --roof-colour keeps the tile shape and shadows. This is the CSS stand-in
+   for the RN/Skia luminance-preserving recolour the build will use. */
+.aerial .roof.tiled {
+  background-color: var(--roof-colour, #B4573F);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(0,0,0,0.17) 22px 26px),
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,0.26) 0px, rgba(0,0,0,0.05) 4px, rgba(255,255,255,0.16) 9px,
+      rgba(0,0,0,0.05) 14px, rgba(0,0,0,0.26) 18px);
+}
+/* VISUALISER STAGE (.aerial.vis): a full-bleed rectangular tile sample framed by
+   a hairline border — a clean material preview, not the aerial view. Reuses
+   .roof + .tiled but drops the hexagon clip so the tiles fill edge to edge. */
+.aerial.vis { background: var(--surface); }
+.aerial.vis::before { display: none; }                 /* drop the building-shadow blob */
+.aerial.vis .roof { inset: 0; clip-path: none; }       /* tile fills edge-to-edge, framed only by the hairline border */
+.aerial.vis .roof::after { clip-path: none; }
+/* COMPARE = a drag slider: colour A fills, colour B is clipped to the right of a
+   draggable divider. Drag the handle to reveal more of either colour. */
+.aerial.vis .roof.side-b { inset: 0 0 0 50%; }
+.aerial.vis .cmp-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #fff; transform: translateX(-50%); z-index: 2; }
+.aerial.vis .cmp-handle {
+  position: absolute; top: 50%; left: 50%; z-index: 3; width: 38px; height: 38px;
+  transform: translate(-50%, -50%); border-radius: 50%; background: #fff;
+  border: 1px solid var(--line-soft); display: grid; place-items: center; cursor: ew-resize;
+}
+.aerial.vis .cmp-handle .ic { width: 18px; height: 18px; color: var(--accent); }
+/* colour name(s) below the preview (single = one, compare = two) */
+.vis-label { text-align: center; font-family: var(--font-ui); }
+.vis-label .vl b { font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.vis-label .vl span { display: block; font-size: var(--t-caption); color: var(--muted); }
+.vis-label.pair { display: flex; justify-content: space-between; align-items: baseline; text-align: left; }
+.vis-label.pair .vl.b { text-align: right; }
+.vis-label.pair .vl b { font-size: var(--t-body); }
 .aerial .badge {
   position: absolute; top: 10px; right: 10px;
   background: rgba(45,32,18,0.82); color: #fff;
@@ -261,6 +327,17 @@
   padding: 4px 12px;
   border-radius: var(--r-pill);
 }
+.aerial .badge.low { background: var(--warn); }   /* low-confidence measurement — amber, white on warn = 5.8:1 */
+/* visualiser caption — colour name set over the recoloured roof (presentation
+   mode: this is the screen the roofer turns to the customer). The gradient is a
+   legibility scrim on the image, not a UI shadow, so the flat rule still holds. */
+.aerial .vis-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 34px 16px 14px;
+  background: linear-gradient(to top, rgba(45, 32, 18, 0.85), rgba(45, 32, 18, 0.45) 55%, transparent);
+}
+.aerial .vis-caption b { display: block; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-title); color: #fff; letter-spacing: -0.01em; }
+.aerial .vis-caption span { font-family: var(--font-ui); font-size: var(--t-caption); color: rgba(255, 255, 255, 0.88); }
 .aerial .pin {
   position: absolute; left: 50%; top: 42%; width: 32px; height: 40px;
   transform: translate(-50%, -100%); /* anchor at the pin's tip, not its centre */
@@ -279,21 +356,27 @@
 .li .n { flex: 1; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .li .n small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); }
 .li > .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
-/* stepper: one connected unit (− | qty | +) — same "construction" grouping as
-   .input-group, not three loose controls. Buttons and value are deliberately
-   different shades: grey = tappable, white = the value itself, not a control. */
-.li .stepper {
-  display: flex; align-items: center;
-  border: 1px solid var(--line-soft); border-radius: var(--r-structure); overflow: hidden;
-}
-.li .stepper .mini-step { width: 44px; height: 44px; display: grid; place-items: center; background: var(--panel); font-style: normal; font-size: var(--t-body); color: var(--ink); }
-.li .stepper .q {
-  min-width: 44px; text-align: center; padding: 0 4px; align-self: stretch; display: grid; place-items: center;
-  background: var(--surface);
+.li > .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }  /* trailing chevron on tappable rows (D1a quotes) */
+/* editable quantity — a tap-to-edit field that opens a numeric keypad. Steppers
+   were dropped: nudging a calculator-derived count like 2,875 by ±1 is unusable,
+   and for a precise value a big keypad beats tiny +/- for gloved hands. Grey field
+   = "this is editable", matching every other input in the app. */
+.li .qedit {
+  min-width: 82px; padding: 10px 14px; text-align: right;
+  background: var(--field); border-radius: var(--r-structure);
   font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums;
   color: var(--ink); font-size: var(--t-body);
-  border-left: 1px solid var(--line-soft); border-right: 1px solid var(--line-soft);
+  border: none; cursor: pointer; appearance: none; -webkit-appearance: none;
+  min-height: 44px;
 }
+.li .qedit:active { background: var(--field-active); outline: 1.5px solid var(--field-active-line); outline-offset: -1.5px; }
+/* per-line pricing — "a defensible price fast" (PRODUCT.md): every line shows
+   unit price × qty = line total under its editable quantity, so the roofer can
+   defend the figure at the kitchen table line by line. --body, not --muted:
+   11px money must hold 4.5:1 comfortably. */
+.li .lr { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: none; }
+.li .lp { font-family: var(--font-ui); font-size: var(--t-micro); color: var(--body); font-variant-numeric: tabular-nums; }
+.li .lp b { font-variation-settings: 'wght' 600; color: var(--ink); }
 
 /* totals bar */
 .total-bar {
@@ -313,11 +396,15 @@
 .timeline .ev.now::before { background: var(--accent); outline: 3px solid var(--accent-tint); }
 .timeline .ev b { color: var(--ink); font-variation-settings: 'wght' 600; }
 
-/* hub cards (job detail) */
+/* hub cards (job detail) — real <button>s on D1: each tile opens its own
+   screen (Measurement → B3 view, Quotes → D1a, Photos → D1b, Notes → D1c) */
 .hub { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .hub .h {
   background: var(--surface); border: 1px solid var(--line-soft); padding: 12px;
+  appearance: none; -webkit-appearance: none; text-align: left; cursor: pointer; width: 100%;
+  font-family: var(--font-ui);
 }
+.hub .h:active { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
 .hub .h b { display: block; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .hub .h span { font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
 
@@ -333,16 +420,42 @@
   font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-body); color: var(--body);
   border-radius: var(--r-pill);
 }
-.seg span.on { background: var(--ink); color: var(--ground); }
+/* selected segment lifts to a white pill defined by the soft warm hairline
+   (`--line-soft`) — not the harsh ink border — with ink text; unselected stay
+   body. Built from the system's neutral tokens (panel · surface · line-soft ·
+   ink/body), no maroon, so the CTA stays the single accent moment. */
+.seg span.on { background: var(--surface); color: var(--ink); outline: 1px solid var(--line-soft); outline-offset: -1px; }
 
-/* progress stages (measuring theatre) */
-.stage-list { display: flex; flex-direction: column; gap: 14px; }
-.stage { display: flex; align-items: center; gap: 12px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--muted); }
-.stage .m { width: 22px; height: 22px; flex: none; display: grid; place-items: center; border: 1px solid var(--line-soft); font-size: var(--t-caption); }
+/* progress stages (measuring theatre) — a CONNECTED vertical stepper: round
+   markers linked by a line that fills green as steps complete, and a live pulse
+   ring on the active step (the labor-illusion moment the screen is built around) */
+.stage-list { display: flex; flex-direction: column; }
+.stage {
+  display: flex; align-items: flex-start; gap: 14px; position: relative;
+  padding-bottom: 22px; font-family: var(--font-ui); font-size: var(--t-body);
+  line-height: 24px; color: var(--muted);
+}
+.stage:last-child { padding-bottom: 0; }
+/* connector line from this marker down to the next */
+.stage::before { content: ''; position: absolute; left: 11px; top: 26px; bottom: 0; width: 2px; background: var(--line-soft); }
+.stage:last-child::before { display: none; }
+.stage.done::before { background: var(--ok); }
+.stage .m {
+  width: 24px; height: 24px; flex: none; border-radius: 50%; position: relative; z-index: 1;
+  display: grid; place-items: center; border: 2px solid var(--line-soft); background: var(--surface);
+  font-size: var(--t-caption);
+}
 .stage.done { color: var(--ink); }
-.stage.done .m { background: var(--ok-tint); border-color: var(--ok); color: var(--ok); }
+.stage.done .m { background: var(--ok); border-color: var(--ok); color: #fff; }  /* solid green + white check */
 .stage.now { color: var(--ink); font-variation-settings: 'wght' 600; }
 .stage.now .m { border-color: var(--accent); color: var(--accent); }
+/* live pulse ring — signals "measuring right now", not a spinner */
+.stage.now .m::after {
+  content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid var(--accent);
+  animation: stage-pulse 1.7s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes stage-pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.1); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .stage.now .m::after { animation: none; opacity: 0; } }
 .progress { height: 3px; background: var(--panel-2); position: relative; }
 .progress i { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
 
@@ -359,3 +472,47 @@
   color: var(--ink);                                 /* inactive nav = ink (our black, never pure #000) */
 }
 .tabbar .t.on .ic { background: var(--accent); }     /* selected: ONLY the icon turns maroon; label stays ink */
+
+/* ---------- profile / settings ---------- */
+/* identity lives in a bordered surface card — the same container language as the
+   .set-box groups below, so the header reads as an intentional "business card" */
+.prof-card {
+  display: flex; gap: 14px; align-items: center;
+  border: 1px solid var(--line-soft); background: var(--surface); padding: 16px 14px;
+}
+/* avatar: a maroon monogram tile — square like a roof tile, the one deliberate
+   spot of accent up top (maroon on tint = 8:1, verified); the corner badge
+   signals a settable business logo */
+.prof-avatar {
+  position: relative; width: 60px; height: 60px; flex: none;
+  background: var(--accent-tint); border: 1px solid var(--accent); color: var(--accent);
+  display: grid; place-items: center; border-radius: var(--r-structure);
+}
+.prof-avatar > span {
+  font-family: var(--font-display); font-variation-settings: 'wght' 600;
+  font-size: 23px; letter-spacing: 0.03em;
+}
+.prof-edit {
+  position: absolute; right: -6px; bottom: -6px;
+  width: 24px; height: 24px; display: grid; place-items: center; padding: 0;
+  background: var(--surface); border: 1px solid var(--line-ink); border-radius: 50%;
+  cursor: pointer; appearance: none; -webkit-appearance: none;
+}
+.prof-edit .ic { width: 13px; height: 13px; color: var(--ink); }
+.prof-id b { display: block; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-title); color: var(--ink); }
+.prof-id span { display: block; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.prof-id span:first-of-type { color: var(--body); }   /* business name one tier above the email */
+.set-group { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro); letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); padding: 16px 0 8px; }
+/* rows live inside .set-box — the same bordered surface container the quote and
+   delivery lists use — so a grouped list looks the same everywhere in the app */
+.set-box { border: 1px solid var(--line-soft); background: var(--surface); padding: 0 14px; }
+.set-row {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 11px 0;
+  border: none; border-bottom: 1px solid var(--line-soft); background: none; cursor: pointer; text-align: left;
+  appearance: none; -webkit-appearance: none; font-family: var(--font-ui);
+}
+.set-row:last-child { border-bottom: none; }
+.set-row .lbl { flex: 1; font-size: var(--t-body); font-variation-settings: 'wght' 600; color: var(--ink); }  /* matches .li .n */
+.set-row .val { font-size: var(--t-body); color: var(--muted); font-variant-numeric: tabular-nums; }
+.set-row .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.set-row.danger .lbl { color: var(--err); }   /* sign out — err #D92D20 on white = 4.83:1, verified */
