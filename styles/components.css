@@ -396,6 +396,29 @@
 .qcard-open .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }
 .qcard-foot { padding: 0 14px 12px; display: flex; justify-content: flex-end; }
 
+/* success toast — a flat ink bar + green check: the "Saved to Jobs" auto-save
+   confirmation. Transient in the app (auto-dismisses ~2.5s); shown static here.
+   No shadow — a solid bar, matching the flat system. */
+.toast {
+  position: absolute; left: 14px; right: 14px; bottom: 26px; z-index: 6;
+  display: flex; align-items: center; gap: 9px;
+  background: var(--ink); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-caption);
+  padding: 12px 14px;
+}
+.toast .ic { width: 16px; height: 16px; color: #58C98A; flex: none; }
+
+/* destructive text action (Delete job on a detail screen) — subtle, centred,
+   never a big red button: deletion shouldn't shout louder than the primary action */
+.delete-job {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; margin-top: 14px; padding: 6px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+  font-size: var(--t-caption); color: var(--err);
+}
+.delete-job .ic { width: 15px; height: 15px; }
+
 /* totals bar */
 .total-bar {
   display: flex; justify-content: space-between; align-items: center;

@@ -377,6 +377,134 @@
                 ></span>
               </div>
               <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Verify your email.</div>
+                  <p class="auth-sub">
+                    We sent a six-digit code to your inbox. Enter it to confirm
+                    your address &mdash; it&rsquo;s how you&rsquo;ll reset your
+                    password later.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Verification code</label>
+                  <div class="otp">
+                    <span class="box">4</span><span class="box">1</span
+                    ><span class="box">9</span>
+                    <span class="box active"><span class="caret"></span></span
+                    ><span class="box"></span><span class="box"></span>
+                  </div>
+                </div>
+                <div class="resend-link"><b>Resend code</b></div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full" disabled>
+                    Verify email
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0C2 &middot; Verify your email</b>Slots in right after
+            <b>Create account</b>. The email is the account&rsquo;s only recovery
+            channel &mdash; password-reset codes go here &mdash; so it&rsquo;s
+            verified while the roofer still has the password in hand: a mistyped
+            address can&rsquo;t silently lock them out later. Reuses 0E&rsquo;s
+            exact code component (locked email row, active box lifts to white,
+            right-aligned <em>Resend</em>). <b>Apple / Google sign-ups skip
+            this</b> &mdash; those emails arrive pre-verified. <b>Back</b>
+            returns to 0C to fix a typo&rsquo;d address; on verify &rarr;
+            <b>0F business setup</b>.
+            <span class="scope-why"><b>Build rule &mdash; resume routing:</b> onboarding is a state machine; on every launch the app opens the <em>first incomplete step</em> &mdash; not signed in &rarr; Welcome (0B); signed in but email unverified &rarr; here (0C2); verified but no business details &rarr; 0F; otherwise &rarr; the Jobs hub. So a roofer who kills the app mid-signup lands back exactly where they left off, and can never reach a quote with an unverified email or a blank docket header.</span>
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Verify your email.</div>
+                  <p class="auth-sub">
+                    We sent a six-digit code to your inbox. Enter it to confirm
+                    your address &mdash; it&rsquo;s how you&rsquo;ll reset your
+                    password later.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row locked">
+                    <i class="ic ic-mail"></i>
+                    <div class="ig-t">
+                      <span class="val">dave@robsonroofing.com.au</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Verification code</label>
+                  <div class="otp error">
+                    <span class="box">4</span><span class="box">1</span
+                    ><span class="box">9</span><span class="box">3</span
+                    ><span class="box">8</span><span class="box">2</span>
+                  </div>
+                  <p class="field-error">
+                    That code&rsquo;s incorrect. Check it or resend below.
+                  </p>
+                </div>
+                <div class="resend-link"><b>Resend code</b></div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Verify email</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0C2 &middot; Verify your email — incorrect code</b>The error twin,
+            matching 0E&rsquo;s incorrect-code state: all six boxes lift to white
+            but outline in error red, an inline message names the problem, and
+            <em>Verify email</em> stays enabled so retrying is one tap. (An
+            expired code follows 0E&rsquo;s other state &mdash; boxes clear,
+            &ldquo;that code expired, tap resend.&rdquo;) This closes Flow 1 to
+            full parity: every input screen now has its error sibling.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
                 <div style="padding-top: 24px">
                   <div class="auth-h">Welcome back.</div>
                   <p class="auth-sub">Sign in to your saved jobs and quotes.</p>
@@ -1115,7 +1243,7 @@
                     </div>
                     <div class="jt">
                       <b>14 Banksia St, Ryde</b
-                      ><span>Marseille &middot; New Install</span>
+                      ><span>Restoration &middot; New Install</span>
                     </div>
                     <div class="jr">
                       <span class="status quoted"
@@ -1126,7 +1254,7 @@
                           aria-label="No activity for 5 days"
                           style="background: var(--warn)"
                         ></span></span
-                      ><span class="val">$24,985</span>
+                      ><span class="val">2 quotes</span>
                     </div>
                   </div>
                   <div class="job-card">
@@ -1213,69 +1341,6 @@
                   ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
-                <div class="welcome-card">
-                  <div class="wc-illustration">
-                    <video
-                      src="../assets/video/empty-hub-illustration.mp4"
-                      autoplay
-                      loop
-                      muted
-                      playsinline
-                    ></video>
-                  </div>
-                  <div class="wc-t">
-                    <h6>No jobs yet</h6>
-                    <p>
-                      Drop in an address and we'll measure the roof.
-                      Your quote starts from there.
-                    </p>
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-full">
-                  Start a job <i class="ic ic-plus"></i>
-                </button> 
-              </div>
-              <div class="tabbar">
-                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
-                <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-palette"></i>Colours</span>
-                <span class="t"><i class="ic ic-user"></i>Profile</span>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>A0 &middot; Empty jobs hub</b>The same screen as A1, right next
-            to it &mdash; zero state. Same <em>Jobs</em> header, search and
-            filter chips, just no cards yet. A short looping illustration
-            video sits full-width up top, muted and autoplaying. Then
-            <em>Start a job</em>. All the teaching happens once on 0G, so this
-            stays uncluttered every day after too.
-          </p>
-        </div>
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <h5>Jobs</h5>
-                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
-                </div>
-                <div class="chip-row">
-                  <span class="chip on">All</span
-                  ><span class="chip">Measured</span
-                  ><span class="chip">Quoted</span
-                  ><span class="chip">Requested</span
-                  ><span class="chip">Delivered</span>
-                </div>
                 <div class="job-card">
                   <div class="thumb">
                     <img
@@ -1285,7 +1350,7 @@
                   </div>
                   <div class="jt">
                     <b>14 Banksia St, Ryde</b
-                    ><span>Marseille · New Install</span>
+                    ><span>Restoration · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status quoted"
@@ -1296,7 +1361,7 @@
                         aria-label="No activity for 5 days"
                         style="background: var(--warn)"
                       ></span></span
-                    ><span class="val">$24,985</span>
+                    ><span class="val">2 quotes</span>
                   </div>
                 </div>
                 <div class="job-card">
@@ -1373,66 +1438,6 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
-                  <h5>Jobs</h5>
-                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
-                </div>
-                <div class="chip-row">
-                  <span class="chip">All</span
-                  ><span class="chip on">Measured</span
-                  ><span class="chip">Quoted</span
-                  ><span class="chip">Requested</span
-                  ><span class="chip">Delivered</span>
-                </div>
-                <div class="job-card">
-                  <div class="thumb">
-                    <img
-                      src="../assets/photos/ba1-before.jpg"
-                      alt="88 Marion Rd, Auburn"
-                    />
-                  </div>
-                  <div class="jt">
-                    <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
-                  </div>
-                  <div class="jr">
-                    <span class="status measured">Measured</span
-                    ><span class="val">&mdash;</span>
-                  </div>
-                </div>
-              </div>
-              <div class="tabbar">
-                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
-                <span class="t"><i class="ic ic-plus"></i>New</span>
-                <span class="t"><i class="ic ic-palette"></i>Colours</span>
-                <span class="t"><i class="ic ic-user"></i>Profile</span>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>A1 &middot; Jobs hub &mdash; Measured filter</b>The filtered state
-            you flagged as missing. Tapping the <b>Measured</b> chip narrows the
-            same list to jobs measured but not yet quoted &mdash; here just
-            <b>88 Marion Rd</b>, the one measured job in the set (its value shows
-            &ldquo;&mdash;&rdquo; because there&rsquo;s no quote yet). Same
-            header, chips and cards as the home hub &mdash; the list narrows in
-            place, it never becomes a separate results view. When a filter has no
-            matches it reads a quiet <em>&ldquo;No measured jobs yet&rdquo;</em>
-            line in the same slot (the empty-filter state).
-          </p>
-        </div>
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
                   <div class="search-field">
                     <i class="ic ic-search"></i
                     ><span>Search jobs, addresses&hellip;</span>
@@ -1455,7 +1460,7 @@
                   </div>
                   <div class="jt">
                     <b>14 Banksia St, Ryde</b
-                    ><span>Marseille · New Install</span>
+                    ><span>Restoration · New Install</span>
                   </div>
                   <div class="jr">
                     <span class="status quoted"
@@ -1466,7 +1471,7 @@
                         aria-label="No activity for 5 days"
                         style="background: var(--warn)"
                       ></span></span
-                    ><span class="val">$24,985</span>
+                    ><span class="val">2 quotes</span>
                   </div>
                 </div>
                 <div class="job-card">
@@ -1534,12 +1539,7 @@
             view.
           </p>
         </div>
-
-        <div class="screen-slot descoped">
-          <div class="scope-flag">
-            <b>Out of MVP scope</b>
-            <span><em>Offline sync</em> is out of scope in the build brief. This whole screen &mdash; saved jobs still opening with no signal, plus the &ldquo;syncs when you&rsquo;re back&rdquo; promise &mdash; <em>is</em> that capability. Greyed for reference, not deleted. MVP options: drop it, or show a plain &ldquo;No connection&rdquo; state with no sync claim.</span>
-          </div>
+        <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
             <div class="screen">
@@ -1553,20 +1553,11 @@
               <div class="appbody">
                 <div class="screen-title">
                   <h5>Jobs</h5>
-                  <button class="icon-btn" aria-label="Search jobs">
-                    <i class="ic ic-search"></i>
-                  </button>
-                </div>
-                <div class="banner">
-                  <i class="ic ic-warn"></i>
-                  <p>
-                    <b>You&rsquo;re offline.</b> Saved jobs still work;
-                    anything new syncs when you&rsquo;re back.
-                  </p>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
                 <div class="chip-row">
-                  <span class="chip on">All</span
-                  ><span class="chip">Measured</span
+                  <span class="chip">All</span
+                  ><span class="chip on">Measured</span
                   ><span class="chip">Quoted</span
                   ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
@@ -1574,39 +1565,16 @@
                 <div class="job-card">
                   <div class="thumb">
                     <img
-                      src="../assets/photos/ba2-before.jpg"
-                      alt="14 Banksia St, Ryde"
+                      src="../assets/photos/ba1-before.jpg"
+                      alt="88 Marion Rd, Auburn"
                     />
                   </div>
                   <div class="jt">
-                    <b>14 Banksia St, Ryde</b
-                    ><span>Marseille · New Install</span>
+                    <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
                   </div>
                   <div class="jr">
-                    <span class="status quoted"
-                      >Quoted
-                      <span
-                        class="age-dot"
-                        role="img"
-                        aria-label="No activity for 5 days"
-                        style="background: var(--warn)"
-                      ></span></span
-                    ><span class="val">$24,985</span>
-                  </div>
-                </div>
-                <div class="job-card">
-                  <div class="thumb">
-                    <img
-                      src="../assets/photos/ba3-after.jpg"
-                      alt="3 Coral Ave, Cronulla"
-                    />
-                  </div>
-                  <div class="jt">
-                    <b>3 Coral Ave, Cronulla</b><span>Elabana · New Install</span>
-                  </div>
-                  <div class="jr">
-                    <span class="status delivery">Delivered</span
-                    ><span class="val">$24,120</span>
+                    <span class="status measured">Measured</span
+                    ><span class="val">&mdash;</span>
                   </div>
                 </div>
               </div>
@@ -1620,15 +1588,18 @@
             </div>
           </div>
           <p class="cap">
-            <b>A1 &middot; Jobs hub &mdash; offline</b>Build rule 7 (cache
-            field essentials), finally visible: on a roof with no signal the
-            saved jobs, measurements and swatches still open, the amber
-            banner names the state and the promise (&ldquo;will sync&rdquo;),
-            and nothing is disabled that doesn&rsquo;t have to be &mdash;
-            only actions needing the network (new measurement, submit
-            delivery) wait.
+            <b>A1 &middot; Jobs hub &mdash; Measured filter</b>The filtered state
+            you flagged as missing. Tapping the <b>Measured</b> chip narrows the
+            same list to jobs measured but not yet quoted &mdash; here just
+            <b>88 Marion Rd</b>, the one measured job in the set (its value shows
+            &ldquo;&mdash;&rdquo; because there&rsquo;s no quote yet). Same
+            header, chips and cards as the home hub &mdash; the list narrows in
+            place, it never becomes a separate results view. When a filter has no
+            matches it reads a quiet <em>&ldquo;No measured jobs yet&rdquo;</em>
+            line in the same slot (the empty-filter state).
           </p>
         </div>
+
         <div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
@@ -1669,6 +1640,12 @@
                   <div class="ev">Requested</div>
                   <div class="ev">Delivered</div>
                 </div>
+                <button class="delete-job">
+                  <i class="ic ic-trash"></i>Delete job
+                </button>
+              </div>
+              <div class="toast">
+                <i class="ic ic-check"></i>Measurement saved to Jobs
               </div>
               <div class="home-ind"></div>
             </div>
@@ -1687,6 +1664,14 @@
             quote) &rarr; C3 (saved). On save the job flips to <b>Quoted</b> and
             shows the D1 you&rsquo;ve already seen (two quotes, Request
             delivery). That closes the Measured &rarr; Quoted bridge.
+            <b>You also land here right after measuring</b> &mdash; the
+            measurement auto-saves as this Measured job, and the
+            <em>&ldquo;Measurement saved to Jobs&rdquo;</em> toast confirms it
+            (an AI scan costs a Nearmap credit, so it&rsquo;s never silently
+            binned; tapping the same job later from the hub shows this screen
+            without the toast). <b>Delete job</b> at the foot is the one
+            destructive action &mdash; for a wrong address you don&rsquo;t want
+            kept, now that leaving the flow no longer discards anything.
           </p>
         </div>
         <div class="screen-slot">
@@ -3255,19 +3240,25 @@
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                   <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div>
-                  <div class="auth-h">Roof dimensions</div>
-                  <p class="auth-sub">Enter the figures you already have.</p>
+                  <div class="auth-h">Quote</div>
+                  <p class="auth-sub">Pottery Brown · New Install · 14 Banksia St, Ryde</p>
                 </div>
-                <div style="display: flex; gap: 12px">
-                  <div class="field" style="flex: 1">
-                    <label>Total area (m²)</label>
-                    <div class="control">150</div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">Main tiles · Pottery Brown</div>
+                    <div class="q">2,912</div>
                   </div>
-                  <div class="field" style="flex: 1">
-                    <label>Pitch (°)</label>
-                    <div class="control">24</div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">38</div>
                   </div>
                 </div>
               </div>
@@ -3275,8 +3266,8 @@
                 <div class="dialog">
                   <h4>Discard this quote?</h4>
                   <p>
-                    You've entered measurements that aren't saved yet.
-                    Closing now discards them.
+                    Your roof measurement is saved to Jobs &mdash; only this
+                    quote in progress will be discarded.
                   </p>
                   <div class="dialog-actions">
                     <button class="btn btn-danger btn-full">
@@ -3292,13 +3283,18 @@
             </div>
           </div>
           <p class="cap">
-            <b>Discard confirmation — the × on any step</b>Back (chevron)
-            is instant, it's non-destructive. But × exits the whole flow and
-            would bin everything entered, so it confirms first (Nielsen #3,
-            error prevention). The safe action, <b>Keep editing</b>, is the
-            prominent primary and sits thumb-closest; the destructive
-            <b>Discard</b> is an err-outline button held separate above it,
-            never a matching filled twin next to the primary.
+            <b>Discard confirmation — leaving a quote in progress</b>Because the
+            measurement <b>auto-saves</b> the moment it&rsquo;s taken, the
+            earlier steps (address, measuring) never show this &mdash; closing
+            there just saves the Measured job and drops you onto it with a
+            &ldquo;Saved to Jobs&rdquo; toast. This dialog only appears once
+            you&rsquo;re building a <em>quote</em> (colour, quantities), and it
+            discards <b>only the quote</b> &mdash; the measurement stays as a
+            Measured job. Back (chevron) is still instant and non-destructive;
+            the safe <b>Keep editing</b> is the prominent primary and sits
+            thumb-closest; the destructive <b>Discard</b> is an err-outline
+            button held separate above it, never a matching filled twin next to
+            the primary.
           </p>
         </div>
       </div>
@@ -4233,6 +4229,128 @@
                 ></span>
               </div>
               <div class="appbody">
+                <div class="screen-title">
+                  <div class="search-field">
+                    <i class="ic ic-search"></i><span>sa</span>
+                  </div>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="seg">
+                  <span class="on">All</span><span>Terracotta</span
+                  ><span>Concrete</span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All profiles</span
+                  ><span class="chip">Flat</span
+                  ><span class="chip">Semi-flat</span
+                  ><span class="chip">Raised</span>
+                </div>
+                <div class="cl-grid">
+                  <div class="cl-card">
+                    <div class="ph t-sambuca"></div>
+                    <div class="nm">
+                      Sambucca<small>Elabana · Concrete</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-saltspray"></div>
+                    <div class="nm">
+                      Salt Spray<small>Atura · Concrete</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t on"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E1 &middot; Colours — search active</b>The colours search state
+            that was missing (the Jobs hub had one, this didn&rsquo;t). Tapping
+            the search icon swaps the title for a full-width field at the same
+            height &mdash; same &times; dismiss as everywhere else &mdash; and
+            narrows the grid live: &ldquo;sa&rdquo; leaves Sambucca and Salt
+            Spray. Segment and profile chips stay put; search narrows within the
+            current filter, no separate results page.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <h5>Colours</h5>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
+                </div>
+                <div class="seg">
+                  <span>All</span><span class="on">Terracotta</span
+                  ><span>Concrete</span>
+                </div>
+                <div class="chip-row">
+                  <span class="chip on">All profiles</span
+                  ><span class="chip">Flat</span
+                  ><span class="chip">Semi-flat</span
+                  ><span class="chip">Raised</span>
+                </div>
+                <div class="cl-grid">
+                  <div class="cl-card">
+                    <div class="ph t-titan"></div>
+                    <div class="nm">
+                      Titan Gloss<small>Marseille · Terracotta</small>
+                    </div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-heritage">
+                      <span class="rec">Recycled</span>
+                    </div>
+                    <div class="nm">
+                      Pottery Brown<small>Marseille · Terracotta</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t on"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>E1 &middot; Colours — Terracotta filter</b>The filtered catalog
+            state. Tapping the <b>Terracotta</b> segment narrows the grid to the
+            two terracotta tiles in the range &mdash; Titan Gloss and the
+            recycled Pottery Brown (badged). Concrete and the profile chips work
+            the same way; the grid narrows in place.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
                 <div
                   class="screen-title"
                   style="justify-content: flex-start; gap: 12px"
@@ -4304,7 +4422,7 @@
                   "
                 >
                   <button class="btn btn-primary btn-full">
-                    Start a quote with this tile
+                    Compare colours
                   </button>
                   <button class="btn btn-secondary btn-full">
                     <i class="ic ic-file"></i> Data sheet (PDF)
@@ -4317,13 +4435,126 @@
           <p class="cap">
             <b>E2 &middot; Colour detail</b>The compliance trio (SA / SRI / LRV)
             + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
-            Browsing has no job yet, so the CTA can&rsquo;t jump into a quote
-            &mdash; <b>Start a quote with this tile</b> begins a New Quote
-            with the tile already attached: job type, address and
-            measurements follow as normal, and the flow lands on C1 with the
-            colour step already done (the in-flow E2 keeps &ldquo;Build
-            quote&rdquo; because there the measurements exist). <b>Data
-            sheet (PDF)</b> opens the viewer, next.
+            From the browse tab there&rsquo;s no job yet &mdash; and no real
+            roof to preview on &mdash; so the primary is honest and light:
+            <b>Compare colours</b> opens the visualiser (the C2 stage, its
+            One-colour / Compare-two toggle) to weigh colours side by side on a
+            tile sample. Preview-only here &mdash; no &ldquo;Save quote,&rdquo;
+            since there&rsquo;s no job to save to. <b>Data sheet (PDF)</b> opens
+            the viewer (E3, after the visualiser).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div class="seg">
+                  <span class="on">One colour</span><span>Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #373939">
+                  <div class="roof tiled"></div>
+                  <div class="badge">Hold to see original</div>
+                </div>
+                <div class="vis-label">
+                  <div class="vl">
+                    <b>Marseille Titan Gloss</b>
+                    <span>Terracotta · raised profile · in stock at the yard</span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch sel t-titan" aria-label="Titan Gloss, selected"></button>
+                  <button class="swatch t-heritage" aria-label="Pottery Brown"></button>
+                  <button class="swatch t-slate" aria-label="Bedrock"></button>
+                  <button class="swatch t-terracotta" aria-label="Florence Red"></button>
+                  <button class="swatch t-olive" aria-label="Riverstone"></button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 &middot; Colour visualiser &mdash; browse</b>Where
+            <b>Compare colours</b> on E2 lands. The same visualiser stage as the
+            quote flow &mdash; a tile sample recoloured live &mdash; but reached
+            from a browse, so it&rsquo;s <b>preview-only</b>: back-only header,
+            no stepbar, and no &ldquo;Save quote&rdquo; (there&rsquo;s no job to
+            save to). Tap a swatch to re-tint; press-and-hold shows the original.
+            The <em>One colour / Compare two</em> toggle switches to the split
+            view, next.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div class="seg">
+                  <span>One colour</span><span class="on">Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #373939">
+                  <div class="roof tiled"></div>
+                  <div class="roof tiled side-b" style="--roof-colour: #5e565b"></div>
+                  <div class="cmp-divider"></div>
+                  <div class="cmp-handle"><i class="ic ic-compare"></i></div>
+                </div>
+                <div class="vis-label pair">
+                  <div class="vl"><b>Titan Gloss</b><span>left</span></div>
+                  <div class="vl b"><b>Bedrock</b><span>right</span></div>
+                </div>
+                <div class="fr-label" style="text-align: center; margin-top: 2px">Left</div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch sel t-titan" aria-label="Titan Gloss, left side"></button>
+                  <button class="swatch t-heritage" aria-label="Pottery Brown"></button>
+                  <button class="swatch t-slate" aria-label="Bedrock"></button>
+                  <button class="swatch t-terracotta" aria-label="Florence Red"></button>
+                  <button class="swatch t-olive" aria-label="Riverstone"></button>
+                </div>
+                <div class="fr-label" style="text-align: center; margin-top: 4px">Right</div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch t-titan" aria-label="Titan Gloss"></button>
+                  <button class="swatch t-heritage" aria-label="Pottery Brown"></button>
+                  <button class="swatch sel t-slate" aria-label="Bedrock, right side"></button>
+                  <button class="swatch t-terracotta" aria-label="Florence Red"></button>
+                  <button class="swatch t-olive" aria-label="Riverstone"></button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C2 &middot; Compare two colours &mdash; browse</b>The split view,
+            with the <b>two colour rows</b>: the tile sample is divided by a
+            draggable slider &mdash; <b>Titan Gloss</b> left, <b>Bedrock</b>
+            right. The <b>top row sets the left</b> colour, the <b>bottom row
+            sets the right</b>, so each side is chosen independently rather than
+            one fixed and one swapped. Drag the handle to reveal more of either.
+            Still preview-only (no Save quote) &mdash; weighing two
+            recycled-tile colours side by side before there&rsquo;s even a job.
           </p>
         </div>
 
@@ -4365,7 +4596,7 @@
                   <div class="row"><span class="bar"></span><span class="bar s"></span></div>
                 </div>
                 <button class="btn btn-primary btn-full">
-                  Share data sheet
+                  <i class="ic ic-download"></i> Download data sheet
                 </button>
               </div>
               <div class="home-ind"></div>
@@ -4375,10 +4606,9 @@
             <b>E3 &middot; Data sheet viewer</b>Where <b>Data sheet
             (PDF)</b> on E2 actually opens &mdash; it was a dead-end button
             before. The PDF renders in-app (skeleton shown here; the build
-            uses a native PDF view), and <b>Share data sheet</b> opens the OS
-            share sheet: email it to the certifier for BASIX sign-off, print
-            it, AirDrop it, save to Files &mdash; one button,
-            every destination, no custom viewer chrome to maintain.
+            uses a native PDF view), and <b>Download data sheet</b> saves the
+            PDF to the device (Files / Downloads) so the roofer keeps a copy to
+            email the BASIX certifier or print later.
             Back-only header, same sub-detail rule as E2.
           </p>
         </div>
@@ -4471,6 +4701,10 @@
                   <button class="set-row danger">
                     <span class="lbl">Sign out</span>
                   </button>
+                  <button class="set-row danger">
+                    <span class="lbl">Delete account</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
                 </div>
               </div>
               <div class="tabbar">
@@ -4490,9 +4724,11 @@
             details that print on a quote. Then only what a roofer actually
             touches: business details (opens F1, next), <b>change
             password</b> (routes into the same reset flow as 0E), support
-            contact, legal, and a separated <b>Sign out</b>. Flat rows with
-            hairline dividers &mdash; the one spot of accent is the avatar,
-            staying in our system.
+            contact, legal, and a separated <b>Sign out</b> (which confirms
+            first, next) and <b>Delete account</b> (store-required &mdash; both
+            Apple and Google mandate in-app account deletion; opens F2). Flat
+            rows with hairline dividers &mdash; the one spot of accent is the
+            avatar, staying in our system.
           </p>
         </div>
 
@@ -4567,6 +4803,181 @@
             changing it is a support action in v1, not a field edit.
             <b>Save details</b> uses the standard button loading state, then
             returns to F.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <h5>Profile</h5>
+                </div>
+                <div class="prof-card">
+                  <div class="prof-avatar">
+                    <span>DR</span>
+                    <button class="prof-edit" aria-label="Change logo">
+                      <i class="ic ic-camera"></i>
+                    </button>
+                  </div>
+                  <div class="prof-id">
+                    <b>Dave Robson</b>
+                    <span>Robson Roofing</span>
+                    <span>dave@robsonroofing.com.au</span>
+                  </div>
+                </div>
+
+                <div class="set-group">Account</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Business details</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Change password</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+
+                <div class="set-group">Support</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Email us</span>
+                    <span class="val">help@roofbros.com.au</span>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Call us</span>
+                    <span class="val">1800 766 327</span>
+                  </button>
+                </div>
+
+                <div class="set-group">About</div>
+                <div class="set-box">
+                  <div class="set-row">
+                    <span class="lbl">Version</span>
+                    <span class="val">1.0.0</span>
+                  </div>
+                  <button class="set-row">
+                    <span class="lbl">Privacy policy</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Terms of use</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+
+                <div style="height: 16px"></div>
+                <div class="set-box">
+                  <button class="set-row danger">
+                    <span class="lbl">Sign out</span>
+                  </button>
+                  <button class="set-row danger">
+                    <span class="lbl">Delete account</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="scrim">
+                <div class="dialog">
+                  <h4>Sign out?</h4>
+                  <p>
+                    You&rsquo;ll need to sign back in to see your jobs and
+                    quotes. Nothing is deleted.
+                  </p>
+                  <div class="dialog-actions">
+                    <button class="btn btn-danger btn-full">Sign out</button>
+                    <button class="btn btn-primary btn-full">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t on"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>F &middot; Sign out — confirm</b>Sign out is a re-login event, so
+            it confirms first (it was a straight-out action before). Same
+            language as the discard confirm: the safe <b>Cancel</b> is the
+            prominent primary, thumb-closest; the destructive <b>Sign out</b> an
+            err-outline button held above it. The copy reassures
+            <em>nothing is deleted</em> &mdash; signing out isn&rsquo;t account
+            deletion (that&rsquo;s F2, next).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Delete account</div>
+                  <p class="auth-sub">
+                    This permanently removes your account and everything in it.
+                  </p>
+                </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>This can&rsquo;t be undone.</b> Your jobs, quotes,
+                    measurements and photos are permanently deleted.
+                  </p>
+                </div>
+                <div class="input-group">
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Enter your password to confirm</label
+                      ><span class="val"
+                        >&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span
+                      >
+                    </div>
+                    <i class="ic ic-eye"></i>
+                  </div>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-danger btn-full">
+                    <i class="ic ic-trash"></i>Delete my account
+                  </button>
+                  <button class="btn btn-secondary btn-full">Cancel</button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>F2 &middot; Delete account</b>The store requirement, built &mdash;
+            both Apple and Google mandate an in-app way to delete an account or
+            the app is rejected. Opened from the <b>Delete account</b> row on F.
+            Names exactly what goes (jobs, quotes, measurements, photos) in an
+            amber banner, requires the <b>password</b> to confirm (so a
+            handed-over phone can&rsquo;t nuke the account), and puts the
+            destructive <b>Delete my account</b> as an err-outline button with
+            <b>Cancel</b> the calm secondary below. The one place the app says
+            &ldquo;irreversible&rdquo; plainly.
           </p>
         </div>
       </div>
