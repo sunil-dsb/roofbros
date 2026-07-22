@@ -88,9 +88,10 @@ Every icon used anywhere in the project, with its **raw SVG source** exactly as 
 Generated from source by \`node extract-icons.mjs\` — **do not hand-edit** this file.
 
 - **${icons.length}** single-colour CSS-mask icons in \`styles/base.css\` (\`.ic-*\`). They inherit
-  \`currentColor\`, so one SVG serves every colour the UI needs. All are one outline
-  family: 24-viewBox, 2px stroke, round caps (the truck keeps its native 64 viewBox
-  at an equivalent stroke weight).
+  \`currentColor\`, so one SVG serves every colour the UI needs. The glyphs are one outline
+  family: 24-viewBox, 2px stroke, round caps — with three documented exceptions that keep
+  their native form: the truck (64 viewBox, equivalent stroke weight) and the Apple mark
+  (32 viewBox, filled logo — masks ignore fill, so it still recolours like the rest).
 - **1** genuine multi-colour logo (Google) inlined in the HTML — a single-colour mask can't carry 4 fills.
 - **2** derived assets in \`styles/components.css\`: the filled map-marker pin and the selected-swatch tick.
 

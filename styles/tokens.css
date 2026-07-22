@@ -58,7 +58,7 @@
 
   /* --- link colour: harmonised slate-blue — the ONLY blue in the system,
      used solely for secondary text links (not actions; those stay maroon). --- */
-  --link: #2B4C8C;
+  --link: #2B4C8C; --link-tint: #D9E4F6; /* slate-blue tint — the Quoted status pill; clearly bluer than --panel so it reads apart from grey Measured */
 
   /* --- colour: semantic (status only, never decorative) --- */
   --ok: #1A7C4B;      --ok-tint: #E3F3EA;    /* 4.54:1 on ok-tint, verified */
@@ -106,7 +106,7 @@
   --accent: #7D1017; --accent-press: #5C0B11; --accent-tint: #EDDBD8; --on-accent: #FFFFFF;
   --field: #ECECEC; --field-active: #FFFFFF; --placeholder: #6B6B6B;
   --field-active-line: color-mix(in srgb, var(--ink) 16%, transparent);
-  --link: #2B4C8C;
+  --link: #2B4C8C; --link-tint: #D9E4F6; /* slate-blue tint — the Quoted status pill; clearly bluer than --panel so it reads apart from grey Measured */
   --ok: #1A7C4B; --ok-tint: #E3F3EA; --warn: #A7590A; --warn-tint: #FBEEDC;
   --err: #D92D20; --err-tint: #FDE8E6;
 }
@@ -118,6 +118,6 @@
   --field: #2C2419; --field-active: #3A3020; --placeholder: #8C8C8C;
   --field-active-line: color-mix(in srgb, var(--ink) 22%, transparent);
   --ok: #4CC38A; --ok-tint: #1D3229; --warn: #E0A050; --warn-tint: #382A18;
-  --link: #8FA9D8;
+  --link: #8FA9D8; --link-tint: #22304A;
   --err: #F0655A; --err-tint: #3D211F;
 }

@@ -384,3 +384,44 @@
 .addr-field .addr-l > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .addr-field .addr-l .ic { flex: none; color: var(--muted); }
 .addr-field .addr-change { flex: none; color: var(--link); font-variation-settings: 'wght' 600; font-size: var(--t-caption); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ============================================================
+   MVP SCOPE MARKING — documentation scaffolding, NOT shipped
+   ------------------------------------------------------------
+   The build brief puts some capabilities out of the first MVP:
+   offline sync, push notifications, and stock/ordering
+   integration (the "submit order to RoofBros → approve →
+   status" loop). We do NOT delete the screens that show them —
+   the full flow stays readable — we DESATURATE them to grey
+   and tag WHY, so what's in vs out of the first build is
+   legible at a glance. Remove this whole block (and the
+   .descoped / .scope-flag / .scope-why / .descoped-el hooks in
+   the HTML) once scope is locked.
+   ============================================================ */
+
+/* whole screen out of scope: grey the phone, tag it above */
+.screen-slot.descoped .phone { filter: grayscale(1); opacity: 0.92; }
+
+/* the tag + reason sit ABOVE the phone, in the doc's own type
+   (not app UI) so it never reads as part of the screen */
+.scope-flag {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  margin: 0 0 12px; padding: 9px 12px;
+  border: 1px dashed var(--line-ink); background: var(--panel);
+  font-family: var(--font-ui); font-size: var(--t-caption); line-height: 1.45; color: var(--body);
+}
+.scope-flag b {
+  flex: none;
+  font-variation-settings: 'wght' 700; font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); white-space: nowrap;
+}
+.scope-flag em { font-style: normal; font-variation-settings: 'wght' 600; color: var(--ink); }
+
+/* one control inside an otherwise in-scope screen (e.g. a lone
+   "Submit to RoofBros" button on the quote-saved screen) */
+.descoped-el { filter: grayscale(1); opacity: 0.5; }
+
+/* caption note tying the scope call back to the affected element */
+.cap .scope-why { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-soft); color: var(--body); }
+.cap .scope-why b { color: var(--ink); }
+.cap .scope-why em { font-style: normal; font-variation-settings: 'wght' 600; color: var(--ink); }

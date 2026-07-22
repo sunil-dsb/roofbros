@@ -56,7 +56,8 @@
   border-radius: var(--r-pill);
 }
 .status.measured { background: var(--panel); color: var(--body); }
-.status.quoted { background: var(--warn-tint); color: var(--warn); }
+.status.quoted { background: var(--link-tint); color: var(--link); } /* slate-blue: a priced quote is informational — distinct from grey Measured, amber Requested, green Delivered. The one status use of the wayfinding blue, so all four states read apart. Amber aging-dot still pops on it. */
+.status.requested { background: var(--warn-tint); color: var(--warn); } /* delivery requested = in flight — the one active amber state between quoted and delivered */
 .status.delivery { background: var(--ok-tint); color: var(--ok); } /* delivered = job done, green */
 .status.error { background: var(--err-tint); color: var(--err); }
 /* age-dot is never colour-alone (WCAG 1.4.1): every instance carries
@@ -377,6 +378,23 @@
 .li .lr { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: none; }
 .li .lp { font-family: var(--font-ui); font-size: var(--t-micro); color: var(--body); font-variant-numeric: tabular-nums; }
 .li .lp b { font-variation-settings: 'wght' 600; color: var(--ink); }
+
+/* D1a quote cards — each quote opens read-only AND carries its own Send, so
+   which price goes to the customer is never ambiguous on a two-quote job */
+.qcard { border: 1px solid var(--line-soft); background: var(--surface); margin-bottom: 10px; }
+/* press state to match every other tappable surface (.hub .h, .chip.on, .cl-card,
+   .opt-card) — the quote row was the one tappable card that never responded to touch */
+.qcard:active { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+.qcard-open {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 13px 14px; background: none; border: none; text-align: left; /* evened out — the 10px bottom was clearance for the removed submit foot */
+  cursor: pointer; appearance: none; -webkit-appearance: none; font-family: var(--font-ui);
+}
+.qcard-open .n { flex: 1; font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
+.qcard-open .n small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); }
+.qcard-open .q { font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
+.qcard-open .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.qcard-foot { padding: 0 14px 12px; display: flex; justify-content: flex-end; }
 
 /* totals bar */
 .total-bar {

@@ -832,6 +832,151 @@
                   ><i class="ic-batt"></i
                 ></span>
               </div>
+              <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Set up your business.</div>
+                  <p class="auth-sub">
+                    Just once. This prints on every quote and delivery docket.
+                  </p>
+                </div>
+                <div class="input-group" style="margin-top: 12px">
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>ABN</label
+                      ><span class="val">51 824 753 556</span>
+                    </div>
+                    <i class="ic ic-check" style="color: var(--ok)"></i>
+                  </div>
+                  <div class="ig-row">
+                    <div class="ig-t">
+                      <label>Business name</label
+                      ><span class="val">Robson Roofing Pty Ltd</span>
+                    </div>
+                  </div>
+                  <div class="ig-row focus">
+                    <div class="ig-t">
+                      <label>Phone</label
+                      ><span class="val">0412 345 678</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="serif-note" style="margin-top: 8px">
+                  ABN checked against the free ABN Lookup register &mdash; we
+                  filled your business name from it. Registered for GST.
+                </p>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Save &amp; continue
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0F &middot; Set up your business</b>The missing capture, added
+            &mdash; runs once straight after <b>0C create account</b>, before
+            the first-run tour, so a roofer never reaches a quote with a blank
+            docket header. <b>Business name and ABN are both required.</b> The
+            roofer types the one hard number &mdash; their <b>ABN</b> &mdash;
+            and we validate it two ways: an instant on-device <b>mod-89
+            checksum</b> (no network, catches typos), then the free
+            <b>ABN&nbsp;Lookup</b> register, which hands back the registered
+            business name so we <b>auto-fill it</b> &mdash; less typing, no
+            misspelled name on a quote (the &ldquo;reduce their work&rdquo;
+            rule). That&rsquo;s why ABN sits first: enter it, the rest fills
+            itself. Green tick = verified; phone completes the three details
+            that print on quotes and dockets (the same set F1 later edits).
+            One-time and required, so there&rsquo;s no &times; to skip &mdash;
+            same as 0E success. <em>(ABR Lookup is a small external dependency
+            &mdash; keys sit with the client per the brief; the checksum works
+            with zero dependencies regardless.)</em>
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div style="padding-top: 24px">
+                  <div class="auth-h">Set up your business.</div>
+                  <p class="auth-sub">
+                    Just once. This prints on every quote and delivery docket.
+                  </p>
+                </div>
+                <div style="margin-top: 12px">
+                  <div class="input-group">
+                    <div
+                      class="ig-row"
+                      style="
+                        background: var(--field-active);
+                        outline: 1.5px solid var(--err);
+                        outline-offset: -1.5px;
+                      "
+                    >
+                      <div class="ig-t">
+                        <label>ABN</label
+                        ><span class="val">51 824 753 555</span>
+                      </div>
+                    </div>
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Business name</label
+                        ><span class="val ph">Filled from your ABN</span>
+                      </div>
+                    </div>
+                    <div class="ig-row">
+                      <div class="ig-t">
+                        <label>Phone</label
+                        ><span class="val ph">Your business number</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="field-error">
+                    That ABN doesn&rsquo;t check out &mdash; it&rsquo;s 11
+                    digits and the last one didn&rsquo;t match. Look for a
+                    transposed number.
+                  </p>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Save &amp; continue
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>0F &middot; Set up your business &mdash; invalid ABN</b>The
+            checksum failing on blur, in the exact language as the 0C email
+            error: the ABN row lifts to white and outlines error-red,
+            everything typed is kept, and the message names the fix (&ldquo;a
+            transposed number&rdquo;), never just &ldquo;invalid.&rdquo; Because
+            the checksum runs on-device, this fires instantly &mdash; the roofer
+            never waits on a round-trip to learn they fat-fingered a digit.
+            Business name stays empty until a valid ABN resolves it. The button
+            stays enabled so the retry is one tap.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
               <div class="appbody appbody-scroll">
                 <div class="screen-title" style="justify-content: flex-end">
                   <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
@@ -1065,6 +1210,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="welcome-card">
@@ -1127,6 +1273,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="job-card">
@@ -1190,10 +1337,10 @@
                     />
                   </div>
                   <div class="jt">
-                    <b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span>
+                    <b>21 Hume Hwy, Chullora</b><span>Delivery requested &middot; today</span>
                   </div>
                   <div class="jr">
-                    <span class="status delivery">Delivered</span
+                    <span class="status requested">Requested</span
                     ><span class="val">$9,480</span>
                   </div>
                 </div>
@@ -1226,6 +1373,66 @@
               </div>
               <div class="appbody">
                 <div class="screen-title">
+                  <h5>Jobs</h5>
+                  <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
+                </div>
+                <div class="chip-row">
+                  <span class="chip">All</span
+                  ><span class="chip on">Measured</span
+                  ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
+                  ><span class="chip">Delivered</span>
+                </div>
+                <div class="job-card">
+                  <div class="thumb">
+                    <img
+                      src="../assets/photos/ba1-before.jpg"
+                      alt="88 Marion Rd, Auburn"
+                    />
+                  </div>
+                  <div class="jt">
+                    <b>88 Marion Rd, Auburn</b><span>Measured yesterday</span>
+                  </div>
+                  <div class="jr">
+                    <span class="status measured">Measured</span
+                    ><span class="val">&mdash;</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar">
+                <span class="t on"><i class="ic ic-home"></i>Jobs</span>
+                <span class="t"><i class="ic ic-plus"></i>New</span>
+                <span class="t"><i class="ic ic-palette"></i>Colours</span>
+                <span class="t"><i class="ic ic-user"></i>Profile</span>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>A1 &middot; Jobs hub &mdash; Measured filter</b>The filtered state
+            you flagged as missing. Tapping the <b>Measured</b> chip narrows the
+            same list to jobs measured but not yet quoted &mdash; here just
+            <b>88 Marion Rd</b>, the one measured job in the set (its value shows
+            &ldquo;&mdash;&rdquo; because there&rsquo;s no quote yet). Same
+            header, chips and cards as the home hub &mdash; the list narrows in
+            place, it never becomes a separate results view. When a filter has no
+            matches it reads a quiet <em>&ldquo;No measured jobs yet&rdquo;</em>
+            line in the same slot (the empty-filter state).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
                   <div class="search-field">
                     <i class="ic ic-search"></i
                     ><span>Search jobs, addresses&hellip;</span>
@@ -1236,6 +1443,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="job-card">
@@ -1299,10 +1507,10 @@
                     />
                   </div>
                   <div class="jt">
-                    <b>21 Hume Hwy, Chullora</b><span>Delivered 2 Jul</span>
+                    <b>21 Hume Hwy, Chullora</b><span>Delivery requested &middot; today</span>
                   </div>
                   <div class="jr">
-                    <span class="status delivery">Delivered</span
+                    <span class="status requested">Requested</span
                     ><span class="val">$9,480</span>
                   </div>
                 </div>
@@ -1327,7 +1535,11 @@
           </p>
         </div>
 
-        <div class="screen-slot">
+        <div class="screen-slot descoped">
+          <div class="scope-flag">
+            <b>Out of MVP scope</b>
+            <span><em>Offline sync</em> is out of scope in the build brief. This whole screen &mdash; saved jobs still opening with no signal, plus the &ldquo;syncs when you&rsquo;re back&rdquo; promise &mdash; <em>is</em> that capability. Greyed for reference, not deleted. MVP options: drop it, or show a plain &ldquo;No connection&rdquo; state with no sync claim.</span>
+          </div>
           <div class="phone">
             <span class="island"></span>
             <div class="screen">
@@ -1356,6 +1568,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="job-card">
@@ -1429,6 +1642,66 @@
               </div>
               <div class="appbody appbody-scroll">
                 <div class="screen-title">
+                  <h5 style="font-size: var(--t-title)">88 Marion Rd, Auburn</h5>
+                  <span class="status measured">Measured</span>
+                </div>
+                <div class="aerial photo" style="height: 130px"></div>
+                <div class="hub">
+                  <button class="h">
+                    <b>Measurement</b><span>175 m² · 26.0° · 96%</span>
+                  </button>
+                  <button class="h">
+                    <b>Quotes</b><span>None yet</span>
+                  </button>
+                  <button class="h">
+                    <b>Photos (2)</b><span>site shots</span>
+                  </button>
+                  <button class="h">
+                    <b>Notes</b><span>None yet</span>
+                  </button>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Start a quote
+                </button>
+                <div class="timeline">
+                  <div class="ev done"><b>Measured</b> · yesterday</div>
+                  <div class="ev">Quoted</div>
+                  <div class="ev">Requested</div>
+                  <div class="ev">Delivered</div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1 &middot; Job detail &mdash; Measured (no quote yet)</b>The
+            other job state, and the one that was missing: what opens when you
+            tap a <b>Measured</b> job like 88 Marion. Same hub as the Quoted D1,
+            but the job hasn&rsquo;t been priced &mdash; so <b>Quotes</b> reads
+            &ldquo;None yet,&rdquo; the status pill is grey <b>Measured</b>, and
+            the primary is <b>Start a quote</b>, not Request delivery (you
+            can&rsquo;t deliver materials that aren&rsquo;t quoted). The timeline
+            shows only <b>Measured</b> done. <b>How it becomes Quoted:</b>
+            Start a quote skips address and measuring &mdash; the roof is
+            already measured &mdash; and jumps straight to colour &rarr; C1 (the
+            quote) &rarr; C3 (saved). On save the job flips to <b>Quoted</b> and
+            shows the D1 you&rsquo;ve already seen (two quotes, Request
+            delivery). That closes the Measured &rarr; Quoted bridge.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
                   <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
                   <span class="status quoted">Quoted</span>
                 </div>
@@ -1448,19 +1721,13 @@
                   </button>
                 </div>
                 <button class="btn btn-primary btn-full">
-                  Request delivery or pickup
-                </button>
-                <button class="btn btn-secondary btn-full">
-                  Send quote to customer
+                  Request delivery
                 </button>
                 <div class="timeline">
                   <div class="ev done"><b>Quote saved</b> · 6 Jul</div>
-                  <div class="ev now">
-                    <b>Delivery requested</b> · #DR-2481 · awaiting
-                    confirmation
-                  </div>
+                  <div class="ev">Delivery requested</div>
                   <div class="ev">Scheduled</div>
-                  <div class="ev">Delivered · proof photo attached</div>
+                  <div class="ev">Delivered</div>
                 </div>
               </div>
               <div class="tabbar">
@@ -1473,16 +1740,150 @@
             </div>
           </div>
           <p class="cap">
-            <b>D1 · Job detail</b>The hub: measurement, quotes, photos, notes —
-            and the delivery button on every job, always. Every tile is a
-            real button opening its own screen: Measurement &rarr; the B3
-            review, Quotes &rarr; D1a, Photos &rarr; D1b, Notes &rarr; D1c
-            (all three follow). <b>Send quote to customer</b> is the
-            deliberate share step C3 refers to (SMS/email a customer-facing
-            copy; never automatic). The delivery timeline row is tappable and
-            opens the delivery detail (D4, further on), and the whole screen
-            scrolls now that it's grown. Status timeline updates with push at
-            every step.
+            <b>D1 · Job detail</b>The hub: measurement, quotes, photos, notes.
+            Every tile is a real button opening its own screen: Measurement
+            &rarr; the read-only measurement detail, Quotes &rarr; D1a,
+            Photos &rarr; D1b, Notes &rarr; D1c. <b>Request delivery</b> is the
+            one primary here &mdash; short label, since deliver-vs-pickup is
+            chosen inside D2. It&rsquo;s quote-aware: with one quote it goes
+            straight to the request; with two or more it opens a quick
+            &ldquo;which quote?&rdquo; chooser (next) &mdash; shallow for the
+            common case, unambiguous when it matters. The delivery timeline row
+            opens the delivery detail; the whole screen scrolls.
+            <span class="scope-why"><b>Scope note:</b> the old &ldquo;timeline updates with push&rdquo; line is dropped &mdash; push is out of MVP scope. The timeline reflects what the roofer has done (requested), not live driver status.</span>
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <h5 style="font-size: var(--t-title)">14 Banksia St, Ryde</h5>
+                  <span class="status quoted">Quoted</span>
+                </div>
+                <div class="aerial photo" style="height: 130px"></div>
+                <div class="hub">
+                  <button class="h">
+                    <b>Measurement</b><span>230 m² · 22.4° · 98%</span>
+                  </button>
+                  <button class="h">
+                    <b>Quotes (2)</b><span>$24,985 · Pottery Brown</span>
+                  </button>
+                  <button class="h">
+                    <b>Photos (4)</b><span>site + before shots</span>
+                  </button>
+                  <button class="h">
+                    <b>Notes</b><span>"access via rear lane"</span>
+                  </button>
+                </div>
+                <button class="btn btn-primary btn-full">
+                  Request delivery
+                </button>
+              </div>
+              <div class="scrim sheet">
+                <div class="dialog">
+                  <h4>Choose a quote to proceed</h4>
+                  <p>
+                    This job has two saved quotes. Pick the one you want to
+                    proceed with &mdash; we&rsquo;ll request delivery for that
+                    quote&rsquo;s materials.
+                  </p>
+                  <div class="hub" style="margin-top: 4px">
+                    <button class="h">
+                      <b>Pottery Brown · New Install</b
+                      ><span>#Q-10235 · $24,985</span>
+                    </button>
+                    <button class="h">
+                      <b>Coastal Terracotta · Restoration</b
+                      ><span>#Q-10234 · $2,145</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1 &middot; Request delivery &mdash; quote chooser</b>The
+            disambiguation step, shown only when it&rsquo;s needed. Tapping
+            <b>Request delivery</b> on a job with <em>one</em> quote skips this
+            and goes straight to D2; with <em>two</em> (like this) a bottom sheet
+            asks which quote&rsquo;s materials to send &mdash; each row carries
+            its colour, ref&nbsp;# and price so the choice is obvious. Picking one
+            opens D2 pre-filled from that quote. This is what keeps the D1 button
+            both shallow (one tap for most jobs) and unambiguous (a deliberate
+            pick when there&rsquo;s more than one).
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                </div>
+                <div>
+                  <div class="auth-h">Measurement</div>
+                  <p class="auth-sub">14 Banksia St, Ryde</p>
+                </div>
+                <div class="aerial photo" style="height: 220px">
+                  <div class="roof" style="opacity: 0.5"></div>
+                  <div class="badge" style="left: 10px; right: auto">Imagery Mar 2025</div>
+                  <div class="badge">98% confidence</div>
+                </div>
+                <div class="hub">
+                  <div class="fig">
+                    <div class="v">230<small> m²</small></div>
+                    <div class="k">Roof area</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">22.4<small>°</small></div>
+                    <div class="k">Pitch</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">18.0<small> lm</small></div>
+                    <div class="k">Ridge</div>
+                  </div>
+                  <div class="fig">
+                    <div class="v">4</div>
+                    <div class="k">Roof faces</div>
+                  </div>
+                </div>
+                <div style="flex: 1"></div>
+                <button class="btn btn-secondary btn-full">Adjust outline</button>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D1d &middot; Measurement detail (read-only)</b>What the
+            <b>Measurement</b> tile on D1 opens for a <em>saved</em> job. It used
+            to point at B3 &mdash; but B3 is the <em>in-quote-flow</em> version,
+            carrying &ldquo;Choose paint &amp; colour&rdquo; on it. From a saved
+            job the measurement is reference only: the aerial + traced outline,
+            the same tabular figures (area, pitch, ridge, faces), imagery date
+            and confidence &mdash; no quote-building CTA. The one action is
+            <b>Adjust outline</b> (opens the B3a corner editor) for when the
+            roofer spots the trace is off. Back-only header &mdash; a detail
+            view, not a wizard step.
           </p>
         </div>
 
@@ -1507,34 +1908,30 @@
                   <div class="auth-h">Quotes</div>
                   <p class="auth-sub">14 Banksia St, Ryde</p>
                 </div>
-                <div
-                  style="
-                    border: 1px solid var(--line-soft);
-                    background: var(--surface);
-                    padding: 2px 14px;
-                  "
-                >
-                  <div class="li">
-                    <div class="n">
-                      Pottery Brown · New Install<small
+                <div class="qcard">
+                  <button class="qcard-open">
+                    <span class="n"
+                      >Pottery Brown · New Install<small
                         >#Q-10235 · saved 6 Jul</small
-                      >
-                    </div>
+                      ></span
+                    >
                     <span class="q">$24,985</span>
                     <i class="ic ic-chevron"></i>
-                  </div>
-                  <div class="li">
-                    <div class="n">
-                      Coastal Terracotta · Restoration<small
+                  </button>
+                </div>
+                <div class="qcard">
+                  <button class="qcard-open">
+                    <span class="n"
+                      >Coastal Terracotta · Restoration<small
                         >#Q-10234 · saved 3 Jul</small
-                      >
-                    </div>
+                      ></span
+                    >
                     <span class="q">$2,145</span>
                     <i class="ic ic-chevron"></i>
-                  </div>
+                  </button>
                 </div>
                 <div style="flex: 1"></div>
-                <button class="btn btn-secondary btn-full">
+                <button class="btn btn-primary btn-full">
                   Start another quote
                 </button>
               </div>
@@ -1543,13 +1940,18 @@
           </div>
           <p class="cap">
             <b>D1a &middot; Quotes</b>Both saved quotes for the site &mdash;
-            the restore price and the full-reroof price, the classic
-            side-by-side a roofer gives a customer. Rows open the saved quote
-            read-only (quote versions are snapshots, never overwritten
-            &mdash; build rule 1). <b>Start another quote</b> begins a new
-            quote with the address and measurement already attached: B0
-            &rarr; straight to colours, no re-entry (Hover&rsquo;s
+            the restore price and the full-reroof price, side by side so the
+            roofer can pick the approach. Each card <b>opens the quote
+            read-only</b> (versions are snapshots, never overwritten &mdash;
+            build rule 1). Delivery isn&rsquo;t requested from here anymore
+            &mdash; that moved back to the <b>D1 primary</b> (with the quote
+            chooser when there are two), which fixed the depth problem and the
+            competing-buttons problem in one go. So this screen is a clean list
+            with a single job: <b>Start another quote</b>, its one maroon
+            primary &mdash; a new quote with the address and measurement already
+            attached (B0 &rarr; straight to colours, no re-entry: Hover&rsquo;s
             &ldquo;no reentry&rdquo; rule, and a power-user shortcut).
+            <span class="scope-why"><b>Scope note:</b> the separate <em>submit order to RoofBros</em> (stock/ordering integration) stays out of MVP scope; the one in-scope handoff is <em>Request delivery</em>, now on D1.</span>
           </p>
         </div>
 
@@ -1611,20 +2013,22 @@
               </div>
               <div class="fr-cta">
                 <button class="btn btn-primary btn-full">
-                  <i class="ic ic-camera"></i> Take photo
+                  <i class="ic ic-camera"></i> Add photo
                 </button>
               </div>
               <div class="home-ind"></div>
             </div>
           </div>
           <p class="cap">
-            <b>D1b &middot; Photos</b>The CompanyCam pattern from the
-            research: <b>one tap to capture</b> (pinned button, gloves-first),
-            GPS auto-attaches the shot to this job, and the time stamp is
-            burned on &mdash; the before/after evidence trail that wins
-            disputes. Grouped by day, newest first; markup (arrows, circles)
-            happens after the shutter, never before. Uploads queue offline
-            and survive signal drops, per build rule 12.
+            <b>D1b &middot; Photos</b>The CompanyCam pattern from the research,
+            gloves-first. <b>Add photo</b> opens a quick sheet &mdash;
+            <em>Take photo</em> or <em>Choose from library</em> &mdash; so a
+            roofer can shoot on the spot or pull in shots already on their
+            phone. Camera shots get GPS + a burned-on time stamp (the
+            before/after evidence trail that wins disputes); imported ones come
+            in as-is. Grouped by day, newest first; markup (arrows, circles)
+            happens after the shutter.
+            <span class="scope-why"><b>Scope note:</b> the earlier &ldquo;uploads queue offline&rdquo; line is dropped &mdash; offline sync is out of MVP scope.</span>
           </p>
         </div>
 
@@ -1909,6 +2313,7 @@
           </div>
           <p class="cap">
             <b>D3 &middot; Request submitted</b>Delivers on the reference number D2 always promised but never showed. One shared success screen for both Deliver-to-site and Pickup-at-yard &mdash; the copy above is the only thing that would vary by path.
+            <span class="scope-why"><b>Scope note:</b> the screen itself stays &mdash; a delivery/pickup <em>request</em> is in scope. Only the push line, &ldquo;we&rsquo;ll text you when it&rsquo;s on the way,&rdquo; leans on <em>push notifications</em> (out of scope). Soften to a no-push confirmation for MVP.</span>
           </p>
         </div>
 
@@ -1928,12 +2333,12 @@
                   <button class="icon-btn" aria-label="Go back">
                     <i class="ic ic-back"></i>
                   </button>
-                  <span class="status delivery">Delivered</span>
+                  <span class="status requested">Requested</span>
                 </div>
                 <div>
                   <div class="auth-h">Delivery #DR-2481</div>
                   <p class="auth-sub">
-                    14 Banksia St, Ryde &middot; Thu 16 Jul, morning
+                    14 Banksia St, Ryde &middot; for Thu 16 Jul, morning
                   </p>
                 </div>
                 <div
@@ -1946,7 +2351,7 @@
                   <div class="li">
                     <div class="n">
                       Main tiles · Pottery Brown<small
-                        >recycled Marseille</small
+                        >from quote · recycled Marseille</small
                       >
                     </div>
                     <div class="q">2,912</div>
@@ -1958,21 +2363,15 @@
                 </div>
                 <div class="timeline">
                   <div class="ev done"><b>Requested</b> · Tue 14 Jul, 9:41am</div>
-                  <div class="ev done"><b>Scheduled</b> · Thu 16 Jul, AM window</div>
-                  <div class="ev done"><b>Out for delivery</b> · 8:05am</div>
-                  <div class="ev done"><b>Delivered</b> · 10:42am</div>
+                  <div class="ev">Confirmed by RoofBros</div>
+                  <div class="ev">Scheduled</div>
+                  <div class="ev">Delivered</div>
                 </div>
-                <div class="field">
-                  <label>Proof of delivery</label>
-                  <div style="border: 1px solid var(--line-soft)">
-                    <img
-                      src="../assets/photos/ba2-after.jpg"
-                      alt="Tiles stacked on the driveway at 14 Banksia St"
-                      style="display: block; width: 100%; height: 118px; object-fit: cover"
-                    />
-                  </div>
-                  <p class="serif-note" style="margin-top: 6px">
-                    Left on the driveway, clear of the carport &middot; 10:42am
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>Pending with RoofBros.</b> They&rsquo;ll confirm the date
+                    and stock; it updates here once they do.
                   </p>
                 </div>
               </div>
@@ -1980,15 +2379,99 @@
             </div>
           </div>
           <p class="cap">
-            <b>D4 &middot; Delivery detail</b>Opened from the delivery row on
-            the job timeline (D1). The full status ladder the D1 timeline
-            only names &mdash; Requested &rarr; Scheduled &rarr; Out for
+            <b>D3a &middot; Delivery request &mdash; Requested (pending)</b>The
+            honest MVP state, and the answer to &ldquo;what happens after I
+            request?&rdquo; Opened from a <b>Requested</b> job or the D1 timeline
+            row. It shows the request itself &mdash; ref&nbsp;#, the
+            quote&rsquo;s materials, the preferred day/window &mdash; over a
+            timeline where only <b>Requested</b> is done; the rest wait on
+            RoofBros. The amber banner names the state plainly, without promising
+            a push it can&rsquo;t send.
+            <span class="scope-why"><b>Scope note:</b> Confirmed / Scheduled / Delivered light up only when RoofBros&rsquo; side (stock/ordering integration + push) ships &mdash; out of MVP scope; the live-tracked <b>Delivered</b> version (D4, next) stays greyed. Per your call we draw <em>Pending only</em> for now &mdash; no Declined state yet.</span>
+          </p>
+        </div>
+
+        <div class="screen-slot descoped">
+          <div class="scope-flag">
+            <b>Out of MVP scope</b>
+            <span>This D4 as a <em>live tracker</em> needs two out-of-scope things: <em>push</em> (to announce status changes) and <em>stock/ordering integration</em> (for RoofBros to drive Requested&rarr;Scheduled&rarr;Out&rarr;Delivered and attach the driver&rsquo;s proof photo). For MVP it survives as a <em>static record of what was requested</em>, not a live delivered state. Greyed, not deleted.</span>
+          </div>
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody appbody-scroll">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                  <span class="status delivery">Delivered</span>
+                </div>
+                <div>
+                  <div class="auth-h">Delivery #DR-2455</div>
+                  <p class="auth-sub">
+                    3 Coral Ave, Cronulla &middot; Fri 4 Jul, morning
+                  </p>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--line-soft);
+                    background: var(--surface);
+                    padding: 2px 14px;
+                  "
+                >
+                  <div class="li">
+                    <div class="n">
+                      Main tiles · Barramundi<small
+                        >recycled Elabana</small
+                      >
+                    </div>
+                    <div class="q">2,840</div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Ridge caps</div>
+                    <div class="q">40</div>
+                  </div>
+                </div>
+                <div class="timeline">
+                  <div class="ev done"><b>Requested</b> · Wed 2 Jul, 4:12pm</div>
+                  <div class="ev done"><b>Scheduled</b> · Fri 4 Jul, AM window</div>
+                  <div class="ev done"><b>Out for delivery</b> · 7:50am</div>
+                  <div class="ev done"><b>Delivered</b> · 9:30am</div>
+                </div>
+                <div class="field">
+                  <label>Proof of delivery</label>
+                  <div style="border: 1px solid var(--line-soft)">
+                    <img
+                      src="../assets/photos/ba3-after.jpg"
+                      alt="Tiles stacked on the driveway at 3 Coral Ave, Cronulla"
+                      style="display: block; width: 100%; height: 118px; object-fit: cover"
+                    />
+                  </div>
+                  <p class="serif-note" style="margin-top: 6px">
+                    Left on the driveway, clear of the carport &middot; 9:30am
+                  </p>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>D4 &middot; Delivery detail</b>Opened from the delivery row on a
+            <b>delivered</b> job&rsquo;s timeline &mdash; shown here for
+            <b>3 Coral Ave</b> (D1 is a different job still awaiting its
+            delivery request, so they carry different reference numbers). The
+            full status ladder &mdash; Requested &rarr; Scheduled &rarr; Out for
             delivery &rarr; Delivered, each stamped &mdash; plus the
             driver&rsquo;s <b>proof-of-delivery photo</b> and drop note, so
-            &ldquo;where are my tiles?&rdquo; is answered without a phone
-            call (the whole point of the delivery moat). Shown here in its
-            end state; earlier states are the same screen with fewer green
-            dots and no photo yet.
+            &ldquo;where are my tiles?&rdquo; is answered without a phone call
+            (the whole point of the delivery moat).
           </p>
         </div>
 
@@ -2027,6 +2510,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="welcome-card">
@@ -2644,7 +3128,7 @@
             </div>
           </div>
           <p class="cap">
-            <b>C2 · Colour visualiser</b>The "kitchen-table close": a tile
+            <b>C2 · Colour visualiser</b>The roofer&rsquo;s final colour check before ordering: a tile
             sample on a neutral grey stage (#ECECEC), a clean rectangle,
             recoloured live in the chosen coating colour (this is the
             Restoration path — the tiles stay, the coat changes). Tap a
@@ -2704,8 +3188,8 @@
             preview changed (exactly your point about the toggle). The tile
             sample is now split by a draggable slider: the saved colour on the
             left, a second colour on the right. Drag the handle to reveal more
-            of either; tap a swatch to change the right side. The kitchen-table
-            moment, weighing two colours on one roof.
+            of either; tap a swatch to change the right side. Weighing two
+            colours on one roof before committing the order.
           </p>
         </div>
         <div class="screen-slot">
@@ -2733,7 +3217,7 @@
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">
-                    Send quote to customer
+                    Request delivery
                   </button>
                   <button class="btn btn-secondary btn-full">View job</button>
                 </div>
@@ -2746,11 +3230,12 @@
             quote&rdquo; had no confirmation before. The badge settles in
             once (450ms ease-out pop + success haptic; reduced-motion gets
             the static badge) &mdash; the one celebratory motion in the app,
-            spent on the peak. Primary is <b>Send quote to customer</b>: the
-            kitchen-table close just happened, so the highest-value next
-            action is one tap away &mdash; still deliberate, never automatic.
+            spent on the peak. Primary is <b>Request delivery</b> for the
+            just-saved quote &mdash; the one in-scope handoff, so the next step
+            (booking the recycled tiles in for this quote) is one tap away.
             <b>View job</b> is the quiet secondary. No close/back button,
             matching 0E &mdash; there&rsquo;s nothing left to cancel.
+            <span class="scope-why"><b>Scope note:</b> primary is now <em>Request delivery</em>, <em>View job</em> the calm secondary. The separate order-submission to RoofBros (stock/ordering integration) stays out of MVP scope.</span>
           </p>
         </div>
 
@@ -2851,6 +3336,7 @@
                   <span class="chip on">All</span
                   ><span class="chip">Measured</span
                   ><span class="chip">Quoted</span
+                  ><span class="chip">Requested</span
                   ><span class="chip">Delivered</span>
                 </div>
                 <div class="welcome-card">
@@ -3562,7 +4048,7 @@
             </div>
           </div>
           <p class="cap">
-            <b>C2 · Colour visualiser &mdash; New Install path</b>The "kitchen-table close": a
+            <b>C2 · Colour visualiser &mdash; New Install path</b>The roofer&rsquo;s final colour check before ordering: a
             recycled-tile sample on a neutral grey stage (#ECECEC), a clean
             rectangle, recoloured live. Tap a swatch and the tiles re-tint in
             under 250ms with shadows preserved (the mockup fakes it with
@@ -3597,7 +4083,7 @@
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">
-                    Send quote to customer
+                    Request delivery
                   </button>
                   <button class="btn btn-secondary btn-full">View job</button>
                 </div>
@@ -3608,9 +4094,10 @@
           <p class="cap">
             <b>C3 &middot; Quote saved</b>Same terminal screen as the
             Restoration path &mdash; one success state shared by both quote
-            flows, same pop-in and same two actions: send now (deliberate,
-            never automatic) or view the job. D1 keeps its own send button
-            for quotes saved earlier.
+            flows, same pop-in and same two actions: <b>Request delivery</b>
+            for this quote, or view the job. Requesting delivery later also
+            lives per-quote in D1a.
+            <span class="scope-why"><b>Scope note:</b> same as the Restoration C3 &mdash; primary is now <em>Request delivery</em>, <em>View job</em> secondary; the order-submission to RoofBros stays out of MVP scope.</span>
           </p>
         </div>
 
@@ -3890,7 +4377,7 @@
             before. The PDF renders in-app (skeleton shown here; the build
             uses a native PDF view), and <b>Share data sheet</b> opens the OS
             share sheet: email it to the certifier for BASIX sign-off, print
-            it, AirDrop it to the customer, save to Files &mdash; one button,
+            it, AirDrop it, save to Files &mdash; one button,
             every destination, no custom viewer chrome to maintain.
             Back-only header, same sub-detail rule as E2.
           </p>
