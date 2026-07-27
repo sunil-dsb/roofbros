@@ -14,6 +14,17 @@
   .suggest { scrollbar-width: thin; }
   .suggest .s-row { padding: 12px 14px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); border-bottom: 1px solid var(--line-soft); display: flex; gap: 10px; align-items: center; }
   .suggest .s-row:last-child { border-bottom: none; }
+  /* always the last row, never a separate screen: Places can fail on a new
+     estate or a rural block, and the roofer still has to create the job —
+     every job is identified by its address (hub, job detail, delivery, quote),
+     so it can't just be skipped. The fallback stays ON this screen: drop the
+     pin on the roof and read the address back from it. Fewer taps than a
+     four-field form, and more accurate, since the pin is what the measurement
+     runs on. Permanent row (Google/Uber pattern) so nothing depends on an
+     empty-results state firing. */
+  .suggest .s-manual { width: 100%; background: none; border-top: 1px solid var(--line-soft); text-align: left; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .suggest .s-manual .ic { color: var(--accent); }
+  .suggest .s-manual b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
   .suggest .s-row small { color: var(--muted); font-size: var(--t-caption); }
   /* the glow is a gradient (an image effect on the photo, same class as the
      legibility scrims), not a box-shadow — keeps the no-shadow rule intact */
@@ -377,13 +388,15 @@
 .note-card p { font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--ink); }
 .note-card .when { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
 
-/* editable delivery/pickup address row — a tappable field showing the target
-   address with a "Change" affordance so a wrong address can be corrected */
-.addr-field { width: 100%; justify-content: space-between; cursor: pointer; appearance: none; -webkit-appearance: none; text-align: left; }
+/* delivery/pickup address row — READ-ONLY by design. Materials go to the roof
+   that was measured, so the destination is the job's own site address and
+   can't drift from it; a typo here sends a truck to the wrong house. "Where
+   exactly on the property" is the drop-zone note's job, not a second address.
+   Pickup shows RoofBros' fixed yard, which is never the roofer's to edit. */
+.addr-field { width: 100%; }
 .addr-field .addr-l { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .addr-field .addr-l > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .addr-field .addr-l .ic { flex: none; color: var(--muted); }
-.addr-field .addr-change { flex: none; color: var(--link); font-variation-settings: 'wght' 600; font-size: var(--t-caption); text-decoration: underline; text-underline-offset: 2px; }
 
 /* ============================================================
    MVP SCOPE MARKING — documentation scaffolding, NOT shipped

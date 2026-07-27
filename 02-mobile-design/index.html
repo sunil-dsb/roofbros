@@ -1679,7 +1679,8 @@
                   </div>
                 </div>
                 <div style="flex: 1"></div>
-                <button class="btn btn-secondary btn-full">Adjust outline</button>
+                <button class="btn btn-secondary btn-full">
+                  Adjust measurement</button>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -1692,7 +1693,7 @@
             job the measurement is reference only: the aerial + traced outline,
             the same tabular figures (area, pitch, ridge, faces), imagery date
             and confidence &mdash; no quote-building CTA. The one action is
-            <b>Adjust outline</b> (opens the B3a corner editor) for when the
+            <b>Adjust measurement</b> (opens B3a) for when the
             roofer spots the trace is off. Back-only header &mdash; a detail
             view, not a wizard step.
           </p>
@@ -1856,9 +1857,6 @@
                 <button class="btn btn-primary btn-full">
                   Request delivery
                 </button>
-                <button class="btn btn-secondary btn-full">
-                  Start a revised quote
-                </button>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -1870,10 +1868,12 @@
             as C1 so it reads as the same document, with one deliberate
             difference: <b>the quantities aren&rsquo;t editable</b>. No
             keypad fields, no steppers &mdash; that&rsquo;s build rule 1 made
-            visible (a saved quote is a snapshot, never overwritten). To
-            change anything you take <b>Start a revised quote</b>, which
-            opens a new version with the address, measurement and colour
-            carried over; the original stays exactly as the customer saw it.
+            visible, and it needs no button to explain it (a saved quote is a
+            snapshot, never overwritten). A new version starts from
+            <b>Start another quote</b> on D1a, one level up &mdash; a
+            &ldquo;revise&rdquo; button here would have been the same action
+            under a second name, so this screen stays single-purpose: read
+            the quote, and book the materials for it.
             <b>Request delivery</b> is the primary, matching D1 and C3, and
             it skips the &ldquo;which quote?&rdquo; step since this one is
             already chosen. The total bar carries the reference and save date
@@ -2032,10 +2032,9 @@
                 </div>
                 <div class="field">
                   <label>Deliver to</label>
-                  <button class="control addr-field">
+                  <div class="control addr-field">
                     <span class="addr-l"><i class="ic ic-pin"></i><span>14 Banksia St, Ryde</span></span>
-                    <span class="addr-change">Change</span>
-                  </button>
+                  </div>
                 </div>
                 <div
                   style="
@@ -2106,8 +2105,12 @@
           <p class="cap">
             <b>D2 · Delivery request — deliver to site</b>Header now stacks
             (close on its own row, title below) like every other flow screen.
-            The delivery address is shown with a <b>Change</b> link so a wrong
-            address is fixable. Pre-filled from the quote; 24h-lead date +
+            The delivery address is <b>read-only</b>: materials go to the roof
+            that was measured, so the destination is the job&rsquo;s own site
+            address and can&rsquo;t drift from it &mdash; a typo here sends a
+            truck to the wrong house. Where exactly to drop them on the
+            property is the drop-zone note&rsquo;s job, not a second address.
+            Pre-filled from the quote; 24h-lead date +
             AM/PM window; drop-zone photo/notes plus a general notes field.
             Long form, so it scrolls with a pinned Submit. The &times; here
             confirms before discarding once anything&rsquo;s entered &mdash;
@@ -2137,10 +2140,9 @@
                 </div>
                 <div class="field">
                   <label>Pick up from</label>
-                  <button class="control addr-field">
+                  <div class="control addr-field">
                     <span class="addr-l"><i class="ic ic-pin"></i><span>RoofBros yard · 8 Kellogg Rd, Rooty Hill</span></span>
-                    <span class="addr-change">Change</span>
-                  </button>
+                  </div>
                 </div>
                 <div
                   style="
@@ -2204,7 +2206,8 @@
           <p class="cap">
             <b>D2 · Delivery request — pickup at yard</b>The other segment
             state (the missing screen). Shows the RoofBros <b>yard address</b>
-            to collect from (also editable via Change), swaps drop-zone for
+            to collect from &mdash; read-only, and never the roofer&rsquo;s to
+            edit: it&rsquo;s RoofBros&rsquo; own yard. Swaps drop-zone for
             <b>Pickup notes</b> since you're collecting, and keeps the same
             materials, date and window.
           </p>
@@ -2335,14 +2338,9 @@
                 </div>
               </div>
               <div class="fr-cta">
-                <div style="display: flex; flex-direction: column; gap: 10px">
-                  <button class="btn btn-secondary btn-full">
-                    Change day or window
-                  </button>
-                  <button class="btn btn-danger btn-full">
-                    Cancel request
-                  </button>
-                </div>
+                <button class="btn btn-danger btn-full">
+                  Cancel request
+                </button>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -2362,12 +2360,13 @@
             here. Laid over a
             timeline where only <b>Requested</b> is done; the rest wait on
             RoofBros. The amber banner names the state plainly, without promising
-            a push it can&rsquo;t send. Two actions sit pinned at the foot,
-            because a pending request is the roofer&rsquo;s to change:
-            <b>Change day or window</b> reopens D2 pre-filled (resubmitting
-            keeps the same reference), and <b>Cancel request</b> confirms
-            first &mdash; next frame. Nothing here is a dead end any more: a
-            wrong Thursday can be made a Friday without ringing anyone.
+            a push it can&rsquo;t send. One action sits pinned at the foot:
+            <b>Cancel request</b>, which confirms first (next frame). A wrong
+            Thursday is fixed by cancelling and requesting again &mdash; not
+            by a separate &ldquo;change&rdquo; path, which would need RoofBros
+            to handle an <em>amended</em> request as distinct from a new one.
+            Cancel-then-rebook is unambiguous on both sides, and while the
+            request is still Pending nothing has been booked to amend.
             <span class="scope-why"><b>Scope note:</b> Confirmed / Scheduled / Delivered light up only when RoofBros&rsquo; side (stock/ordering integration + push) ships &mdash; out of MVP scope; the live-tracked <b>Delivered</b> version (D4, next) stays greyed. Per your call we draw <em>Pending only</em> for now &mdash; no Declined state yet. <b>Change/cancel is in scope</b> though: while a request is still Pending nobody has acted on it, so it&rsquo;s the roofer&rsquo;s own record to edit &mdash; no RoofBros integration needed.</span>
           </p>
         </div>
@@ -2579,9 +2578,11 @@
                     </p>
                   </div>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  Start a job <i class="ic ic-plus"></i>
-                </button> 
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Start a job <i class="ic ic-plus"></i>
+                  </button>
+                </div>
               </div>
               <div class="tabbar">
                 <span class="t"><i class="ic ic-home"></i>Jobs</span>
@@ -2697,6 +2698,10 @@
                       >14 Banksia Cl, Castle Hill NSW <small>· 31 km</small></span
                     >
                   </div>
+                  <button class="s-row s-manual">
+                    <i class="ic ic-pin"></i>
+                    <span>Can&rsquo;t find it? <b>Drop a pin instead</b></span>
+                  </button>
                 </div>
                 <div class="aerial photo" style="height: 168px">
                   <div class="pin"></div>
@@ -2706,9 +2711,11 @@
                   Already have your measurements?
                   <b>Enter them manually</b>
                 </p>
-                <button class="btn btn-primary btn-full">
-                  Confirm address
-                </button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Confirm address
+                  </button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -2722,75 +2729,17 @@
             Manual measurements instead, and nothing here should imply
             a scan that isn't coming. The "Enter them manually" link is the
             other route in, for either job type, any time the roofer already
-            has the numbers. Real aerial photo now, not the flat gradient —
+            has the numbers. If Places can't find the address at all — a new
+            estate with no street data yet, a rural block — the last row of
+            the list is <b>"Can't find it? Drop a pin instead"</b>: the
+            roofer positions the pin on the actual roof and the address is
+            read back from where the pin lands. No separate address form, no
+            typing four fields — and it's <em>more</em> accurate, since the
+            pin is what the measurement runs on anyway.
+            Real aerial photo now, not the flat gradient —
             only here and B2/B3, where it's standing in for actual Nearmap
             imagery; C2/D1 keep the abstract version since that one's an
             illustration of a colour, not a location.
-          </p>
-        </div>
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
-                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
-                </div>
-                <div class="stepbar" role="img" aria-label="Step 2 of 4"><i class="on"></i><i class="on"></i><i></i><i></i></div>
-                <div>
-                  <div class="auth-h">Enter address</div>
-                  <p class="auth-sub">Type the site address by hand.</p>
-                </div>
-                <div class="field">
-                  <label>Street address</label>
-                  <div class="control focus">14 Banksia St</div>
-                </div>
-                <div class="field">
-                  <label>Suburb</label>
-                  <div class="control">Ryde</div>
-                </div>
-                <div style="display: flex; gap: 12px">
-                  <div class="field" style="flex: 1.5">
-                    <label>State</label>
-                    <div class="control" style="justify-content: space-between">
-                      NSW <i class="ic ic-chevron" style="transform: rotate(90deg)"></i>
-                    </div>
-                  </div>
-                  <div class="field" style="flex: 1">
-                    <label>Postcode</label>
-                    <div class="control">2112</div>
-                  </div>
-                </div>
-                <div style="flex: 1"></div>
-                <button class="btn btn-primary btn-full">
-                  Confirm address
-                </button>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>B1 · Manual address entry</b>The fallback to build for when Places
-            autocomplete can&rsquo;t resolve the address &mdash; a new estate, a
-            rural block, or no connection. B1&rsquo;s no-results state offers an
-            <b>&ldquo;Enter address manually&rdquo;</b> action that opens this.
-            Discrete AU fields so the record stays structured, never a free-text
-            blob: <b>Street address</b>, <b>Suburb</b>, <b>State</b> (a picker,
-            defaulting to the business&rsquo;s own state from 0F), and a 4-digit
-            numeric <b>Postcode</b>. <b>Confirm address</b> geocodes what was
-            typed and drops the same draggable pin as B1, then carries on to
-            measuring &mdash; or, if there&rsquo;s still no aerial imagery, to the
-            manual <b>Roof dimensions</b> screen. This is the address half of
-            &ldquo;enter everything by hand&rdquo;; the roof-figure half is that
-            Roof dimensions screen in the manual flow.
           </p>
         </div>
         <div class="screen-slot">
@@ -2857,7 +2806,69 @@
           <p class="cap">
             <b>B2 · The measuring reveal</b>Scan-line over the real roof, stages
             narrating real work, polygon drawing itself. 5–12s of earned trust —
-            never a spinner.
+            never a spinner. If the scan drops out part-way, the next frame
+            catches it.
+          </p>
+        </div>
+
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back">
+                    <i class="ic ic-back"></i>
+                  </button>
+                  <button class="icon-btn" aria-label="Close">
+                    <i class="ic ic-close"></i>
+                  </button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div>
+                  <div class="auth-h">Measuring stopped</div>
+                  <p class="auth-sub">14 Banksia St, Ryde</p>
+                </div>
+                <div class="aerial photo" style="height: 200px"></div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>The scan didn&rsquo;t finish.</b> The connection
+                    dropped part-way through. Nothing&rsquo;s lost &mdash; try
+                    again, or put the figures in yourself.
+                  </p>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Try again</button>
+                  <button class="btn btn-secondary btn-full">
+                    Enter measurements manually
+                  </button>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>B2 · Measuring stopped</b>The one moment the roofer was
+            watching a progress bar with no way out. A scan can drop at 60%
+            &mdash; signal goes on a roof, or the API times out &mdash; and
+            until now nothing was drawn for it. Same amber banner as every
+            other warning: it names the cause, says nothing is lost, and
+            offers both ways forward. <b>Try again</b> re-runs the scan (the
+            address and pin are already confirmed, so it costs one retry, not
+            the whole flow); <b>Enter measurements manually</b> is the same
+            escape hatch and the same wording as B1&rsquo;s failed state, so
+            the roofer meets one consistent way out. Distinct from that
+            state: there, imagery never existed; here it did and the trace
+            didn&rsquo;t finish &mdash; which is why retrying is worth
+            offering first.
           </p>
         </div>
         <div class="screen-slot">
@@ -2918,12 +2929,14 @@
                     </div>
                   </div>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  Choose paint &amp; colour
-                </button>
-                <button class="btn btn-secondary btn-full">
-                  Adjust outline
-                </button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Choose paint &amp; colour
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    Adjust measurement
+                  </button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -2934,8 +2947,9 @@
             names the next step for the job type chosen at B0 — <b>Choose
             paint &amp; colour</b> here (Restoration); a New Installation
             that measured by AI reads <b>Choose tile</b> (→ E1) instead.
-            <b>Adjust outline</b> opens the corner editor (B3a) — the button
-            says exactly what the screen does. The <b>imagery date</b>
+            <b>Adjust measurement</b> opens B3a — the button now names the
+            screen it opens, and both B3 states carry the same two buttons in
+            the same order (next frame). The <b>imagery date</b>
             (Nearmap's real surveyDate field) sits top-left: a roofer should
             know if the photo predates a reno — and hand-adjusting the
             outline is free while a re-scan costs Nearmap credits.
@@ -2967,7 +2981,7 @@
                 </div>
                 <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div class="auth-h">Measurement</div>
-                <div class="aerial photo" style="height: 168px">
+                <div class="aerial photo" style="height: 152px">
                   <div class="roof" style="opacity: 0.5"></div>
                   <div class="badge" style="left: 10px; right: auto">Imagery Mar 2025</div>
                   <div class="badge low">78% confidence</div>
@@ -2998,12 +3012,14 @@
                     <div class="k">Roof faces</div>
                   </div>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  Adjust outline
-                </button>
-                <button class="btn btn-secondary btn-full">
-                  Use these figures anyway
-                </button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Choose paint &amp; colour
+                  </button>
+                  <button class="btn btn-secondary btn-full">
+                    Adjust measurement
+                  </button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -3011,13 +3027,19 @@
           <p class="cap">
             <b>B3 · Low-confidence state (&lt;85%)</b>The real state the
             measurement API can return (it hands back a confidence value).
-            Amber badge on the image + an amber banner that names the likely
-            cause and the fix — never a silent bad number. The CTAs flip:
-            <b>Adjust outline</b> becomes the primary (recommended), with
-            "Use these figures anyway" kept as the secondary so the roofer
-            still has control (Postel's law). Distinct from the
-            measurement-failed state (no imagery at all → manual entry); here
-            the imagery exists but the AI is unsure.
+            <b>Same screen as B3, one variable:</b> the badge turns amber and
+            a banner names the likely cause and the fix — never a silent bad
+            number. The buttons deliberately <b>do not change</b>. An earlier
+            draft flipped them (Adjust as primary, "Use these figures anyway"
+            as secondary) and that was wrong on three counts: a roofer doing
+            five quotes a day learns the maroon button moves them forward, so
+            hijacking it drops them into an editor they didn't ask for; the
+            warning is already carried twice, by badge and banner; and "use
+            these anyway" scolds a professional who is looking straight at
+            the outline and can judge it. Low confidence is <em>uncertainty,
+            not unavailability</em> — the figures exist and are often fine.
+            Contrast the measurement-<b>failed</b> state, where changing the
+            CTA <em>is</em> right because the AI path is genuinely gone.
           </p>
         </div>
 
@@ -3083,8 +3105,8 @@
             </div>
           </div>
           <p class="cap">
-            <b>B3a &middot; Adjust measurement</b>Where <b>Adjust outline</b>
-            (B3, both states) goes &mdash; now with <b>two ways to fix a wrong
+            <b>B3a &middot; Adjust measurement</b>Where <b>Adjust measurement</b>
+            (B3, both states, and D1d) goes &mdash; now with <b>two ways to fix a wrong
             measurement</b>, since the AI can trace the wrong edges. <b>Drag a
             corner</b> of the measured polygon (white dot, maroon ring; the
             grabbed one swells) and area/pitch recompute live; <b>or tap any
@@ -3114,7 +3136,7 @@
                 </div>
                 <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div>
-                  <div class="auth-h">Quote details</div>
+                  <div class="auth-h">Paint &amp; colour</div>
                   <p class="auth-sub">Pick a brand and finish; add any extras.</p>
                 </div>
                 <div class="field">
@@ -3155,15 +3177,23 @@
                 <label class="check-row">
                   <span class="cbox"></span>This project is urgent
                 </label>
-                <button class="btn btn-primary btn-full">Build quote</button>
-                <button class="btn btn-secondary btn-full">Try on a roof</button>
+              </div>
+              <div class="fr-cta">
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <button class="btn btn-primary btn-full">Build quote</button>
+                  <button class="btn btn-secondary btn-full">Try on a roof</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
           </div>
           <p class="cap">
             <b>C0 · Paint &amp; colour — Restoration</b>The Restoration
-            material choice, aligned to the live app. <b>Paint brand</b>
+            material choice, aligned to the live app. Titled <b>Paint &amp;
+            colour</b>, matching the <em>Choose paint &amp; colour</em>
+            button that opens it — it read "Quote details" before, which
+            collided with C1 "Quote" and D1e "Quote" and promised a quote
+            that doesn't exist yet. <b>Paint brand</b>
             (Industrial roof coatings / Shield coat) drives a
             <b>brand-specific colour set</b> &mdash; the fix for the old mixed
             list: Industrial shows Dover White / Paperbark / Surfmist / Evening
@@ -3197,6 +3227,7 @@
                 <div class="screen-title">
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                 </div>
+                <div class="auth-h">Try a colour</div>
                 <div class="seg">
                   <span class="on">One colour</span><span>Compare two</span>
                 </div>
@@ -3218,7 +3249,9 @@
                   <button class="swatch p-gully" aria-label="Gully"></button>
                   <button class="swatch p-monument" aria-label="Monument"></button>
                 </div>
-                <button class="btn btn-primary btn-full">Build quote</button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Build quote</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -3232,7 +3265,10 @@
             press-and-hold shows the original; the One-colour / Compare-two
             toggle swaps the preview. Reached from C0&rsquo;s <b>Try on a
             roof</b>; it returns to the flow via <b>Build quote</b> &mdash;
-            back-only header, no stepbar, since it&rsquo;s a detour, not a
+            titled <b>Try a colour</b>, echoing the <em>Try on a roof</em>
+            button that opens it &mdash; it was the one screen in the app
+            with no heading at all, just a floating back arrow.
+            Back-only header and no stepbar, since it&rsquo;s a detour, not a
             required step. <b>No &ldquo;Save quote&rdquo; here</b> &mdash; saving
             happens once, at C1. →
           </p>
@@ -3252,6 +3288,7 @@
                 <div class="screen-title">
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                 </div>
+                <div class="auth-h">Try a colour</div>
                 <div class="seg">
                   <span>One colour</span><span class="on">Compare two</span>
                 </div>
@@ -3273,7 +3310,9 @@
                   <button class="swatch p-gully" aria-label="Gully"></button>
                   <button class="swatch p-monument" aria-label="Monument"></button>
                 </div>
-                <button class="btn btn-primary btn-full">Build quote</button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Build quote</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -3438,7 +3477,7 @@
                 <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div>
                   <div class="auth-h">Quote</div>
-                  <p class="auth-sub">Pottery Brown · New Install · 14 Banksia St, Ryde</p>
+                  <p class="auth-sub">Coastal Terracotta · Restoration · 14 Banksia St, Ryde</p>
                 </div>
                 <div
                   style="
@@ -3448,12 +3487,12 @@
                   "
                 >
                   <div class="li">
-                    <div class="n">Main tiles · Pottery Brown</div>
-                    <div class="q">2,912</div>
+                    <div class="n">Top coat buckets</div>
+                    <div class="q">6</div>
                   </div>
                   <div class="li">
-                    <div class="n">Ridge caps</div>
-                    <div class="q">38</div>
+                    <div class="n">Terracotta primer</div>
+                    <div class="q">3</div>
                   </div>
                 </div>
               </div>
@@ -3548,9 +3587,11 @@
                     </p>
                   </div>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  Start a job <i class="ic ic-plus"></i>
-                </button> 
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Start a job <i class="ic ic-plus"></i>
+                  </button>
+                </div>
               </div>
               <div class="tabbar">
                 <span class="t"><i class="ic ic-home"></i>Jobs</span>
@@ -3666,6 +3707,10 @@
                       >14 Banksia Cl, Castle Hill NSW <small>· 31 km</small></span
                     >
                   </div>
+                  <button class="s-row s-manual">
+                    <i class="ic ic-pin"></i>
+                    <span>Can&rsquo;t find it? <b>Drop a pin instead</b></span>
+                  </button>
                 </div>
                 <div class="aerial photo" style="height: 168px">
                   <div class="pin"></div>
@@ -3675,9 +3720,11 @@
                   Already have your measurements?
                   <b>Enter them manually</b>
                 </p>
-                <button class="btn btn-primary btn-full">
-                  Confirm address
-                </button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    Confirm address
+                  </button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -3691,7 +3738,14 @@
             Manual measurements instead, and nothing here should imply
             a scan that isn't coming. The "Enter them manually" link is the
             other route in, for either job type, any time the roofer already
-            has the numbers. Real aerial photo now, not the flat gradient —
+            has the numbers. If Places can't find the address at all — a new
+            estate with no street data yet, a rural block — the last row of
+            the list is <b>"Can't find it? Drop a pin instead"</b>: the
+            roofer positions the pin on the actual roof and the address is
+            read back from where the pin lands. No separate address form, no
+            typing four fields — and it's <em>more</em> accurate, since the
+            pin is what the measurement runs on anyway.
+            Real aerial photo now, not the flat gradient —
             only here and B2/B3, where it's standing in for actual Nearmap
             imagery; C2/D1 keep the abstract version since that one's an
             illustration of a colour, not a location.
@@ -3901,7 +3955,7 @@
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                   <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div class="auth-h">Choose a tile</div>
                 <div class="seg">
                   <span class="on">All</span><span>Terracotta</span
@@ -3983,9 +4037,11 @@
             (all Monier — the range the live calculator actually quotes), recycled stock badged. The
             New Installation flow enters this same library contextually (from
             Manual measurements), where it shows a back button instead of the
-            tab bar &mdash; and now carries the <b>stepbar</b> too (3 of 4,
-            same stage as Manual measurements and Restoration's C0), which had
-            gone missing when this screen was reused here.
+            tab bar &mdash; and now carries the <b>stepbar</b> too, at
+            <b>4 of 4</b>: choosing the tile is part of building the quote,
+            the same phase as Restoration&rsquo;s C0 paint step. It used to
+            read 3 of 4, which put the same conceptual step in a different
+            segment depending on which path the roofer took.
           </p>
         </div>
         <div class="screen-slot">
@@ -4006,7 +4062,7 @@
                 >
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                 </div>
-                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div class="cl-hero t-heritage"></div>
                 <div>
                   <div
@@ -4063,6 +4119,9 @@
                     <span>Coastal</span><b>Salt safe</b>
                   </div>
                 </div>
+                <button class="btn btn-secondary btn-full">
+                  <i class="ic ic-file"></i> Data sheet (PDF)
+                </button>
                 <div class="field" style="margin-top: 8px">
                   <label>Additional details (optional)</label>
                   <div class="control placeholder" style="align-items: flex-start; min-height: 54px; padding-top: 12px">
@@ -4072,22 +4131,14 @@
                 <label class="check-row">
                   <span class="cbox"></span>This project is urgent
                 </label>
-                <div
-                  style="
-                    margin-top: 6px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                  "
-                >
+              </div>
+              <div class="fr-cta">
+                <div style="display: flex; flex-direction: column; gap: 10px">
                   <button class="btn btn-primary btn-full">
                     Build quote
                   </button>
                   <button class="btn btn-secondary btn-full">
                     Try on a roof
-                  </button>
-                  <button class="btn btn-secondary btn-full">
-                    <i class="ic ic-file"></i> Data sheet (PDF)
                   </button>
                 </div>
               </div>
@@ -4102,9 +4153,9 @@
             <b>optional</b> detour to the C2 visualiser <b>before</b> building,
             so colour can drive the materials rather than being a stale
             afterthought &mdash; exactly like Restoration&rsquo;s C0.
-            Stepbar added at 3 of 4 to match &mdash; it was missing before,
-            breaking the progress indicator&rsquo;s promise part-way through
-            the flow.
+            Stepbar reads <b>4 of 4</b>, matching C0 &mdash; the phases are
+            Job &middot; Site &middot; Measure &middot; Quote, and picking the
+            tile belongs to Quote, not Measure.
           </p>
         </div>
         <div class="screen-slot">
@@ -4122,6 +4173,7 @@
                 <div class="screen-title">
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                 </div>
+                <div class="auth-h">Try a colour</div>
                 <div class="seg">
                   <span class="on">One colour</span><span>Compare two</span>
                 </div>
@@ -4142,7 +4194,9 @@
                   <button class="swatch t-titan" aria-label="Titan Gloss"></button>
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
-                <button class="btn btn-primary btn-full">Build quote</button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Build quote</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -4673,6 +4727,7 @@
                     <i class="ic ic-back"></i>
                   </button>
                 </div>
+                <div class="auth-h">Try a colour</div>
                 <div class="seg">
                   <span class="on">One colour</span><span>Compare two</span>
                 </div>
@@ -4725,6 +4780,7 @@
                     <i class="ic ic-back"></i>
                   </button>
                 </div>
+                <div class="auth-h">Try a colour</div>
                 <div class="seg">
                   <span>One colour</span><span class="on">Compare two</span>
                 </div>
@@ -4807,9 +4863,11 @@
                   <div class="row"><span class="bar tall"></span></div>
                   <div class="row"><span class="bar"></span><span class="bar s"></span></div>
                 </div>
-                <button class="btn btn-primary btn-full">
-                  <i class="ic ic-download"></i> Download data sheet
-                </button>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">
+                    <i class="ic ic-download"></i> Download data sheet
+                  </button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
