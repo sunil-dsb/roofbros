@@ -1810,14 +1810,16 @@
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n">Ridge caps</div>
+                    <div class="n">
+                      Ridge caps<small class="spec-pick">Terracotta ridges &middot; 2.1/m</small>
+                    </div>
                     <div class="lr">
                       <span class="q">38</span>
                       <span class="lp">× $29 · <b>$1,102</b></span>
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n"><span class="term">Point works</span></div>
+                    <div class="n">Point works</div>
                     <div class="lr">
                       <span class="q">3</span>
                       <span class="lp">× $185 · <b>$555</b></span>
@@ -1825,14 +1827,16 @@
                   </div>
                   <div class="li-group">Substrate</div>
                   <div class="li">
-                    <div class="n"><span class="term">Sarking rolls</span></div>
+                    <div class="n">Sarking rolls</div>
                     <div class="lr">
                       <span class="q">7</span>
                       <span class="lp">× $210 · <b>$1,470</b></span>
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n">Batten bundles</div>
+                    <div class="n">
+                      Batten bundles<small class="spec-pick">38&times;38 &middot; 8 per bundle</small>
+                    </div>
                     <div class="lr">
                       <span class="q">26</span>
                       <span class="lp">× $120 · <b>$3,120</b></span>
@@ -2723,13 +2727,17 @@
           <p class="cap">
             <b>B1 · Address &amp; map confirm</b>Places autocomplete, then a
             draggable pin on aerial imagery. ~50m drag threshold before
-            re-geocoding. Shared by both job types, so the button says
-            "Confirm address," not "Measure this roof" — Restoration takes
-            this into AI measuring (B2→B3); New Installation takes it into
-            Manual measurements instead, and nothing here should imply
-            a scan that isn't coming. The "Enter them manually" link is the
-            other route in, for either job type, any time the roofer already
-            has the numbers. If Places can't find the address at all — a new
+            re-geocoding. Shared by both job types, and the button says
+            "Confirm address," not "Measure this roof," because how the roof
+            gets measured is a <b>separate choice made here, not by job
+            type</b>: <b>Confirm address</b> starts the AI scan (B2→B3) for
+            either job type, and <b>"Enter them manually"</b> is the other
+            route in, also for either job type, any time the roofer already
+            has the numbers. Job type decides only what comes <em>after</em>
+            the measurement — paint &amp; colour for Restoration, tile for
+            New Installation. (Locking the two together was a real
+            architecture bug, fixed and logged; this caption used to still
+            describe it.) If Places can't find the address at all — a new
             estate with no street data yet, a rural block — the last row of
             the list is <b>"Can't find it? Drop a pin instead"</b>: the
             roofer positions the pin on the actual roof and the address is
@@ -2918,13 +2926,13 @@
                 <div class="input-group">
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label><span class="term">Starters</span> (qty)</label
+                      <label>Starters (qty)</label
                       ><span class="val ph">e.g., 56</span>
                     </div>
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label><span class="term">Three ways</span> (qty)</label
+                      <label>Three ways (qty)</label
                       ><span class="val ph">e.g., 10</span>
                     </div>
                   </div>
@@ -3370,8 +3378,7 @@
                   </div>
                   <div class="li">
                     <div class="n">
-                      <span class="term">Terracotta primer</span
-                      ><small>terracotta roof (concrete gets high-build)</small>
+                      Terracotta primer<small>terracotta roof (concrete gets high-build)</small>
                     </div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">3</button>
@@ -3732,13 +3739,17 @@
           <p class="cap">
             <b>B1 · Address &amp; map confirm &mdash; manual path</b>Places autocomplete, then a
             draggable pin on aerial imagery. ~50m drag threshold before
-            re-geocoding. Shared by both job types, so the button says
-            "Confirm address," not "Measure this roof" — Restoration takes
-            this into AI measuring (B2→B3); New Installation takes it into
-            Manual measurements instead, and nothing here should imply
-            a scan that isn't coming. The "Enter them manually" link is the
-            other route in, for either job type, any time the roofer already
-            has the numbers. If Places can't find the address at all — a new
+            re-geocoding. Shared by both job types, and the button says
+            "Confirm address," not "Measure this roof," because how the roof
+            gets measured is a <b>separate choice made here, not by job
+            type</b>: <b>Confirm address</b> starts the AI scan (B2→B3) for
+            either job type, and <b>"Enter them manually"</b> is the other
+            route in, also for either job type, any time the roofer already
+            has the numbers. Job type decides only what comes <em>after</em>
+            the measurement — paint &amp; colour for Restoration, tile for
+            New Installation. (Locking the two together was a real
+            architecture bug, fixed and logged; this caption used to still
+            describe it.) If Places can't find the address at all — a new
             estate with no street data yet, a rural block — the last row of
             the list is <b>"Can't find it? Drop a pin instead"</b>: the
             roofer positions the pin on the actual roof and the address is
@@ -3817,7 +3828,10 @@
                 <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
                 <div>
                   <div class="auth-h">Roof dimensions</div>
-                  <p class="auth-sub">Enter the figures you already have.</p>
+                  <p class="auth-sub">
+                    14 Banksia St, Ryde &middot; enter the figures you already
+                    have.
+                  </p>
                 </div>
                 <div style="display: flex; gap: 12px">
                   <div class="field" style="flex: 1">
@@ -3844,13 +3858,13 @@
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label><span class="term">Starters</span> (qty)</label
+                      <label>Starters (qty)</label
                       ><span class="val ph">e.g., 56</span>
                     </div>
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
-                      <label><span class="term">Three ways</span> (qty)</label
+                      <label>Three ways (qty)</label
                       ><span class="val ph">e.g., 10</span>
                     </div>
                   </div>
@@ -3865,17 +3879,20 @@
             <b>Manual measurements</b>Not exclusive to New Installation — the
             other side of the fork from B1, reached either by "Enter them
             manually" or by the measurement-failed state, for either job
-            type. The CTA names the actual next step rather than a vague
+            type. The subtitle now carries <b>the site address</b>: this was
+            the one screen in the flow with no job context, so a roofer
+            typing 230 and 22.4 had nothing on screen confirming which roof
+            the figures belong to — the same gap fixed on C1. The CTA names the actual next step rather than a vague
             "Continue": <b>Choose tile</b> here (New Installation → E1), or
             <b>Choose paint &amp; colour</b> on the Restoration instance
             (→ C0). Either way it skips B2/B3 — nothing to review when the
             roofer just typed the numbers. <b>Work out the area</b> opens a
             small sheet: width × length + the pitch, computed with the
             calculator's own <code>calculateRoofArea</code> — a roofer has
-            tape-measure numbers more often than an area. Trade terms (<span
-            class="term">Starters</span>, <span class="term">Three
-            ways</span>) carry a dotted underline: tap to learn, next
-            frame. →
+            tape-measure numbers more often than an area. Trade terms
+            (Starters, Three ways, Sarking) are left plain: this is a
+            roofer's own vocabulary, and glossing it in their working tool
+            would read as talking down to them.
             <span class="scope-why"><b>Nothing saved yet (same as B3):</b> the typed dimensions live in the quote being built &mdash; the job only lands in Jobs once you <b>Save quote</b> (C1). <b>&times; asks to confirm</b>, and discarding means the numbers have to be re-entered; there&rsquo;s no auto-save and no &ldquo;Measured&rdquo; limbo state.</span>
           </p>
         </div>
@@ -3896,133 +3913,55 @@
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
                   <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
-                <div class="stepbar" role="img" aria-label="Step 3 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
-                <div>
-                  <div class="auth-h">Roof dimensions</div>
-                  <p class="auth-sub">Enter the figures you already have.</p>
-                </div>
-                <div style="display: flex; gap: 12px">
-                  <div class="field" style="flex: 1">
-                    <label>Total area (m²)</label>
-                    <div class="control">150</div>
-                  </div>
-                  <div class="field" style="flex: 1">
-                    <label>Pitch (°)</label>
-                    <div class="control">24</div>
-                  </div>
-                </div>
-              </div>
-              <div class="scrim sheet">
-                <div class="dialog">
-                  <h4>Three ways</h4>
-                  <p>
-                    The Y-shaped cap that covers the point where three ridge
-                    lines meet. Walk the roof and count the junctions;
-                    most hip roofs have two.
-                  </p>
-                  <div class="dialog-actions">
-                    <button class="btn btn-primary btn-full">Got it</button>
-                  </div>
-                </div>
-              </div>
-              <div class="home-ind"></div>
-            </div>
-          </div>
-          <p class="cap">
-            <b>Term explainer &mdash; tap any dotted term</b>A bottom sheet,
-            not a tooltip: big enough to read in sunlight, one tap to
-            dismiss, and it never navigates away from the half-filled form.
-            The same pattern covers every naked trade term in the app
-            &mdash; <em>sarking</em> (C1), <em>BASIX / SRI / LRV</em> (E2)
-            and the <em>confidence %</em> badge (B3). Plain language, no
-            diagram needed; an expert never has to see it (Jordan learns,
-            Alex is never interrupted).
-          </p>
-        </div>
-        <div class="screen-slot">
-          <div class="phone">
-            <span class="island"></span>
-            <div class="screen">
-              <div class="statusbar">
-                <span>9:41</span
-                ><span class="sb-ic"
-                  ><i class="ic-cell"></i><i class="ic-wifi"></i
-                  ><i class="ic-batt"></i
-                ></span>
-              </div>
-              <div class="appbody">
-                <div class="screen-title">
-                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
-                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
-                </div>
                 <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div class="auth-h">Choose a tile</div>
                 <div class="seg">
-                  <span class="on">All</span><span>Terracotta</span
-                  ><span>Concrete</span>
+                  <span class="on">Terracotta</span><span>Concrete</span>
                 </div>
                 <div class="chip-row">
-                  <span class="chip on">All profiles</span
-                  ><span class="chip">Flat</span
-                  ><span class="chip">Semi-flat</span
-                  ><span class="chip">Raised</span>
+                  <span class="chip on">Marseille</span
+                  ><span class="chip">Nouveau</span
+                  ><span class="chip">Nullarbor</span
+                  ><span class="chip">Urban Shingles</span>
                 </div>
                 <div class="cl-grid">
                   <div class="cl-card">
                     <div class="ph t-titan"></div>
-                    <div class="nm">
-                      Titan Gloss<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="nm">Titan Gloss</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-barra"></div>
-                    <div class="nm">
-                      Barramundi<small>Elabana · Concrete</small>
-                    </div>
+                    <div class="ph t-peak"></div>
+                    <div class="nm">Peak</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-sambuca"></div>
-                    <div class="nm">
-                      Sambucca<small>Elabana · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-saltspray"></div>
-                    <div class="nm">
-                      Salt Spray<small>Atura · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-soho"></div>
-                    <div class="nm">
-                      Soho Night<small>Madison · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-storm"></div>
-                    <div class="nm">
-                      Mist Grey<small>Elabana · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-wallaroo"></div>
-                    <div class="nm">
-                      Wild Rice<small>Atura · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-england"></div>
-                    <div class="nm">
-                      Aniseed<small>Horizon · Concrete</small>
-                    </div>
+                    <div class="ph t-comet"></div>
+                    <div class="nm">Comet</div>
                   </div>
                   <div class="cl-card">
                     <div class="ph t-heritage">
                       <span class="rec">Recycled</span>
                     </div>
-                    <div class="nm">
-                      Pottery Brown<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="nm">Pottery Brown</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-slate"></div>
+                    <div class="nm">Bedrock</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-delta"></div>
+                    <div class="nm">Delta Sands</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-olive"></div>
+                    <div class="nm">Riverstone</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-earth"></div>
+                    <div class="nm">Earth</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-mars"></div>
+                    <div class="nm">Mars</div>
                   </div>
                 </div>
               </div>
@@ -4033,8 +3972,7 @@
             <b>E1 &middot; Colours — the tile chart &mdash; in the quote flow</b>The fourth tab
             (restored from Deliveries): "browse the tile colour chart," which
             the brief asks for as a standalone capability — not only mid-quote.
-            Material segmented control, profile chips, real AU market names
-            (all Monier — the range the live calculator actually quotes), recycled stock badged. The
+            <b>Profile first, then its colours</b> — matching the real data model: the material segment (Terracotta / Concrete) narrows the profile chips, and the grid shows only the colours that profile actually comes in. This is a correction: the grid used to mix colours from every profile with the profile as a subtitle, but <b>22 of 35 colour names repeat across profiles</b> (Peak, Bedrock, Comet, Earth and Mars all exist in Marseille <em>and</em> Nouveau), so a flat colour grid showed the same name three times and a colour meant nothing until you read the small print. Profile also drives the maths — tiles/m² and the full-row packaging — so it is the bigger decision and now leads. Real Monier names throughout, recycled stock badged. The
             New Installation flow enters this same library contextually (from
             Manual measurements), where it shows a back button instead of the
             tab bar &mdash; and now carries the <b>stepbar</b> too, at
@@ -4258,14 +4196,16 @@
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n">Ridge caps</div>
+                    <div class="n">
+                      Ridge caps<small class="spec-pick">Terracotta ridges &middot; 2.1/m</small>
+                    </div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">38</button>
                       <span class="lp">× $29 · <b>$1,102</b></span>
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n"><span class="term">Point works</span></div>
+                    <div class="n">Point works</div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">3</button>
                       <span class="lp">× $185 · <b>$555</b></span>
@@ -4273,14 +4213,16 @@
                   </div>
                   <div class="li-group">Substrate</div>
                   <div class="li">
-                    <div class="n"><span class="term">Sarking rolls</span></div>
+                    <div class="n">Sarking rolls</div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">7</button>
                       <span class="lp">× $210 · <b>$1,470</b></span>
                     </div>
                   </div>
                   <div class="li">
-                    <div class="n">Batten bundles</div>
+                    <div class="n">
+                      Batten bundles<small class="spec-pick">38&times;38 &middot; 8 per bundle</small>
+                    </div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">26</button>
                       <span class="lp">× $120 · <b>$3,120</b></span>
@@ -4314,7 +4256,16 @@
             about: tiles round up to <b>full packing rows</b> (2,912, not the
             raw 2,875 — Marseille ships 56 to a row), and the
             <b>Monier delivery-fee tier</b> is a quoted line, not a surprise
-            (over 1,000 tiles → per-100-tile units). Unit prices are
+            (over 1,000 tiles → per-100-tile units). Two lines carry a
+            <b>dotted spec</b> because they're real calculator inputs the app
+            was never asking for: <b>ridge type</b> (terracotta ridges 2.1/m
+            vs A-Line 2.4/m — <b>+16% on ridge caps</b>) and <b>batten
+            type</b> (8 vs 12 per bundle — <b>−31% on bundles</b>). Both show
+            the spec on the line whose number they change; tapping opens the
+            two options in a sheet. Their defaults come from <b>Profile →
+            Quote defaults</b>, since a roofer uses the same battens on every
+            job — so the common path needs no taps and the maths still can't
+            silently fall back to a wrong default. Unit prices are
             placeholders until the price book lands. C2 (optional) visualises
             the colour before this — same order as Restoration.
             <b>Save quote</b> writes it to Jobs.
@@ -4395,71 +4346,52 @@
                   <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
                 <div class="seg">
-                  <span class="on">All</span><span>Terracotta</span
-                  ><span>Concrete</span>
+                  <span class="on">Terracotta</span><span>Concrete</span>
                 </div>
                 <div class="chip-row">
-                  <span class="chip on">All profiles</span
-                  ><span class="chip">Flat</span
-                  ><span class="chip">Semi-flat</span
-                  ><span class="chip">Raised</span>
+                  <span class="chip on">Marseille</span
+                  ><span class="chip">Nouveau</span
+                  ><span class="chip">Nullarbor</span
+                  ><span class="chip">Urban Shingles</span>
                 </div>
                 <div class="cl-grid">
                   <div class="cl-card">
                     <div class="ph t-titan"></div>
-                    <div class="nm">
-                      Titan Gloss<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="nm">Titan Gloss</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-barra"></div>
-                    <div class="nm">
-                      Barramundi<small>Elabana · Concrete</small>
-                    </div>
+                    <div class="ph t-peak"></div>
+                    <div class="nm">Peak</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-sambuca"></div>
-                    <div class="nm">
-                      Sambucca<small>Elabana · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-saltspray"></div>
-                    <div class="nm">
-                      Salt Spray<small>Atura · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-soho"></div>
-                    <div class="nm">
-                      Soho Night<small>Madison · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-storm"></div>
-                    <div class="nm">
-                      Mist Grey<small>Elabana · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-wallaroo"></div>
-                    <div class="nm">
-                      Wild Rice<small>Atura · Concrete</small>
-                    </div>
-                  </div>
-                  <div class="cl-card">
-                    <div class="ph t-england"></div>
-                    <div class="nm">
-                      Aniseed<small>Horizon · Concrete</small>
-                    </div>
+                    <div class="ph t-comet"></div>
+                    <div class="nm">Comet</div>
                   </div>
                   <div class="cl-card">
                     <div class="ph t-heritage">
                       <span class="rec">Recycled</span>
                     </div>
-                    <div class="nm">
-                      Pottery Brown<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="nm">Pottery Brown</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-slate"></div>
+                    <div class="nm">Bedrock</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-delta"></div>
+                    <div class="nm">Delta Sands</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-olive"></div>
+                    <div class="nm">Riverstone</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-earth"></div>
+                    <div class="nm">Earth</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-mars"></div>
+                    <div class="nm">Mars</div>
                   </div>
                 </div>
               </div>
@@ -4476,8 +4408,7 @@
             <b>E1 &middot; Colours — the tile chart</b>The fourth tab
             (restored from Deliveries): "browse the tile colour chart," which
             the brief asks for as a standalone capability — not only mid-quote.
-            Material segmented control, profile chips, real AU market names
-            (all Monier — the range the live calculator actually quotes), recycled stock badged. The
+            <b>Profile first, then its colours</b> — matching the real data model: the material segment (Terracotta / Concrete) narrows the profile chips, and the grid shows only the colours that profile actually comes in. This is a correction: the grid used to mix colours from every profile with the profile as a subtitle, but <b>22 of 35 colour names repeat across profiles</b> (Peak, Bedrock, Comet, Earth and Mars all exist in Marseille <em>and</em> Nouveau), so a flat colour grid showed the same name three times and a colour meant nothing until you read the small print. Profile also drives the maths — tiles/m² and the full-row packaging — so it is the bigger decision and now leads. Real Monier names throughout, recycled stock badged. The
             New Installation flow enters this same library contextually (from
             Manual measurements), where it shows a back button instead of the
             tab bar.
@@ -4502,27 +4433,52 @@
                   <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
                 </div>
                 <div class="seg">
-                  <span class="on">All</span><span>Terracotta</span
-                  ><span>Concrete</span>
+                  <span class="on">Terracotta</span><span>Concrete</span>
                 </div>
                 <div class="chip-row">
-                  <span class="chip on">All profiles</span
-                  ><span class="chip">Flat</span
-                  ><span class="chip">Semi-flat</span
-                  ><span class="chip">Raised</span>
+                  <span class="chip on">Marseille</span
+                  ><span class="chip">Nouveau</span
+                  ><span class="chip">Nullarbor</span
+                  ><span class="chip">Urban Shingles</span>
                 </div>
                 <div class="cl-grid">
                   <div class="cl-card">
-                    <div class="ph t-sambuca"></div>
-                    <div class="nm">
-                      Sambucca<small>Elabana · Concrete</small>
-                    </div>
+                    <div class="ph t-titan"></div>
+                    <div class="nm">Titan Gloss</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-saltspray"></div>
-                    <div class="nm">
-                      Salt Spray<small>Atura · Concrete</small>
+                    <div class="ph t-peak"></div>
+                    <div class="nm">Peak</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-comet"></div>
+                    <div class="nm">Comet</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-heritage">
+                      <span class="rec">Recycled</span>
                     </div>
+                    <div class="nm">Pottery Brown</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-slate"></div>
+                    <div class="nm">Bedrock</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-delta"></div>
+                    <div class="nm">Delta Sands</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-olive"></div>
+                    <div class="nm">Riverstone</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-earth"></div>
+                    <div class="nm">Earth</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-mars"></div>
+                    <div class="nm">Mars</div>
                   </div>
                 </div>
               </div>
@@ -4562,29 +4518,46 @@
                   <button class="icon-btn" aria-label="Search"><i class="ic ic-search"></i></button>
                 </div>
                 <div class="seg">
-                  <span>All</span><span class="on">Terracotta</span
-                  ><span>Concrete</span>
+                  <span class="on">Terracotta</span><span>Concrete</span>
                 </div>
                 <div class="chip-row">
-                  <span class="chip on">All profiles</span
-                  ><span class="chip">Flat</span
-                  ><span class="chip">Semi-flat</span
-                  ><span class="chip">Raised</span>
+                  <span class="chip">Marseille</span
+                  ><span class="chip on">Nouveau</span
+                  ><span class="chip">Nullarbor</span
+                  ><span class="chip">Urban Shingles</span>
                 </div>
                 <div class="cl-grid">
                   <div class="cl-card">
                     <div class="ph t-titan"></div>
-                    <div class="nm">
-                      Titan Gloss<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="nm">Titan</div>
                   </div>
                   <div class="cl-card">
-                    <div class="ph t-heritage">
-                      <span class="rec">Recycled</span>
-                    </div>
-                    <div class="nm">
-                      Pottery Brown<small>Marseille · Terracotta</small>
-                    </div>
+                    <div class="ph t-slate"></div>
+                    <div class="nm">Bedrock</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-peak"></div>
+                    <div class="nm">Peak</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-ravine"></div>
+                    <div class="nm">Ravine</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-comet"></div>
+                    <div class="nm">Comet</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-olive"></div>
+                    <div class="nm">Riverstone</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-mars"></div>
+                    <div class="nm">Mars</div>
+                  </div>
+                  <div class="cl-card">
+                    <div class="ph t-earth"></div>
+                    <div class="nm">Earth</div>
                   </div>
                 </div>
               </div>
@@ -4598,11 +4571,14 @@
             </div>
           </div>
           <p class="cap">
-            <b>E1 &middot; Colours — Terracotta filter</b>The filtered catalog
-            state. Tapping the <b>Terracotta</b> segment narrows the grid to the
-            two terracotta tiles in the range &mdash; Titan Gloss and the
-            recycled Pottery Brown (badged). Concrete and the profile chips work
-            the same way; the grid narrows in place.
+            <b>E1 &middot; Colours — switching profile</b>The two filters
+            working together. The <b>Terracotta</b> segment sets which profile
+            chips are offered (Marseille, Nouveau, Nullarbor, Urban Shingles);
+            tapping a chip swaps the grid to that profile&rsquo;s own range.
+            Marseille carries 14 colours, Nullarbor only 3, Cambridge and
+            Madison a single one &mdash; a real difference the old flat grid
+            hid completely. Concrete works the same way. The grid narrows in
+            place; nothing navigates.
           </p>
         </div>
         <div class="screen-slot">
@@ -4926,6 +4902,20 @@
                   </div>
                 </div>
 
+                <div class="set-group">Quote defaults</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Ridge type</span>
+                    <span class="val">Terracotta ridges</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Batten type</span>
+                    <span class="val">38&times;38 &middot; 8/bundle</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                </div>
+
                 <div class="set-group">Account</div>
                 <div class="set-box">
                   <button class="set-row">
@@ -4992,8 +4982,11 @@
             <b>maroon monogram tile</b> (square, echoing a roof tile; tap the
             badge to set a business logo) beside name, business and email, the
             details that print on a quote. Then only what a roofer actually
-            touches: business details (opens F1, next), <b>change
-            password</b> (routes into the same reset flow as 0E), support
+            touches: <b>Quote defaults</b> (ridge type and batten type — two
+            real calculator inputs that were never captured anywhere; set
+            once here because a roofer uses the same battens on every job,
+            overridable per-quote on C1), business details (opens F1, next),
+            <b>change password</b> (routes into the same reset flow as 0E), support
             contact, legal, and a separated <b>Sign out</b> (which confirms
             first, next) and <b>Delete account</b> (store-required &mdash; both
             Apple and Google mandate in-app account deletion; opens F2). Flat
@@ -5102,6 +5095,20 @@
                     <span>Robson Roofing</span>
                     <span>dave@robsonroofing.com.au</span>
                   </div>
+                </div>
+
+                <div class="set-group">Quote defaults</div>
+                <div class="set-box">
+                  <button class="set-row">
+                    <span class="lbl">Ridge type</span>
+                    <span class="val">Terracotta ridges</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
+                  <button class="set-row">
+                    <span class="lbl">Batten type</span>
+                    <span class="val">38&times;38 &middot; 8/bundle</span>
+                    <i class="ic ic-chevron"></i>
+                  </button>
                 </div>
 
                 <div class="set-group">Account</div>

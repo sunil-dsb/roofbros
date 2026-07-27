@@ -243,6 +243,16 @@
 .t-slate { background: linear-gradient(140deg, #665e63, #48413f); }       /* Bedrock — Marseille #5e565b */
 .t-olive { background: linear-gradient(140deg, #a1968a, #7d7266); }       /* Riverstone — Marseille #978d7e */
 .t-cream { background: linear-gradient(140deg, #E8DFC8, #CBB98F); }       /* unused — kept for drafts */
+/* the rest of the real Marseille range (colorMapping.ts PROFILE_COLORS.Marseille),
+   so E1 can show ONE profile's colours at a time. Colour names repeat across
+   profiles — Peak/Bedrock/Comet/Earth/Mars all exist in Marseille AND Nouveau —
+   so a colour is only unambiguous once its profile is fixed. */
+.t-peak { background: linear-gradient(140deg, #595d63, #3f434a); }        /* Peak #4e5258 */
+.t-comet { background: linear-gradient(140deg, #909aa3, #78848f); }       /* Comet #848f99 */
+.t-delta { background: linear-gradient(140deg, #dcc19c, #c4a67c); }       /* Delta Sands #D2B48C */
+.t-earth { background: linear-gradient(140deg, #ec8a63, #d9663c); }       /* Earth #e7774e */
+.t-mars { background: linear-gradient(140deg, #dd8973, #c8634b); }        /* Mars #d5775e */
+.t-ravine { background: linear-gradient(140deg, #767869, #5b5d55); }      /* Ravine #6a6c63 — Nouveau/Urban Shingles only */
 /* paint swatches — Industrial roof coatings card (Restoration path).
    Paint is not tile: its own p-* set so retinting one never breaks the other. */
 .p-coastal { background: linear-gradient(140deg, #A0522D, #7d3a1e); }     /* Coastal Terracotta */

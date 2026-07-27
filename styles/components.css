@@ -41,11 +41,17 @@
 
 /* ---------- chips, pills, status ---------- */
 .chip {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   font-family: var(--font-ui); font-variation-settings: 'wght' 600;
   font-size: var(--t-caption); padding: 8px 14px; min-height: 44px;
   border: 1px solid var(--line-ink); color: var(--body); background: var(--surface);
   border-radius: var(--r-pill);
+  /* a chip is always ONE line at its natural width. Without these two, a long
+     label ("Urban Shingles") wraps to two lines and that chip stops matching
+     the others — and because flex items shrink by default, the row squeezed
+     the chips to fit instead of scrolling. flex: none + nowrap means the row
+     overflows and scrolls (see .chip-row), which is the intended behaviour. */
+  flex: none; white-space: nowrap;
 }
 .chip.on { background: var(--accent-tint); color: var(--accent); border-color: var(--accent); }  /* selected = light maroon touch (tint + text), NOT a solid fill — a solid fill would compete with the CTA. Matches swatch.sel / opt-card.sel */
 .status {
@@ -201,15 +207,14 @@
 /* horizontally scrollable (was overflow:hidden, which silently clipped any
    status added later); scrollbar hidden like .tour-track — the cut-off chip
    at the edge is the scroll affordance */
-.chip-row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.chip-row { display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .chip-row::-webkit-scrollbar { display: none; }
 
-/* tappable trade term — dotted underline marks "tap to learn" (three ways,
-   sarking, BASIX, SRI, confidence %); opens a bottom-sheet explainer
-   (.scrim.sheet). Jargon should never be naked in-app for a first-year
-   roofer, but explainers must stay out of the expert's way (one tap, quiet
-   affordance). RN: onPress on the label span. */
-.term { text-decoration: underline dotted; text-decoration-color: var(--muted); text-underline-offset: 3px; cursor: help; }
+/* NOTE: there is deliberately no glossary/tooltip pattern. Trade terms
+   (starters, three ways, sarking, point works) are the audience's own
+   vocabulary — a roofer who needs "sarking" defined isn't the user. Removed
+   2026-07-15; explaining a tradesman's words back to him reads as talking
+   down, which is the same failure as marketing-speak. */
 
 /* step indicator — 4 thin segments (Job · Site · Measure · Quote) filled up to
    the current phase. Visibility of status (Nielsen #1) across the wizard spine.
@@ -227,8 +232,9 @@
 /* modal scrim + confirm dialog (discard-on-close). Scrim is a backdrop, not a
    drop-shadow, so it doesn't break the flat/no-shadow rule. */
 .scrim { position: absolute; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; padding: 0 20px; }
-/* bottom-sheet variant — jargon explainers ("three ways", BASIX…): slides from
-   the bottom, rounded top only (OS sheet convention, --r-sheet) */
+/* bottom-sheet variant — slides from the bottom, rounded top only (OS sheet
+   convention, --r-sheet). Used for pick-one-of-a-few actions, e.g. D1b's
+   Add photo (Take photo / Choose from library). */
 .scrim.sheet { place-items: end stretch; padding: 0; }
 .scrim.sheet .dialog { border-radius: var(--r-sheet) var(--r-sheet) 0 0; padding-bottom: 28px; }
 .dialog { width: 100%; background: var(--surface); border-radius: var(--r-sheet); padding: 22px 20px 18px; }
@@ -362,6 +368,14 @@
 .li:last-child { border-bottom: none; }
 .li .n { flex: 1; font-family: var(--font-ui); font-variation-settings: 'wght' 600; color: var(--ink); font-size: var(--t-body); }
 .li .n small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); }
+/* a line whose SPEC is a choice, not just a note: ridge type and batten type are
+   real calculator inputs (ridgeType / battenType) that swing the quantity —
+   terracotta ridges 2.1/m vs A-Line 2.4/m is +16% on ridge caps; 8-per-bundle
+   vs 12-per-bundle is -31% on battens. Shown on the line whose number they
+   change, dotted to mark it tappable; tapping opens the two options in a
+   bottom sheet. Defaults come from Profile → Quote defaults, so the common
+   case needs no taps at all. */
+.li .n small.spec-pick { color: var(--body); text-decoration: underline dotted; text-decoration-color: var(--line-ink); text-underline-offset: 2px; cursor: pointer; }
 .li .q { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums; color: var(--ink); font-size: var(--t-body); }
 .li > .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }  /* trailing chevron on tappable rows (D1a quotes) */
 /* editable quantity — a tap-to-edit field that opens a numeric keypad. Steppers
