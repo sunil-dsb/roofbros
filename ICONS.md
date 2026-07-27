@@ -3,7 +3,7 @@
 Every icon used anywhere in the project, with its **raw SVG source** exactly as it ships.
 Generated from source by `node extract-icons.mjs` — **do not hand-edit** this file.
 
-- **22** single-colour CSS-mask icons in `styles/base.css` (`.ic-*`). They inherit
+- **25** single-colour CSS-mask icons in `styles/base.css` (`.ic-*`). They inherit
   `currentColor`, so one SVG serves every colour the UI needs. The glyphs are one outline
   family: 24-viewBox, 2px stroke, round caps — with three documented exceptions that keep
   their native form: the truck (64 viewBox, equivalent stroke weight) and the Apple mark
@@ -43,7 +43,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Every × dismiss: auth sheets, New Quote steps, D2 delivery request, search
-- **Instances in mockups:** 27
+- **Instances in mockups:** 25
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
@@ -53,7 +53,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** pixeden.com
 - **Licence:** Public Domain
 - **Used for:** Address suggestion rows (B1), delivery/pickup address rows (D2); reused FILLED as the map marker (see below)
-- **Instances in mockups:** 10
+- **Instances in mockups:** 12
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.8-7-11a7 7 0 0 1 14 0c0 5.2-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
@@ -63,7 +63,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** D2 drop-zone photo field, D1b "Take photo", F profile-logo badge
-- **Instances in mockups:** 3
+- **Instances in mockups:** 4
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3.5l2-3h7l2 3H21v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
@@ -73,7 +73,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Before/after slider handle (0B welcome), compare slider handle (C2)
-- **Instances in mockups:** 4
+- **Instances in mockups:** 5
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 4-4 4"/><path d="M20 7H7"/><path d="M8 13l-4 4 4 4"/><path d="M4 17h13"/></svg>
@@ -83,7 +83,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** icons8
 - **Licence:** Public Domain
 - **Used for:** Tab bar — Jobs
-- **Instances in mockups:** 9
+- **Instances in mockups:** 10
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5.5 9.5V20h5v-6h3v6h5V9.5"/></svg>
@@ -103,7 +103,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Password show/hide toggle (0C, 0D, 0E)
-- **Instances in mockups:** 6
+- **Instances in mockups:** 7
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -113,7 +113,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** gonzodesign
 - **Licence:** CC Attribution (credit if published)
 - **Used for:** Back on every wizard step and sub-screen (B-, C-, D1a-c, E-, F1)
-- **Instances in mockups:** 26
+- **Instances in mockups:** 36
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
@@ -123,7 +123,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** mirror of ic-back (gonzodesign)
 - **Licence:** CC Attribution (credit if published)
 - **Used for:** Trailing chevron on tappable rows: F settings rows, D1a quote rows
-- **Instances in mockups:** 6
+- **Instances in mockups:** 18
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
@@ -133,7 +133,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Tab bar — Colours
-- **Instances in mockups:** 9
+- **Instances in mockups:** 10
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="4"/><circle cx="8" cy="14.5" r="4"/><circle cx="16" cy="14.5" r="4"/></svg>
@@ -143,7 +143,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** "Discard quote" action in the discard-confirm dialog
-- **Instances in mockups:** 1
+- **Instances in mockups:** 2
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M10 4h4"/><path d="M6 7v13h12V7"/><path d="M10 11v5"/><path d="M14 11v5"/></svg>
@@ -173,7 +173,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Reset-password email row (0E), F1 locked sign-in email, F "Email us"
-- **Instances in mockups:** 5
+- **Instances in mockups:** 7
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7.5l9 6 9-6"/></svg>
@@ -183,7 +183,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Success badges (0E/C3/D3), measuring stage done markers (B2), trust rows (0G); reused as the selected-swatch tick (see below)
-- **Instances in mockups:** 7
+- **Instances in mockups:** 8
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg>
@@ -193,7 +193,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Tab bar — Profile
-- **Instances in mockups:** 9
+- **Instances in mockups:** 10
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
@@ -243,13 +243,43 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 - **Source:** hand-drawn
 - **Licence:** no external licence
 - **Used for:** Amber banners: measurement failed (B1), low confidence (B3), offline (A1)
-- **Instances in mockups:** 3
+- **Instances in mockups:** 5
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9.5 16.5H2.5z"/><path d="M12 9.5v4.5"/><circle cx="12" cy="17" r="1" fill="black" stroke="none"/></svg>
 ```
 
-## 24. Map marker (filled pin) — `components.css .aerial .pin`
+## 24. Download — `.ic-download`
+- **Source:** hand-drawn
+- **Licence:** no external licence
+- **Used for:** E3 "Download data sheet"
+- **Instances in mockups:** 1
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>
+```
+
+## 25. Circle (markup) — `.ic-circle`
+- **Source:** hand-drawn
+- **Licence:** no external licence
+- **Used for:** Photo markup toolbar (D1b viewer) — circle a detail
+- **Instances in mockups:** 0
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/></svg>
+```
+
+## 26. Undo (markup) — `.ic-undo`
+- **Source:** hand-drawn
+- **Licence:** no external licence
+- **Used for:** Photo markup toolbar (D1b viewer) — undo the last mark
+- **Instances in mockups:** 0
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+```
+
+## 27. Map marker (filled pin) — `components.css .aerial .pin`
 - **Source:** ic-pin's outer path, filled maroon (#7D1017) with a thin white edge
 - **Licence:** Public Domain (derived from pixeden.com pin)
 - **Used for:** The draggable address marker on B1's aerial map
@@ -258,7 +288,7 @@ Status-bar glyphs (`ic-cell`, `ic-wifi`, `ic-batt`) are decorative CSS shapes in
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21s-7-5.8-7-11a7 7 0 0 1 14 0c0 5.2-7 11-7 11z" fill="#7D1017" stroke="#fff" stroke-width="1.3"/></svg>
 ```
 
-## 25. Selected-swatch tick — `components.css .swatch.sel::after`
+## 28. Selected-swatch tick — `components.css .swatch.sel::after`
 - **Source:** identical path to ic-check, rendered white at 16px over the selected swatch/colour
 - **Licence:** no external licence (hand-drawn)
 - **Used for:** Selected state on every colour swatch (C0, C2)

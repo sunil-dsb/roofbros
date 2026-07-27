@@ -107,6 +107,33 @@
 .ig-row .ig-t .ph, .ig-row .ig-t .val.ph { color: var(--placeholder); }
 .ig-row > .ic { color: var(--muted); flex: none; }
 
+/* ---------- READ-ONLY value ----------
+   A fact the roofer can read but not change: the email a code went to, the
+   address materials are going to. It deliberately does NOT wear the field
+   costume — in this system the grey fill (--field) IS the affordance meaning
+   "tap to type", so borrowing it for a value nobody can edit invites a tap
+   that does nothing. No fill, no box: label + value on the ground with a
+   hairline, the same presentation as .spec-row.
+
+   Text stays at FULL contrast (13.4:1), because this is information the screen
+   depends on — the roofer has to read which email the code went to. That's the
+   difference from DISABLED (.otp.disabled, .btn:disabled), which dims a real
+   control that will become available and has nothing to read yet. Dimming a
+   value you must read is the mistake this replaces: .ig-row.locked ran the
+   email at 3.49:1 and its label at 2.60:1, both under AA.
+
+   Three states, three appearances:
+     grey fill      = editable, tap to type
+     white+outline  = editable, focused
+     no fill        = read-only, information only
+     dimmed         = disabled control, will become available */
+.ro-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+.ro-row:last-of-type { border-bottom: none; }
+.ro-row > .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.ro-row .t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.ro-row label { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-caption); color: var(--muted); }
+.ro-row .val { font-family: var(--font-ui); font-size: var(--t-heading); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 /* ---------- OTP code entry (6 boxes) — same field system as every input: grey at rest, white + soft border when active ---------- */
 .otp { display: flex; gap: 8px; }
 .otp .box {
