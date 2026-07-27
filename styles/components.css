@@ -362,7 +362,7 @@
    were dropped: nudging a calculator-derived count like 2,875 by ±1 is unusable,
    and for a precise value a big keypad beats tiny +/- for gloved hands. Grey field
    = "this is editable", matching every other input in the app. */
-.li .qedit {
+.qedit {
   min-width: 82px; padding: 10px 14px; text-align: right;
   background: var(--field); border-radius: var(--r-structure);
   font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-variant-numeric: tabular-nums;
@@ -370,7 +370,7 @@
   border: none; cursor: pointer; appearance: none; -webkit-appearance: none;
   min-height: 44px;
 }
-.li .qedit:active { background: var(--field-active); outline: 1.5px solid var(--field-active-line); outline-offset: -1.5px; }
+.qedit:active { background: var(--field-active); outline: 1.5px solid var(--field-active-line); outline-offset: -1.5px; }
 /* per-line pricing — "a defensible price fast" (PRODUCT.md): every line shows
    unit price × qty = line total under its editable quantity, so the roofer can
    defend the figure at the kitchen table line by line. --body, not --muted:
@@ -418,6 +418,12 @@
   font-size: var(--t-caption); color: var(--err);
 }
 .delete-job .ic { width: 15px; height: 15px; }
+
+/* checkbox — square + flat, matching the structural language (e.g. "project is urgent") */
+.check-row { display: flex; align-items: center; gap: 10px; padding: 10px 2px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); cursor: pointer; }
+.check-row .cbox { width: 20px; height: 20px; flex: none; border: 1.5px solid var(--line-ink); background: var(--surface); }
+.check-row .cbox.on { background: var(--accent); border-color: var(--accent); position: relative; }
+.check-row .cbox.on::after { content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
 
 /* totals bar */
 .total-bar {
