@@ -1605,7 +1605,7 @@
                     <b>Measurement</b><span>230 m² · 22.4° · 98%</span>
                   </button>
                   <button class="h">
-                    <b>Quotes (2)</b><span>$24,985 · Pottery Brown</span>
+                    <b>Quotes (2)</b><span>$25,800 · Pottery Brown</span>
                   </button>
                   <button class="h">
                     <b>Photos (4)</b><span>site + before shots</span>
@@ -1680,7 +1680,7 @@
                         >#Q-10235 · saved 6 Jul</small
                       ></span
                     >
-                    <span class="q">$24,985</span>
+                    <span class="q">$25,800</span>
                     <i class="ic ic-chevron"></i>
                   </button>
                 </div>
@@ -1804,7 +1804,7 @@
                         >#Q-10235 · saved 6 Jul</small
                       ></span
                     >
-                    <span class="q">$24,985</span>
+                    <span class="q">$25,800</span>
                     <i class="ic ic-chevron"></i>
                   </button>
                 </div>
@@ -1896,6 +1896,20 @@
                     </div>
                   </div>
                   <div class="li">
+                    <div class="n">Starters</div>
+                    <div class="lr">
+                      <span class="q">56</span>
+                      <span class="lp">× $8.75 · <b>$490</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Three ways</div>
+                    <div class="lr">
+                      <span class="q">10</span>
+                      <span class="lp">× $32.50 · <b>$325</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
                     <div class="n">Point works</div>
                     <div class="lr">
                       <span class="q">3</span>
@@ -1932,8 +1946,8 @@
                 </div>
                 <div class="total-bar">
                   <span
-                    >#Q-10235 · saved 6 Jul<br />GST included: $2,271</span
-                  ><b>$24,985</b>
+                    >#Q-10235 · saved 6 Jul<br />GST included: $2,345</span
+                  ><b>$25,800</b>
                 </div>
                 <button class="btn btn-primary btn-full">
                   Request delivery
@@ -3215,13 +3229,13 @@
                   <div class="ig-row">
                     <div class="ig-t">
                       <label>Starters (qty)</label
-                      ><span class="val ph">e.g., 56</span>
+                      ><span class="val">56</span>
                     </div>
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
                       <label>Three ways (qty)</label
-                      ><span class="val ph">e.g., 10</span>
+                      ><span class="val">10</span>
                     </div>
                   </div>
                 </div>
@@ -3439,6 +3453,13 @@
                   <p class="auth-sub">Pick a brand and finish; add any extras.</p>
                 </div>
                 <div class="field">
+                  <label>Existing roof</label>
+                  <div class="seg">
+                    <span class="on">Terracotta</span><span>Concrete</span
+                    ><span>Metal</span>
+                  </div>
+                </div>
+                <div class="field">
                   <label>Paint brand</label>
                   <div style="display: flex; flex-direction: column; gap: 10px">
                     <div class="opt-card sel">
@@ -3487,8 +3508,17 @@
             </div>
           </div>
           <p class="cap">
-            <b>C0 · Paint &amp; colour — Restoration</b>The Restoration
-            material choice, aligned to the live app. Titled <b>Paint &amp;
+            <b>C0 · Paint &amp; colour — Restoration</b>The Restoration material
+            choice. <b>Existing roof</b> comes first, and it is not cosmetic:
+            the primer follows the material the roof already is &mdash;
+            terracotta gets terracotta primer, concrete gets high-build,
+            metal gets metal primer. The app never asked this before, and
+            neither does the live web tool: its code hardcodes every
+            restoration to a concrete profile (<code>&#39;Elabana&#39;</code>),
+            so a terracotta roof silently gets the wrong primer on every
+            quote. One segmented control fixes it, and it also gives metal
+            roofs a path &mdash; metal recoating is common work here and had
+            nowhere to go. Titled <b>Paint &amp;
             colour</b>, matching the <em>Choose paint &amp; colour</em>
             button that opens it — it read "Quote details" before, which
             collided with C1 "Quote" and D1e "Quote" and promised a quote
@@ -3669,7 +3699,7 @@
                   </div>
                   <div class="li">
                     <div class="n">
-                      Terracotta primer<small>terracotta roof (concrete gets high-build)</small>
+                      Terracotta primer<small>set by the existing roof, chosen at C0</small>
                     </div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">3</button>
@@ -3696,9 +3726,10 @@
             calculator and rarely touched (edited-by-exception) — so each is a
             tap-to-edit field opening a numeric keypad, NOT a ±1 stepper: you
             can't nudge a derived count like 2,912 into shape, and a big keypad
-            is more glove-friendly than tiny +/−. The primer follows the roof
-            material (real calculator rule): terracotta roofs get terracotta
-            primer, concrete gets high-build. Every line carries its
+            is more glove-friendly than tiny +/−. The primer is <b>not a guess</b>: it follows the <em>Existing roof</em>
+            chosen at C0 &mdash; terracotta primer here, high-build for a
+            concrete roof, metal primer for metal, straight from the
+            calculator&rsquo;s own rule. Every line carries its
             unit price and line total — the roofer can defend the figure at
             the kitchen table line by line, not just quote one number. The
             subtitle keeps the job context (colour · type · address) visible,
@@ -4149,13 +4180,13 @@
                   <div class="ig-row">
                     <div class="ig-t">
                       <label>Starters (qty)</label
-                      ><span class="val ph">e.g., 56</span>
+                      ><span class="val">56</span>
                     </div>
                   </div>
                   <div class="ig-row">
                     <div class="ig-t">
                       <label>Three ways (qty)</label
-                      ><span class="val ph">e.g., 10</span>
+                      ><span class="val">10</span>
                     </div>
                   </div>
                 </div>
@@ -4495,6 +4526,20 @@
                     </div>
                   </div>
                   <div class="li">
+                    <div class="n">Starters</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">56</button>
+                      <span class="lp">× $8.75 · <b>$490</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
+                    <div class="n">Three ways</div>
+                    <div class="lr">
+                      <button class="qedit" aria-label="Edit quantity">10</button>
+                      <span class="lp">× $32.50 · <b>$325</b></span>
+                    </div>
+                  </div>
+                  <div class="li">
                     <div class="n">Point works</div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">3</button>
@@ -4531,8 +4576,8 @@
                 </div>
                 <div class="total-bar">
                   <span
-                    >6 items · indicative pricing<br />GST included: $2,271</span
-                  ><b>$24,985</b>
+                    >8 items · indicative pricing<br />GST included: $2,345</span
+                  ><b>$25,800</b>
                 </div>
                 <button class="btn btn-primary btn-full">Save quote</button>
               </div>
@@ -4580,7 +4625,7 @@
                       Quote saved.
                     </div>
                     <p class="auth-sub" style="margin: 8px auto 0; max-width: 26ch">
-                      Quote #Q-10235 &middot; $24,985 attached to 14 Banksia St, Ryde.
+                      Quote #Q-10235 &middot; $25,800 attached to 14 Banksia St, Ryde.
                     </p>
                   </div>
                 </div>
