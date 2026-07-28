@@ -1766,7 +1766,7 @@
             <b>D1d &middot; Measurement detail (read-only)</b>What the
             <b>Measurement</b> tile on D1 opens for a <em>saved</em> job. It used
             to point at B3 &mdash; but B3 is the <em>in-quote-flow</em> version,
-            carrying &ldquo;Choose paint &amp; colour&rdquo; on it. From a saved
+            carrying &ldquo;Choose coating&rdquo; on it. From a saved
             job the measurement is reference only: the aerial + traced outline,
             the same tabular figures (area, pitch, ridge, faces), imagery date
             and confidence &mdash; no quote-building CTA. The one action is
@@ -3241,7 +3241,7 @@
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">
-                    Choose paint &amp; colour
+                    Choose coating
                   </button>
                   <button class="btn btn-secondary btn-full">
                     Adjust measurement
@@ -3255,7 +3255,7 @@
             <b>B3 · Measurement review</b>Image + polygon stay on top; big
             tabular figures below; confidence is first-class. The primary
             names the next step for the job type chosen at B0 — <b>Choose
-            paint &amp; colour</b> here (Restoration); a New Installation
+            coating</b> here (Restoration, → C0a then C0); a New Installation
             that measured by AI reads <b>Choose tile</b> (→ E1) instead.
             <b>Adjust measurement</b> opens B3a — the button now names the
             screen it opens, and both B3 states carry the same two buttons in
@@ -3327,7 +3327,7 @@
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">
-                    Choose paint &amp; colour
+                    Choose coating
                   </button>
                   <button class="btn btn-secondary btn-full">
                     Adjust measurement
@@ -3442,6 +3442,78 @@
                   ><i class="ic-batt"></i
                 ></span>
               </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                  <button class="icon-btn" aria-label="Close"><i class="ic ic-close"></i></button>
+                </div>
+                <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+                <div>
+                  <div class="auth-h">Existing roof</div>
+                  <p class="auth-sub">What is this roof made of today? It sets the primer. Paint and colour come next.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <div class="opt-card sel">
+                    <div class="ot">
+                      <b>Terracotta</b>
+                      <span>Clay tiles &mdash; takes terracotta primer</span>
+                    </div>
+                  </div>
+                  <div class="opt-card">
+                    <div class="ot">
+                      <b>Concrete</b>
+                      <span>Cement or pressed tiles &mdash; takes high-build primer</span>
+                    </div>
+                  </div>
+                  <div class="opt-card">
+                    <div class="ot">
+                      <b>Metal</b>
+                      <span>Colorbond or similar sheet &mdash; takes metal primer</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="serif-note">Pre-set from the aerial scan where it can tell metal from tile; the roofer confirms or changes it in one tap.</p>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+          <p class="cap">
+            <b>C0a &middot; Existing roof</b>Its own screen, and deliberately so.
+            Everything after this point is about what the roof <em>becomes</em>
+            &mdash; brand, colour, finish. This is the one question about what
+            it <em>is</em>. Mixed into C0 it read badly: &ldquo;Existing roof:
+            Terracotta&rdquo; sitting directly above &ldquo;Colour: Coastal
+            Terracotta&rdquo; invites the roofer to read the second as the
+            roof&rsquo;s current colour. Split out, the tense of each screen is
+            unambiguous. It sits <b>after</b> the measurement, not at B0, because
+            only here has the roofer just been looking at an aerial photo of the
+            actual roof &mdash; at job-type time the app doesn&rsquo;t even know
+            which property it is. It is <b>not cosmetic</b>: the primer follows
+            the substrate, so terracotta gets terracotta primer, concrete gets
+            high-build, metal gets metal primer. The live web tool never asks
+            &mdash; its code hardcodes every restoration to a concrete profile
+            (<code>&#39;Elabana&#39;</code>), so a terracotta roof silently gets
+            the wrong primer on every quote. Asking also gives <b>metal roofs a
+            path</b>; metal recoating is common work here and had nowhere to go.
+            Each option names its consequence rather than leaving the roofer to
+            infer it. <b>Tap to advance</b>, same as B0 &mdash; one exclusive
+            choice with nothing else on screen doesn&rsquo;t need a Continue tap.
+            Shares <b>step 4</b> with C0: both are the coating decision, so the
+            stepbar stays at four phases. Restoration only; New Installation
+            takes its substrate from the tile chosen on E1.
+          </p>
+        </div>
+        <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
               <div class="appbody appbody-scroll">
                 <div class="screen-title">
                   <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
@@ -3450,14 +3522,7 @@
                 <div class="stepbar" role="img" aria-label="Step 4 of 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
                 <div>
                   <div class="auth-h">Paint &amp; colour</div>
-                  <p class="auth-sub">Pick a brand and finish; add any extras.</p>
-                </div>
-                <div class="field">
-                  <label>Existing roof</label>
-                  <div class="seg">
-                    <span class="on">Terracotta</span><span>Concrete</span
-                    ><span>Metal</span>
-                  </div>
+                  <p class="auth-sub">Pick the brand and finish going on the roof.</p>
                 </div>
                 <div class="field">
                   <label>Paint brand</label>
@@ -3479,12 +3544,12 @@
                 <div class="field">
                   <label>Colour <small style="color: var(--muted); font-variation-settings: 'wght' 400">· Industrial roof coatings</small></label>
                   <div style="display: flex; flex-wrap: wrap; gap: 10px">
-                    <button class="swatch sel p-cream" aria-label="Dover White, selected"></button>
-                    <button class="swatch p-monument" aria-label="Paperbark"></button>
-                    <button class="swatch p-slategrey" aria-label="Surfmist"></button>
-                    <button class="swatch p-gully" aria-label="Evening Haze"></button>
-                    <button class="swatch p-coastal" aria-label="Dune"></button>
-                    <button class="swatch p-manor" aria-label="Terrain"></button>
+                    <button class="swatch p-dover" aria-label="Dover White"></button>
+                    <button class="swatch p-paperbark" aria-label="Paperbark"></button>
+                    <button class="swatch p-dune" aria-label="Dune"></button>
+                    <button class="swatch sel p-coastal" aria-label="Coastal Terracotta, selected"></button>
+                    <button class="swatch p-gully" aria-label="Gully"></button>
+                    <button class="swatch p-monument" aria-label="Monument"></button>
                   </div>
                   <p class="serif-note" style="margin-top: 6px">Colours are per brand &mdash; Shield coat swaps to its own reds &amp; terracottas.</p>
                 </div>
@@ -3508,25 +3573,19 @@
             </div>
           </div>
           <p class="cap">
-            <b>C0 · Paint &amp; colour — Restoration</b>The Restoration material
-            choice. <b>Existing roof</b> comes first, and it is not cosmetic:
-            the primer follows the material the roof already is &mdash;
-            terracotta gets terracotta primer, concrete gets high-build,
-            metal gets metal primer. The app never asked this before, and
-            neither does the live web tool: its code hardcodes every
-            restoration to a concrete profile (<code>&#39;Elabana&#39;</code>),
-            so a terracotta roof silently gets the wrong primer on every
-            quote. One segmented control fixes it, and it also gives metal
-            roofs a path &mdash; metal recoating is common work here and had
-            nowhere to go. Titled <b>Paint &amp;
-            colour</b>, matching the <em>Choose paint &amp; colour</em>
-            button that opens it — it read "Quote details" before, which
+            <b>C0 · Paint &amp; colour — Restoration</b>The second half of the
+            coating decision, and now <b>only about what the roof becomes</b>.
+            The existing substrate moved to C0a: one screen asking what the roof
+            <em>is</em>, one asking what it <em>turns into</em>, so no screen
+            mixes the two tenses. What&rsquo;s left here is a clean
+            finish-picker. Titled <b>Paint &amp;
+            colour</b> — it read "Quote details" before, which
             collided with C1 "Quote" and D1e "Quote" and promised a quote
             that doesn't exist yet. <b>Paint brand</b>
             (Industrial roof coatings / Shield coat) drives a
             <b>brand-specific colour set</b> &mdash; the fix for the old mixed
-            list: Industrial shows Dover White / Paperbark / Surfmist / Evening
-            Haze / Dune / Terrain; picking Shield coat swaps the whole set to
+            list: Industrial shows Dover White / Paperbark / Dune / Coastal
+            Terracotta / Gully / Monument; picking Shield coat swaps the whole set to
             its reds &amp; terracottas (Roof Red, Manor Red, Tuscan, the
             Terracottas). Real names/hexes load from the catalogue API &mdash;
             representative until it&rsquo;s wired. Then a free-text
@@ -3571,10 +3630,10 @@
                   </div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch p-dover" aria-label="Dover White"></button>
+                  <button class="swatch p-paperbark" aria-label="Paperbark"></button>
+                  <button class="swatch p-dune" aria-label="Dune"></button>
                   <button class="swatch sel p-coastal" aria-label="Coastal Terracotta, selected"></button>
-                  <button class="swatch p-manor" aria-label="Manor Red"></button>
-                  <button class="swatch p-slategrey" aria-label="Slate Grey"></button>
-                  <button class="swatch p-cream" aria-label="Classic Cream"></button>
                   <button class="swatch p-gully" aria-label="Gully"></button>
                   <button class="swatch p-monument" aria-label="Monument"></button>
                 </div>
@@ -3623,21 +3682,21 @@
                 </div>
                 <div class="aerial vis" style="height: 300px; --roof-colour: #A0522D">
                   <div class="roof tiled"></div>
-                  <div class="roof tiled side-b" style="--roof-colour: #3A3A3A"></div>
+                  <div class="roof tiled side-b" style="--roof-colour: #2A2A2A"></div>
                   <div class="cmp-divider"></div>
                   <div class="cmp-handle"><i class="ic ic-compare"></i></div>
                 </div>
                 <div class="vis-label pair">
                   <div class="vl"><b>Coastal Terracotta</b><span>picked</span></div>
-                  <div class="vl b"><b>Slate Grey</b><span>comparing</span></div>
+                  <div class="vl b"><b>Monument</b><span>comparing</span></div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch p-dover" aria-label="Dover White"></button>
+                  <button class="swatch p-paperbark" aria-label="Paperbark"></button>
+                  <button class="swatch p-dune" aria-label="Dune"></button>
                   <button class="swatch sel p-coastal" aria-label="Coastal Terracotta, your pick"></button>
-                  <button class="swatch p-manor" aria-label="Manor Red"></button>
-                  <button class="swatch p-slategrey" aria-label="Slate Grey, comparing"></button>
-                  <button class="swatch p-cream" aria-label="Classic Cream"></button>
                   <button class="swatch p-gully" aria-label="Gully"></button>
-                  <button class="swatch p-monument" aria-label="Monument"></button>
+                  <button class="swatch sel p-monument" aria-label="Monument, comparing"></button>
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">Build quote</button>
@@ -3699,7 +3758,7 @@
                   </div>
                   <div class="li">
                     <div class="n">
-                      Terracotta primer<small>set by the existing roof, chosen at C0</small>
+                      Terracotta primer<small class="spec-pick">Existing roof &middot; terracotta</small>
                     </div>
                     <div class="lr">
                       <button class="qedit" aria-label="Edit quantity">3</button>
@@ -3727,7 +3786,7 @@
             tap-to-edit field opening a numeric keypad, NOT a ±1 stepper: you
             can't nudge a derived count like 2,912 into shape, and a big keypad
             is more glove-friendly than tiny +/−. The primer is <b>not a guess</b>: it follows the <em>Existing roof</em>
-            chosen at C0 &mdash; terracotta primer here, high-build for a
+            chosen at C0a &mdash; terracotta primer here, high-build for a
             concrete roof, metal primer for metal, straight from the
             calculator&rsquo;s own rule. Every line carries its
             unit price and line total — the roofer can defend the figure at
@@ -4205,8 +4264,8 @@
             typing 230 and 22.4 had nothing on screen confirming which roof
             the figures belong to — the same gap fixed on C1. The CTA names the actual next step rather than a vague
             "Continue": <b>Choose tile</b> here (New Installation → E1), or
-            <b>Choose paint &amp; colour</b> on the Restoration instance
-            (→ C0). Either way it skips B2/B3 — nothing to review when the
+            <b>Choose coating</b> on the Restoration instance
+            (→ C0a). Either way it skips B2/B3 — nothing to review when the
             roofer just typed the numbers. <b>Work out the area</b> opens a
             small sheet: width × length + the pitch, computed with the
             calculator's own <code>calculateRoofArea</code> — a roofer has

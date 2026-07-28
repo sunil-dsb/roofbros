@@ -261,6 +261,9 @@
 .p-cream { background: linear-gradient(140deg, #F5E6D3, #dcc9ae); }       /* Classic Cream */
 .p-gully { background: linear-gradient(140deg, #6B7A6B, #4f5c4f); }       /* Gully */
 .p-monument { background: linear-gradient(140deg, #333333, #1d1d1d); }    /* Monument #2A2A2A */
+.p-dover { background: linear-gradient(140deg, #F8F8F4, #e6e6df); }        /* Dover White #F5F5F0 */
+.p-paperbark { background: linear-gradient(140deg, #ddceb4, #c5b599); }    /* Paperbark #D4C4A8 */
+.p-dune { background: linear-gradient(140deg, #c2ab8e, #a68d6f); }         /* Dune #B8A082 */
 
 /* bottom-anchored action group (auth + action screens) */
 .screen-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
