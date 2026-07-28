@@ -4949,7 +4949,8 @@
                   <i class="ic ic-file"></i> Data sheet (PDF)
                 </button>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Try a colour</button>
+                  <button class="btn btn-primary btn-full">Start a quote</button>
+                  <button class="btn btn-secondary btn-full">Try a colour</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -4958,8 +4959,14 @@
           <p class="cap">
             <b>E2 &middot; Colour detail</b>The compliance trio (SA / SRI / LRV)
             + BASIX class &mdash; quoting infrastructure in NSW, not decoration.
-            From the browse tab there&rsquo;s no job yet &mdash; and no real
-            roof to preview on &mdash; so the primary is honest and light:
+            From the browse tab there&rsquo;s no job yet, but browsing has to
+            <em>lead</em> somewhere &mdash; a catalogue you can&rsquo;t act on
+            is a dead end. So the primary is <b>Start a quote</b>: it opens
+            the New Quote flow with this tile already chosen, and the roofer
+            picks job type and address from there. <b>Try a colour</b> is the
+            optional preview beside it &mdash; the same commit-primary +
+            preview-secondary pairing C0 and the in-flow E2 use, so the screen
+            behaves the same wherever it&rsquo;s reached.
             <b>Try a colour</b> opens the visualiser (the C2 stage, its
             One-colour / Compare-two toggle) to weigh colours side by side on a
             tile sample. Preview-only here &mdash; no &ldquo;Save quote,&rdquo;
@@ -5005,6 +5012,9 @@
                   <button class="swatch t-terracotta" aria-label="Florence Red"></button>
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Start a quote</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -5013,9 +5023,11 @@
             <b>C2 &middot; Colour visualiser &mdash; browse</b>Where
             <b>Try a colour</b> on E2 lands. The same visualiser stage as the
             quote flow &mdash; a tile sample recoloured live &mdash; but reached
-            from a browse, so it&rsquo;s <b>preview-only</b>: back-only header,
-            no stepbar, and no &ldquo;Save quote&rdquo; (there&rsquo;s no job to
-            save to). Tap a swatch to re-tint; press-and-hold shows the original.
+            from a browse, so there&rsquo;s nothing to save into yet: back-only
+            header, no stepbar, and where the quote flow says <em>Save
+            quote</em> this says <b>Start a quote</b> &mdash; the same slot,
+            carrying the previewed tile into a new quote instead of
+            dead-ending on a colour the roofer just decided they liked. Tap a swatch to re-tint; press-and-hold shows the original.
             The <em>One colour / Compare two</em> toggle switches to the split
             view, next.
           </p>
@@ -5067,6 +5079,9 @@
                   <button class="swatch t-terracotta" aria-label="Florence Red"></button>
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Start a quote</button>
+                </div>
               </div>
               <div class="home-ind"></div>
             </div>
@@ -5078,8 +5093,10 @@
             right. The <b>top row sets the left</b> colour, the <b>bottom row
             sets the right</b>, so each side is chosen independently rather than
             one fixed and one swapped. Drag the handle to reveal more of either.
-            Still preview-only (no Save quote) &mdash; weighing two
-            recycled-tile colours side by side before there&rsquo;s even a job.
+            Weighing two recycled-tile colours side by side before there&rsquo;s
+            even a job &mdash; and <b>Start a quote</b> carries whichever side
+            won straight into a new quote, so the comparison actually decides
+            something.
           </p>
         </div>
 
