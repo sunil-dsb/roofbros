@@ -96,10 +96,10 @@
               <div class="appbody" style="padding: 0; position: relative">
                 <div class="loader-wrap">
                   <section class="loader">
-                    <div><div><span class="one h6"></span><span class="two h3"></span></div></div>
-                    <div><div><span class="one h1"></span></div></div>
-                    <div><div><span class="two h2"></span></div></div>
-                    <div><div><span class="one h4"></span></div></div>
+                    <div><div><span class="h6"></span><span class="h3"></span></div></div>
+                    <div><div><span class="h1"></span></div></div>
+                    <div><div><span class="h2"></span></div></div>
+                    <div><div><span class="h4"></span></div></div>
                   </section>
                 </div>
                 <p class="load-label" style="position: absolute; top: 50%; left: 0; right: 0; margin: 92px 0 0; text-align: center">One moment…</p>
@@ -2555,6 +2555,13 @@
                   <div class="auth-h">Delivery #DR-2481</div>
                   <p class="auth-sub">14 Banksia St, Ryde</p>
                 </div>
+                <div class="banner">
+                  <i class="ic ic-warn"></i>
+                  <p>
+                    <b>Pending with RoofBros.</b> They&rsquo;ll confirm the date
+                    and stock &mdash; the timeline below updates as it moves.
+                  </p>
+                </div>
                 <div
                   style="
                     border: 1px solid var(--line-soft);
@@ -2614,13 +2621,6 @@
                   <div class="ev">Scheduled</div>
                   <div class="ev">Delivered</div>
                 </div>
-                <div class="banner">
-                  <i class="ic ic-warn"></i>
-                  <p>
-                    <b>Pending with RoofBros.</b> They&rsquo;ll confirm the date
-                    and stock; it updates here once they do.
-                  </p>
-                </div>
               </div>
               <div class="fr-cta">
                 <button class="btn btn-danger btn-full">
@@ -2645,14 +2645,22 @@
             here. Laid over a
             timeline where only <b>Requested</b> is done; the rest wait on
             RoofBros. The amber banner names the state plainly, without promising
-            a push it can&rsquo;t send. One action sits pinned at the foot:
+            a push it can&rsquo;t send &mdash; and it sits <b>directly under the
+            title</b>, not at the foot. It answers &ldquo;why is nothing
+            happening?&rdquo;, which is the first question this screen gets, so
+            burying it below four panels and the timeline meant scrolling to the
+            end to find it. It also explains the <b>Requested</b> chip in the
+            header, and an explanation five sections away from the thing it
+            explains isn&rsquo;t one. Same placement as every other banner in the
+            app (B3&rsquo;s low-confidence warning, F2&rsquo;s delete notice):
+            immediately after the object it&rsquo;s about. One action sits pinned at the foot:
             <b>Cancel request</b>, which confirms first (next frame). A wrong
             Thursday is fixed by cancelling and requesting again &mdash; not
             by a separate &ldquo;change&rdquo; path, which would need RoofBros
             to handle an <em>amended</em> request as distinct from a new one.
             Cancel-then-rebook is unambiguous on both sides, and while the
             request is still Pending nothing has been booked to amend.
-            <span class="scope-why"><b>Scope note:</b> Confirmed / Scheduled / Delivered light up only when RoofBros&rsquo; side (stock/ordering integration + push) ships &mdash; out of MVP scope; the live-tracked <b>Delivered</b> version (D4, next) stays greyed. Per your call we draw <em>Pending only</em> for now &mdash; no Declined state yet. <b>Change/cancel is in scope</b> though: while a request is still Pending nobody has acted on it, so it&rsquo;s the roofer&rsquo;s own record to edit &mdash; no RoofBros integration needed.</span>
+            <span class="scope-why"><b>Scope note:</b> Confirmed / Scheduled / Delivered light up only when RoofBros&rsquo; side (stock/ordering integration + push) ships &mdash; out of MVP scope; the live-tracked <b>Delivered</b> version (D4) stays greyed. Per your call we draw <em>Pending only</em> for now &mdash; no Declined state yet. <b>Change/cancel is in scope</b> though: while a request is still Pending nobody has acted on it, so it&rsquo;s the roofer&rsquo;s own record to edit &mdash; no RoofBros integration needed.</span>
           </p>
         </div>
 
@@ -3638,7 +3646,7 @@
                   <button class="swatch p-monument" aria-label="Monument"></button>
                 </div>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Build quote</button>
+                  <button class="btn btn-primary btn-full">Build quote in Coastal Terracotta</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -3652,8 +3660,14 @@
             (&lt;250ms, shadows preserved via Skia in the build);
             press-and-hold shows the original; the One-colour / Compare-two
             toggle swaps the preview. Reached from C0&rsquo;s <b>Try a
-            colour</b>; it returns to the flow via <b>Build quote</b> &mdash;
-            titled <b>Try a colour</b>, echoing the <em>Try a colour</em>
+            colour</b>; it returns to the flow via <b>Build quote in Coastal
+            Terracotta</b> &mdash; the button <b>names the colour it carries</b>,
+            because this is the screen where the colour gets decided and the
+            roofer shouldn&rsquo;t have to infer what a bare &ldquo;Build
+            quote&rdquo; is taking with it. On this view there&rsquo;s only one
+            colour, already marked, so no confirmation is needed and it stays a
+            <b>single tap</b>; the Compare-two view has two equals and asks in a
+            sheet instead (C2a). Titled <b>Try a colour</b>, echoing the <em>Try a colour</em>
             button that opens it &mdash; it was the one screen in the app
             with no heading at all, just a floating back arrow.
             Back-only header and no stepbar, since it&rsquo;s a detour, not a
@@ -3687,16 +3701,16 @@
                   <div class="cmp-handle"><i class="ic ic-compare"></i></div>
                 </div>
                 <div class="vis-label pair">
-                  <div class="vl"><b>Coastal Terracotta</b><span>picked</span></div>
-                  <div class="vl b"><b>Monument</b><span>comparing</span></div>
+                  <div class="vl"><b>Coastal Terracotta</b><span>left</span></div>
+                  <div class="vl b"><b>Monument</b><span>right</span></div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center">
                   <button class="swatch p-dover" aria-label="Dover White"></button>
                   <button class="swatch p-paperbark" aria-label="Paperbark"></button>
                   <button class="swatch p-dune" aria-label="Dune"></button>
-                  <button class="swatch sel p-coastal" aria-label="Coastal Terracotta, your pick"></button>
+                  <button class="swatch cmp p-coastal" aria-label="Coastal Terracotta, left side"></button>
                   <button class="swatch p-gully" aria-label="Gully"></button>
-                  <button class="swatch sel p-monument" aria-label="Monument, comparing"></button>
+                  <button class="swatch cmp p-monument" aria-label="Monument, right side"></button>
                 </div>
                 <div class="screen-foot">
                   <button class="btn btn-primary btn-full">Build quote</button>
@@ -3707,16 +3721,115 @@
           </div>
           <p class="cap">
             <b>C2 · Compare two colours</b>Same screen, the toggle flipped to the
-            split slider: your <b>pick</b> on the left, the colour you&rsquo;re
-            weighing it against on the right; drag the handle to wipe between
-            them. The <b>checkmark stays on your pick</b> &mdash; the same
-            &ldquo;chosen&rdquo; marker as everywhere else, so it&rsquo;s never
-            ambiguous which colour <b>Build quote</b> carries (tapping a swatch
-            moves the pick, and the previous colour drops to the compare side).
-            Still no save button; still optional.
+            split slider: two colours the roofer is weighing, <b>left</b> and
+            <b>right</b>; drag the handle to wipe between them. <b>Neither wears
+            the checkmark.</b> On this view the two are <em>equals</em> &mdash;
+            calling one the pick and the other the runner-up invents a hierarchy
+            the roofer doesn&rsquo;t have, and an earlier build put the same maroon
+            check on both, so nothing on screen said which colour the quote would
+            take. Both get a <b>neutral ring</b> instead: in play, neither chosen.
+            The sides are labelled <b>left</b> / <b>right</b>, the same language
+            the browse compare already used. The choice is asked for where it
+            matters &mdash; <b>Build quote</b> opens the sheet on the next frame
+            &mdash; instead of being guessed here. Still no save button; still
+            optional.
           </p>
         </div>
         <div class="screen-slot">
+          <div class="phone">
+            <span class="island"></span>
+            <div class="screen">
+              <div class="statusbar">
+                <span>9:41</span
+                ><span class="sb-ic"
+                  ><i class="ic-cell"></i><i class="ic-wifi"></i
+                  ><i class="ic-batt"></i
+                ></span>
+              </div>
+              <div class="appbody">
+                <div class="screen-title">
+                  <button class="icon-btn" aria-label="Go back"><i class="ic ic-back"></i></button>
+                </div>
+                <div class="auth-h">Try a colour</div>
+                <div class="seg">
+                  <span>One colour</span><span class="on">Compare two</span>
+                </div>
+                <div class="aerial vis" style="height: 300px; --roof-colour: #A0522D">
+                  <div class="roof tiled"></div>
+                  <div class="roof tiled side-b" style="--roof-colour: #2A2A2A"></div>
+                  <div class="cmp-divider"></div>
+                  <div class="cmp-handle"><i class="ic ic-compare"></i></div>
+                </div>
+                <div class="vis-label pair">
+                  <div class="vl"><b>Coastal Terracotta</b><span>left</span></div>
+                  <div class="vl b"><b>Monument</b><span>right</span></div>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center">
+                  <button class="swatch p-dover" aria-label="Dover White"></button>
+                  <button class="swatch p-paperbark" aria-label="Paperbark"></button>
+                  <button class="swatch p-dune" aria-label="Dune"></button>
+                  <button class="swatch cmp p-coastal" aria-label="Coastal Terracotta, left side"></button>
+                  <button class="swatch p-gully" aria-label="Gully"></button>
+                  <button class="swatch cmp p-monument" aria-label="Monument, right side"></button>
+                </div>
+                <div class="screen-foot">
+                  <button class="btn btn-primary btn-full">Build quote</button>
+                </div>
+              </div>
+              <div class="scrim sheet">
+                <div class="dialog">
+                  <h4>Which colour goes on the quote?</h4>
+                  <div class="dialog-actions">
+                    <div class="opt-card">
+                      <span class="swatch p-coastal" role="img" aria-label="Coastal Terracotta"></span>
+                      <div class="ot">
+                        <b>Coastal Terracotta</b>
+                        <span>Industrial roof coatings</span>
+                      </div>
+                      <span class="side">left</span>
+                    </div>
+                    <div class="opt-card">
+                      <span class="swatch p-monument" role="img" aria-label="Monument"></span>
+                      <div class="ot">
+                        <b>Monument</b>
+                        <span>Industrial roof coatings</span>
+                      </div>
+                      <span class="side">right</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="home-ind"></div>
+            </div>
+          </div>
+                    <p class="cap">
+            <b>C2a &middot; Which colour? &mdash; sheet</b>Where <b>Build quote</b>
+            goes from the compare view, and the reason compare mode carries
+            <b>no checkmark at all</b>. Two colours the roofer is weighing are
+            <em>equals</em> &mdash; marking one &ldquo;picked&rdquo; and the other
+            &ldquo;comparing&rdquo; invents a hierarchy they don&rsquo;t have, and
+            the earlier build put the same maroon check on both, so nothing on
+            screen said which colour the quote would take. Compare mode now shows
+            two <b>neutral rings</b> (in play, neither chosen) and labels the sides
+            <b>left</b> / <b>right</b> &mdash; the same honest language the browse
+            compare already used &mdash; and the question is asked at the moment it
+            matters instead of being guessed earlier. <b>Each row carries the real
+            swatch</b>, in the same left/right order as the split: after judging
+            colours as pictures, picking them back out of a list of names would
+            throw away the only thing this screen earned. The sheet stays short so
+            the two roofs are still visible above it. <b>Tapping a row is the
+            commit</b> &mdash; no second confirm button, so it&rsquo;s two taps from
+            compare and each one names the colour. Reuses <code>.scrim.sheet</code>
+            (D1b&rsquo;s Add-photo sheet) and <code>.opt-card</code> with the swatch
+            where the leading icon normally sits &mdash; no new component language.
+            The <b>One colour</b> view needs none of this: one colour, already
+            marked, so its button just states it &mdash; <em>Build quote in Coastal
+            Terracotta</em> &mdash; and stays a single tap. Same pattern on the
+            browse path, where the button reads <em>Start a quote in Titan
+            Gloss</em>.
+          </p>
+        </div>
+<div class="screen-slot">
           <div class="phone">
             <span class="island"></span>
             <div class="screen">
@@ -4513,7 +4626,7 @@
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Build quote</button>
+                  <button class="btn btn-primary btn-full">Build quote in Pottery Brown</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -5117,7 +5230,7 @@
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
                 <div class="screen-foot">
-                  <button class="btn btn-primary btn-full">Start a quote</button>
+                  <button class="btn btn-primary btn-full">Start a quote in Titan Gloss</button>
                 </div>
               </div>
               <div class="home-ind"></div>
@@ -5169,7 +5282,7 @@
                 </div>
                 <div class="fr-label" style="text-align: center; margin-top: 2px">Left</div>
                 <div style="display: flex; gap: 10px; justify-content: center">
-                  <button class="swatch sel t-titan" aria-label="Titan Gloss, left side"></button>
+                  <button class="swatch cmp t-titan" aria-label="Titan Gloss, left side"></button>
                   <button class="swatch t-heritage" aria-label="Pottery Brown"></button>
                   <button class="swatch t-slate" aria-label="Bedrock"></button>
                   <button class="swatch t-terracotta" aria-label="Florence Red"></button>
@@ -5179,7 +5292,7 @@
                 <div style="display: flex; gap: 10px; justify-content: center">
                   <button class="swatch t-titan" aria-label="Titan Gloss"></button>
                   <button class="swatch t-heritage" aria-label="Pottery Brown"></button>
-                  <button class="swatch sel t-slate" aria-label="Bedrock, right side"></button>
+                  <button class="swatch cmp t-slate" aria-label="Bedrock, right side"></button>
                   <button class="swatch t-terracotta" aria-label="Florence Red"></button>
                   <button class="swatch t-olive" aria-label="Riverstone"></button>
                 </div>
@@ -5197,10 +5310,15 @@
             right. The <b>top row sets the left</b> colour, the <b>bottom row
             sets the right</b>, so each side is chosen independently rather than
             one fixed and one swapped. Drag the handle to reveal more of either.
-            Weighing two recycled-tile colours side by side before there&rsquo;s
-            even a job &mdash; and <b>Start a quote</b> carries whichever side
-            won straight into a new quote, so the comparison actually decides
-            something.
+            Both selections wear the <b>neutral ring</b>, not the checkmark
+            &mdash; same rule as the in-quote compare: two colours being weighed
+            are equals, and nothing here has been chosen yet. Weighing two
+            recycled-tile colours side by side before there&rsquo;s even a job
+            &mdash; and <b>Start a quote</b> asks which one in the same
+            sheet pattern as C2a &mdash; with the two tile colours in place of the
+            coating pair &mdash; then carries it into a new quote, so the comparison actually
+            decides something. Two independent rows survive precisely
+            <em>because</em> neither side has to be the pick.
           </p>
         </div>
 

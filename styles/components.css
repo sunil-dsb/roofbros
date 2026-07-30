@@ -112,8 +112,7 @@
    address materials are going to. It deliberately does NOT wear the field
    costume — in this system the grey fill (--field) IS the affordance meaning
    "tap to type", so borrowing it for a value nobody can edit invites a tap
-   that does nothing. No fill, no box: label + value on the ground with a
-   hairline, the same presentation as .spec-row.
+   that does nothing. No fill — but it does get a box; see Shape below.
 
    Text stays at FULL contrast (13.4:1), because this is information the screen
    depends on — the roofer has to read which email the code went to. That's the
@@ -126,9 +125,20 @@
      grey fill      = editable, tap to type
      white+outline  = editable, focused
      no fill        = read-only, information only
-     dimmed         = disabled control, will become available */
-.ro-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
-.ro-row:last-of-type { border-bottom: none; }
+     dimmed         = disabled control, will become available
+
+   Shape: a square OUTLINED box — never a bottom rule. A lone bottom border is
+   the Material underlined-field look: it reads as a text input you can tap,
+   which is the opposite of what this row is, and it's a third shape language
+   next to "square = structure, pill = touch". Outlined and unfilled keeps the
+   no-fill read-only rule while still reading as structure.
+   (The old rule paired border-bottom with .ro-row:last-of-type to strip the
+   last divider — but :last-of-type is by ELEMENT, not class, and every real
+   use is a single row followed by another div, so it never once matched: all
+   8 instances rendered a divider dividing nothing. Adjacent rows now fuse via
+   the sibling selector, which actually works.) */
+.ro-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-soft); border-radius: var(--r-structure); }
+.ro-row + .ro-row { border-top: none; }
 .ro-row > .ic { width: 18px; height: 18px; color: var(--muted); flex: none; }
 .ro-row .t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .ro-row label { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-caption); color: var(--muted); }
@@ -188,6 +198,14 @@
 /* ---------- tile swatch (square — they read as tiles) ---------- */
 .swatch { width: 44px; height: 44px; border: 1px solid var(--line-soft); cursor: pointer; position: relative; flex: none; appearance: none; -webkit-appearance: none; padding: 0; }
 .swatch.sel { outline: 2px solid var(--accent); outline-offset: 1px; }
+/* .cmp — the two colours loaded into the compare view. In play on the split, but
+   NEITHER is chosen: on that screen the roofer is weighing two equals, so marking
+   one "picked" invents a hierarchy they don't have. The choice is asked for at
+   commit time (C2a's sheet) instead of guessed here. Deliberately not maroon and
+   deliberately no checkmark — maroon+check means "chosen" everywhere in this app,
+   and an earlier build put that same marker on both compare swatches, which left
+   nothing on screen saying which colour Build quote would carry. */
+.swatch.cmp { outline: 2px solid var(--line-ink); outline-offset: 1px; }
 .swatch.sel::after {
   content: ''; position: absolute; inset: 0;
   background: #fff;
@@ -208,6 +226,13 @@
 }
 .opt-card .ic { width: 24px; height: 24px; flex: none; color: var(--muted); }
 .opt-card .ot { flex: 1; min-width: 0; }
+/* a colour option (C2a's sheet): the swatch takes the leading icon's place, at its
+   normal 44px because here the colour IS the content — after judging colours as
+   pictures on the split, choosing them back out of a list of names would throw away
+   the only thing the visualiser earned. .side is the left/right tie-back to the
+   split, so the mapping from sheet row to screen half needs no thought. */
+.opt-card > .swatch { cursor: inherit; }
+.opt-card .side { flex: none; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
 .opt-card b {
   display: block; font-family: var(--font-ui); font-variation-settings: 'wght' 600;
   font-size: var(--t-heading); color: var(--ink);
