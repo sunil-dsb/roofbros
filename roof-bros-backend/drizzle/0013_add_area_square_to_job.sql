@@ -1,0 +1,1 @@
+ALTER TABLE "job" ADD COLUMN "area_square" numeric(10, 2);

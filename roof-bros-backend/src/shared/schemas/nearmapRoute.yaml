@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Nearmap API
+  description: Endpoints for the Nearmap integration module
+  version: 1.0.0
+tags:
+  - name: Nearmap
+    description: Nearmap-related endpoints
+
+paths:
+  /v1/nearmap/coverage:
+    get:
+      summary: Get coverage
+      description: Get Nearmap coverage for a specific address
+      tags:
+        - Nearmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+
+  /v1/nearmap/features/{surveyResourceId}:
+    get:
+      summary: Get features
+      description: Get features from Nearmap using a surveyResourceId
+      tags:
+        - Nearmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: surveyResourceId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: transactionToken
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+
+  /v1/nearmap/static-map/{surveyResourceId}:
+    get:
+      summary: Get static map
+      description: Get static map image from Nearmap
+      tags:
+        - Nearmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: surveyResourceId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: transactionToken
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: x
+          required: false
+          schema:
+            type: string
+            default: '0'
+        - in: query
+          name: y
+          required: false
+          schema:
+            type: string
+            default: '0'
+        - in: query
+          name: tileSize
+          required: false
+          schema:
+            type: string
+            default: '4096x4096'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+
+  /v1/nearmap/consolidated-data:
+    get:
+      summary: Get consolidated data
+      description: Fetch all Nearmap data (coverage, features, map) in one call
+      tags:
+        - Nearmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: address
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object

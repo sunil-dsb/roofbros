@@ -1,0 +1,512 @@
+/* ============================================================
+   RoofBros — mobile-design.css
+   Page-local styles for 02-mobile-design screens only. Promote anything reused twice into components.css.
+   Load order: tokens → base → components → device → docs/page.
+   ============================================================ */
+
+.suggest {
+  border: 1px solid var(--line-soft); border-top: none; background: var(--surface);
+  border-radius: 0 0 var(--r-structure) var(--r-structure);
+  max-height: 146px; overflow-y: auto;
+}
+  /* native thin scrollbar, not a custom-drawn one (product-register rule:
+     don't reinvent standard affordances) — RN gets FlatList's own indicator */
+  .suggest { scrollbar-width: thin; }
+  .suggest .s-row { padding: 12px 14px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--ink); border-bottom: 1px solid var(--line-soft); display: flex; gap: 10px; align-items: center; }
+  .suggest .s-row:last-child { border-bottom: none; }
+  /* always the last row, never a separate screen: Places can fail on a new
+     estate or a rural block, and the roofer still has to create the job —
+     every job is identified by its address (hub, job detail, delivery, quote),
+     so it can't just be skipped. The fallback stays ON this screen: drop the
+     pin on the roof and read the address back from it. Fewer taps than a
+     four-field form, and more accurate, since the pin is what the measurement
+     runs on. Permanent row (Google/Uber pattern) so nothing depends on an
+     empty-results state firing. */
+  .suggest .s-manual { width: 100%; background: none; border-top: 1px solid var(--line-soft); text-align: left; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .suggest .s-manual .ic { color: var(--accent); }
+  .suggest .s-manual b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
+  .suggest .s-row small { color: var(--muted); font-size: var(--t-caption); }
+  /* the glow is a gradient (an image effect on the photo, same class as the
+     legibility scrims), not a box-shadow — keeps the no-shadow rule intact */
+  .scanline {
+    position: absolute; left: 0; right: 0; top: 38%; height: 16px; margin-top: -8px; opacity: 0.9;
+    background: linear-gradient(to bottom,
+      transparent, rgba(255,255,255,0.55) 38%, #fff 44%, #fff 56%, rgba(255,255,255,0.55) 62%, transparent);
+  }
+  .serif-note { font-size: var(--t-body); color: var(--body); }
+  /* date picker = balanced calendar tiles: weekday / day / month, identical
+     structure across all three; soft hairline, selected = tint + maroon outline
+     + maroon number (same selection language as the option cards).
+     Real <button>s so screen readers announce them (same rule as .swatch). */
+  .datewin { display: flex; gap: 10px; }
+  .datewin .d {
+    flex: 1; border: 1px solid var(--line-soft); border-radius: var(--r-structure);
+    padding: 12px 6px; font-family: var(--font-ui);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    background: var(--surface); appearance: none; -webkit-appearance: none; cursor: pointer;
+  }
+  .datewin .d .dow { font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-variation-settings: 'wght' 600; }
+  .datewin .d .day { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-data); color: var(--ink); line-height: 1; }
+  .datewin .d .mon { font-size: var(--t-caption); color: var(--muted); }
+  .datewin .d.on { background: var(--accent-tint); border-color: var(--accent); outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+  .datewin .d.on .day { color: var(--accent); }
+  /* on the tint, --muted measures ~3.3:1 (fails AA) — lift to --body (6.6:1),
+     the same fix .opt-card.sel span already uses */
+  .datewin .d.on .dow, .datewin .d.on .mon { color: var(--body); }
+
+/* ---------- entry flow: splash, welcome, auth, empty hub ----------
+   Splash = mark + wordmark only (Wise/Revolut/Uber pattern). White badge
+   rounded with --r-sheet (~app-icon squircle) — a deliberate brand
+   exception echoing the phone's home-screen icon; reuses a token, not a
+   new magic value. */
+.splash-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;  }
+.splash-badge { width: 112px; height: 112px; background: #FFFFFF; border-radius: var(--r-sheet); display: grid; place-items: center; }
+.splash-badge img { width: 76px; height: 76px; display: block; }
+.splash-word { margin-top: 20px; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); letter-spacing: -0.02em; color: #FFFFFF; }
+
+.auth-h { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); line-height: 1.08; letter-spacing: -0.01em; color: var(--ink); }
+.auth-sub { margin-top: 8px; font-size: var(--t-body); color: var(--body); }
+
+/* social-row + auth-divider now live in components.css (reusable, not page-local) */
+.field .control .val { color: var(--ink); }
+.field .control .eye { margin-left: auto; color: var(--muted); }
+.link-line { text-align: center; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.link-line b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
+.terms { text-align: center; font-size: var(--t-caption); line-height: 1.55; color: var(--muted); padding: 0 12px; }
+.terms u { text-decoration-color: var(--line-soft); text-underline-offset: 2px; }
+/* forgot-password link — larger, slate link colour. It was error-red once
+   ("draws attention"), but red means error/destructive everywhere else in the
+   system (field-error, btn-danger, OTP error) — a benign navigation link in
+   red trains that meaning away. Superseded 2026-07-14, logged in DECISIONS. */
+.forgot-link { text-align: right; }
+.forgot-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+
+
+/* home greeting (Jobs tab only) */
+.greeting { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); letter-spacing: -0.01em; color: var(--ink); }  /* --t-display: tokens.css assigns the greeting to the display role — was off-role at --t-data */
+
+/* welcome card: explains the empty jobs list, no tour or carousel needed.
+   A looping illustration video bleeds full-width at the top; text below it. */
+.welcome-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: var(--surface); border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.welcome-card .wc-t { padding: 16px 20px 24px; }
+.welcome-card .wc-t h6 { margin: 0; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.welcome-card .wc-t p { margin: 6px 0 0; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); max-width: 30ch; }
+
+.wc-illustration { width: 100%; aspect-ratio: 16 / 9; background: var(--panel); }
+.wc-illustration video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+
+/* OTP + field-error now live in components.css (reusable, not page-local) */
+
+
+/* success confirmation: a quiet green badge, not a full takeover — matches the
+   flat, no-shadow system (a tinted circle, not an animated checkmark burst).
+   ENTRANCE: the app's one celebratory motion (brief: "premium, animated feel")
+   — the badge settles in with an ease-out-quint scale, the check lands a beat
+   later. No bounce, no confetti; it plays once and sits still. RN spec:
+   Reanimated spring (scale 0.85→1, ~450ms) + delayed check opacity,
+   haptic = notificationSuccess on mount, and announceForAccessibility with
+   the heading text so the confirmation is heard, not just seen. */
+.success-badge { width: 72px; height: 72px; border-radius: 50%; background: var(--ok-tint); display: grid; place-items: center; margin: 0 auto; animation: success-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.success-badge .ic { width: 32px; height: 32px; color: var(--ok); animation: success-check 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+@keyframes success-pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes success-check { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .success-badge, .success-badge .ic { animation: none; }
+}
+
+/* resend link — same treatment and slate link colour as the forgot link */
+.resend-link { text-align: right; }
+.resend-link b { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- text-link tap targets (Fitts / WCAG 2.5.5) ----------
+   Every inline text link is a real ≥44px target: the visual stays a small
+   underlined word, padding grows the hit area, and the negative margin gives
+   the extra size back so the layout doesn't move. RN: hitSlop to ≥44px.
+   (read-only .ro-row values need none of this — nothing there is tappable.) */
+.link-line b, .ba-login b, .forgot-link b, .resend-link b {
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 8px; margin: -12px -8px;
+  cursor: pointer;
+}
+/* B1's manual-measurements fork: a primary route for gloved hands (and the
+   measurement-failed recovery path) shouldn't be the smallest text on the
+   screen — body size, not caption */
+.link-line.manual { font-size: var(--t-body); }
+
+/* ---------- colours library ---------- */
+.cl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow: hidden; align-content: start; flex: 1; }
+.cl-card { border: 1px solid var(--line-soft); background: var(--surface); overflow: hidden; }
+.cl-card:active { outline: 1.5px solid var(--accent); outline-offset: -1.5px; }
+/* the swatch now reads as an actual tiled sample: the .t-* colour + a barrel-tile
+   shading overlay (same language as the visualiser), so the range looks like
+   roof tiles, not flat paint chips */
+.cl-card .ph { height: 84px; position: relative; }
+.cl-card .ph::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 13px, rgba(0,0,0,0.15) 13px 16px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.03) 3px, rgba(255,255,255,0.13) 7px, rgba(0,0,0,0.03) 11px, rgba(0,0,0,0.20) 14px);
+}
+/* recycled-stock badge — RoofBros' whole USP is tile recycling, so flag it */
+.cl-card .ph .rec {
+  position: absolute; top: 6px; left: 6px; z-index: 1;
+  background: rgba(45,32,18,0.86); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+  font-size: var(--t-micro); letter-spacing: 0.03em; line-height: 1;
+  padding: 3px 7px; border-radius: var(--r-pill);
+}
+.cl-card .nm { padding: 9px 10px 11px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-caption); color: var(--ink); line-height: 1.2; }
+.cl-card .nm small { display: block; font-variation-settings: 'wght' 400; font-size: var(--t-micro); color: var(--muted); margin-top: 3px; line-height: 1.3; }
+.cl-hero { height: 210px; position: relative; overflow: hidden; }
+.cl-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 20px, rgba(0,0,0,0.15) 20px 24px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.20) 0, rgba(0,0,0,0.03) 4px, rgba(255,255,255,0.13) 10px, rgba(0,0,0,0.03) 16px, rgba(0,0,0,0.20) 20px);
+}
+.spec-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--line-soft); font-family: var(--font-ui); font-size: var(--t-caption); }
+.spec-row:last-child { border-bottom: none; }
+.spec-row span { color: var(--muted); }
+.spec-row b { color: var(--ink); font-variation-settings: 'wght' 600; text-align: right; }
+.basix { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro); letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--r-pill); background: var(--accent-tint); color: var(--accent); }
+
+/* ---------- welcome: FULL-SCREEN interactive before/after slider ----------
+   Brand-expression screen. Real RoofBros restoration photos fill the screen;
+   content overlays a bottom scrim. Drag anywhere (script at foot of 02 page)
+   except the button/link. Before/After pills sit at the top. */
+.ba-screen { position: relative; display: flex; flex-direction: column; background: #000; }
+/* three slides stacked and crossfaded; only the active one accepts drag input */
+.ba-slider { position: absolute; inset: 0; z-index: 0; overflow: hidden; touch-action: none; cursor: ew-resize; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; }
+.ba-slider.on { opacity: 1; z-index: 1; pointer-events: auto; }
+.ba-img { position: absolute; top: 0; left: 0; width: 390px; height: 100%; object-fit: cover; object-position: center; display: block; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.ba-before-wrap { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; }
+.ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; z-index: 2; }
+.ba-handle {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+  width: 46px; height: 46px; border-radius: 50%; background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  display: grid; place-items: center;
+}
+.ba-handle .ic { width: 20px; height: 20px; color: var(--accent); }
+.ba-tag {
+  position: absolute; top: 64px; z-index: 2;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600;
+  font-size: var(--t-micro); letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
+  background: rgba(20, 14, 10, 0.78); padding: 4px 12px; border-radius: var(--r-pill);
+}
+.ba-tag-before { left: 16px; }
+.ba-tag-after { right: 16px; }
+/* white overlay: photo fades into a solid-white content area so the welcome
+   flows into the app's white ground; dark text + maroon accents on white. */
+/* shorter white zone (fade starts lower) so more of the roof shows through */
+.ba-scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0) 52%, rgba(255,255,255,0.55) 68%,
+    rgba(255,255,255,0.94) 82%, var(--ground) 92%, var(--ground) 100%);
+}
+.ba-status { position: relative; z-index: 3; pointer-events: none; }
+.ba-spacer { flex: 1; pointer-events: none; }
+.ba-overlay { position: relative; z-index: 3; padding: 0 24px 16px; display: flex; flex-direction: column; pointer-events: none; }
+.ba-overlay .btn, .ba-overlay .ba-login { pointer-events: auto; }
+.ba-screen .home-ind { position: relative; z-index: 3; pointer-events: none; }
+/* pagination = navigational hint (not an action) → ink, not maroon */
+.ba-dots { display: flex; gap: 6px; margin-bottom: 14px; }
+.ba-dots i { width: 7px; height: 7px; border-radius: var(--r-pill); background: color-mix(in srgb, var(--link) 30%, transparent); transition: width 0.3s; }
+.ba-dots i.on { width: 22px; background: var(--link); }
+.ba-h { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-display); line-height: 1.08; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.ba-sub { margin-top: 10px; font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--body); max-width: 32ch; }
+.ba-overlay .btn { margin-top: 20px; }
+.ba-login { text-align: center; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); margin-top: 14px; }
+.ba-login b { color: var(--link); font-variation-settings: 'wght' 600; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- tile & paint colours — REAL catalogue data ----------
+   Tile names + hexes from the live calculator's colorMapping.ts
+   (PROFILE_COLORS, Monier); paint names + hexes from PAINT_BRAND_COLORS.
+   Each gradient is the real hex ± a shade for the barrel-tile light.
+   Swap for real tile photos in build. */
+.t-titan { background: linear-gradient(140deg, #424445, #2b2d2d); }       /* Titan Gloss — Marseille #373939 */
+.t-barra { background: linear-gradient(140deg, #33352f, #1e201b); }       /* Barramundi — Elabana #292a27 */
+.t-sambuca { background: linear-gradient(140deg, #24282a, #0e1112); }     /* Sambucca — Elabana #171b1c */
+.t-saltspray { background: linear-gradient(140deg, #e4e8dd, #cbd1c2); }   /* Salt Spray — Atura #dce1d6 */
+.t-soho { background: linear-gradient(140deg, #4c4b4b, #353434); }        /* Soho Night — Madison #424141 */
+.t-storm { background: linear-gradient(140deg, #6a7075, #4d5357); }       /* Mist Grey — Elabana #5e6468 */
+.t-wallaroo { background: linear-gradient(140deg, #d0cbc4, #b0a99e); }    /* Wild Rice — Atura #c7c2bc */
+.t-england { background: linear-gradient(140deg, #6f5d45, #4e4030); }     /* Aniseed — Horizon #64533d */
+.t-heritage { background: linear-gradient(140deg, #574b47, #3c3330); }    /* Pottery Brown — Marseille #4d423f, the recycled hero */
+.t-terracotta { background: linear-gradient(140deg, #a34428, #7a2f1a); }  /* Florence Red — Marseille #953c24 */
+.t-slate { background: linear-gradient(140deg, #665e63, #48413f); }       /* Bedrock — Marseille #5e565b */
+.t-olive { background: linear-gradient(140deg, #a1968a, #7d7266); }       /* Riverstone — Marseille #978d7e */
+.t-cream { background: linear-gradient(140deg, #E8DFC8, #CBB98F); }       /* unused — kept for drafts */
+/* the rest of the real Marseille range (colorMapping.ts PROFILE_COLORS.Marseille),
+   so E1 can show ONE profile's colours at a time. Colour names repeat across
+   profiles — Peak/Bedrock/Comet/Earth/Mars all exist in Marseille AND Nouveau —
+   so a colour is only unambiguous once its profile is fixed. */
+.t-peak { background: linear-gradient(140deg, #595d63, #3f434a); }        /* Peak #4e5258 */
+.t-comet { background: linear-gradient(140deg, #909aa3, #78848f); }       /* Comet #848f99 */
+.t-delta { background: linear-gradient(140deg, #dcc19c, #c4a67c); }       /* Delta Sands #D2B48C */
+.t-earth { background: linear-gradient(140deg, #ec8a63, #d9663c); }       /* Earth #e7774e */
+.t-mars { background: linear-gradient(140deg, #dd8973, #c8634b); }        /* Mars #d5775e */
+.t-ravine { background: linear-gradient(140deg, #767869, #5b5d55); }      /* Ravine #6a6c63 — Nouveau/Urban Shingles only */
+/* paint swatches — Industrial roof coatings card (Restoration path).
+   Paint is not tile: its own p-* set so retinting one never breaks the other. */
+.p-coastal { background: linear-gradient(140deg, #A0522D, #7d3a1e); }     /* Coastal Terracotta */
+.p-manor { background: linear-gradient(140deg, #8B0000, #660000); }       /* Manor Red */
+.p-slategrey { background: linear-gradient(140deg, #444444, #2c2c2c); }   /* Slate Grey #3A3A3A */
+.p-cream { background: linear-gradient(140deg, #F5E6D3, #dcc9ae); }       /* Classic Cream */
+.p-gully { background: linear-gradient(140deg, #6B7A6B, #4f5c4f); }       /* Gully */
+.p-monument { background: linear-gradient(140deg, #333333, #1d1d1d); }    /* Monument #2A2A2A */
+.p-dover { background: linear-gradient(140deg, #F8F8F4, #e6e6df); }        /* Dover White #F5F5F0 */
+.p-paperbark { background: linear-gradient(140deg, #ddceb4, #c5b599); }    /* Paperbark #D4C4A8 */
+.p-dune { background: linear-gradient(140deg, #c2ab8e, #a68d6f); }         /* Dune #B8A082 */
+
+/* bottom-anchored action group (auth + action screens) */
+.screen-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+
+/* ---------- 0G · Welcome (first run): dismissible onboarding, packed on purpose ----------
+   Rich because it's ephemeral: tap × and it's gone, so the daily hub stays calm. */
+.appbody-scroll { overflow-y: auto; scrollbar-width: none; }
+.appbody-scroll::-webkit-scrollbar { display: none; }
+
+/* auto-playing photo carousel: real restorations, each with its own informative caption */
+.fr-carousel { position: relative; overflow: hidden; border-radius: var(--r-structure); border: 1px solid var(--line-soft); flex: none; height: 220px; }
+.fr-car-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+.fr-car-slide.on { opacity: 1; z-index: 1; }
+.fr-car-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fr-car-slide::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(16,11,7,0.92) 0%, rgba(16,11,7,0.6) 32%, rgba(16,11,7,0.05) 62%, transparent 78%); }
+/* no text-shadow: the slide's dark gradient scrim (::after above) already
+   guarantees legibility — belt without the braces, per the no-shadow rule */
+.fr-car-cap { position: absolute; left: 14px; right: 44px; bottom: 13px; margin: 0; z-index: 2; font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-heading); line-height: 1.4; color: #FFFFFF; }
+.fr-car-dots { position: absolute; right: 14px; bottom: 17px; z-index: 2; margin: 0; }
+
+/* how-it-works: swipeable, scroll-snapped, reusing the slate-blue dot language */
+.tour { display: flex; flex-direction: column; gap: 12px; }
+.tour-track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+.tour-track::-webkit-scrollbar { display: none; }
+.tour-slide { scroll-snap-align: start; flex: 0 0 84%; box-sizing: border-box; padding: 18px; background: var(--surface); border: 1px solid var(--line-soft); }
+.tour-content { display: flex; flex-direction: column; gap: 7px; }
+/* step number as an outlined badge, corner marks reading as a measuring/targeting motif */
+.tour-step {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex: none;
+  border: 1px solid var(--accent-tint);
+  font-family: var(--font-display); font-variation-settings: 'wght' 600;
+  font-size: var(--t-heading); color: var(--accent);
+  margin-bottom: 4px;
+}
+.tour-step .tsq { position: absolute; width: 5px; height: 5px; background: var(--accent); }
+.tour-step .tsq.tl { top: -2px; left: -2px; }
+.tour-step .tsq.tr { top: -2px; right: -2px; }
+.tour-step .tsq.bl { bottom: -2px; left: -2px; }
+.tour-step .tsq.br { bottom: -2px; right: -2px; }
+/* connector arrow sits inline with the title: marks a step as following on from the
+   one before it. First step has none, matching the source pattern
+   (Measure  →  Quote  →  Preview colour  →  Request delivery). */
+.tour-head { display: flex; align-items: center; gap: 6px; }
+.tour-arrow { width: 18px; height: 18px; flex: none; color: var(--accent); }
+.tour-slide h6 { margin: 0; font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.tour-slide p { margin: 0; font-family: var(--font-ui); font-size: var(--t-caption); line-height: 1.5; color: var(--body); }
+.tour-dots { margin: 0; justify-content: flex-start; }
+
+/* section label, reused above the tour and above the example job */
+.fr-label { font-family: var(--font-ui); font-variation-settings: 'wght' 500; font-size: var(--t-body); color: var(--muted); }
+
+/* preview of the real jobs list, one card per stage so it's concrete, not abstract */
+.fr-example { display: flex; flex-direction: column; gap: 8px; }
+
+/* quiet credibility facts, same green-check language as a completed stage */
+.fr-trust { display: flex; flex-direction: column; gap: 8px; }
+.fr-trust-row { display: flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: var(--t-caption); color: var(--muted); }
+.fr-trust-row .ic { width: 14px; height: 14px; flex: none; color: var(--ok); }
+
+/* pinned action bar — CTA stays put while the body scrolls */
+/* pinned action bar — ONLY for screens that scroll. The hairline is not
+   decoration: it exists because content passes underneath, and it's the line
+   that says so. On a screen that doesn't scroll there's nothing to separate,
+   so the button belongs in .screen-foot (margin-top: auto) instead — same
+   position, no invented chrome. Getting this wrong on a tab-bar screen also
+   stacks two hairlines a button apart, which reads as a mistake.
+   Where both do appear (D1: scrolling body + tab bar) they're deliberately
+   different weights — soft warm line separates content, ink line terminates
+   the screen — so they read as a hierarchy, not a double rule. */
+.fr-cta { flex: none; padding: 12px 16px; border-top: 1px solid var(--line-soft); background: var(--surface); }
+
+/* ---------- plain loader (app boot / saving / fetching) — a hexagon-drawing
+   line loader (adapted from Uiverse.io by RafaM-dev), recoloured to the maroon
+   accent and scoped/namespaced so nothing leaks. Distinct from the B2 measuring
+   theatre, which narrates real work; this is the generic async wait. ---------- */
+.loader { position: relative; width: 90px; height: 103px; }
+.loader > div { position: absolute; width: 50px; height: 31px; }
+.loader > div:nth-of-type(2) { transform: rotate(60deg); }
+.loader > div:nth-of-type(3) { transform: rotate(-60deg); }
+.loader > div > div { width: 100%; height: 100%; position: relative; }
+.loader > div > div > span { position: absolute; width: 4px; height: 0%; background: var(--accent); z-index: 1; }
+.loader .h1 { left: 0; animation: load1 3.2s ease infinite; }
+.loader .h2 { right: 0; animation: load2 3.2s ease 0.4s infinite; }
+.loader .h3 { right: 0; animation: load3 3.2s ease 0.8s infinite; }
+.loader .h4 { top: 10px; left: 23px; animation: load4 3.2s ease 1s infinite; transform: rotate(90deg); }
+.loader .h6 { left: 0; animation: load6 3.2s ease 1.3s infinite; }
+@keyframes load1 { 0% { bottom: 0; height: 0; } 6.944444444% { bottom: 0; height: 100%; } 50% { top: 0; height: 100%; } 59.944444433% { top: 0; height: 0; } }
+@keyframes load2 { 0% { top: 0; height: 0; } 6.944444444% { top: 0; height: 100%; } 50% { bottom: 0; height: 100%; } 59.944444433% { bottom: 0; height: 0; } }
+@keyframes load3 { 0% { top: 0; height: 0; } 6.944444444% { top: 0; height: 100%; } 50% { bottom: 0; height: 100%; } 59.94444443% { bottom: 0; height: 0; } }
+@keyframes load4 { 0% { top: 37px; left: 23px; height: 134%; } 6.944444444% { top: 10px; height: 134%; } 50% { bottom: 10px; height: 134%; } 59.94444443% { bottom: 0; height: 0; } }
+@keyframes load6 { 0% { bottom: 0; height: 0; } 6.944444444% { bottom: 0; height: 100%; } 50% { top: 0; height: 100%; } 59.94444443% { top: 0; height: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader > div > div > span { animation: none !important; height: 100%; opacity: 0.5; }
+}
+.load-label { margin-top: 26px; font-family: var(--font-ui); font-size: var(--t-body); color: var(--muted); }
+
+/* Reusable centred loader. The animated shape sits toward the TOP-LEFT of its own
+   90×103 box (empty margin on the right & bottom), so centring the box alone
+   leaves the shape off-centre. This wrapper centres the box, then the offset
+   re-centres the visible shape. Drop any .loader inside .loader-wrap to centre it. */
+.loader-wrap { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.loader-wrap .loader { transform: translate(20px, 32px); }
+
+/* ---------- B3a · outline editor: draggable polygon vertices ----------
+   White dot + maroon ring on each corner of the measured outline; the active
+   (grabbed) corner swells. 20px visual — RN pans with a 44px hitSlop per the
+   compact-control rule. Positions are % of the aerial box, matching the
+   .roof polygon's six corners. */
+.vx {
+  position: absolute; width: 20px; height: 20px; margin: -10px;
+  border-radius: 50%; background: #fff; border: 2.5px solid var(--accent);
+  padding: 0; appearance: none; -webkit-appearance: none; cursor: grab;
+}
+.vx.active { width: 26px; height: 26px; margin: -13px; background: var(--accent-tint); }
+
+/* ---------- E3 · data sheet: PDF page mock + skeleton lines ----------
+   A real A4-ish page preview (white, hairline edge), skeleton bars standing in
+   for the PDF body — swap for a real react-native-pdf page render in build. */
+.pdf-page { background: #fff; border: 1px solid var(--line-soft); padding: 20px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.pdf-page .ttl { font-family: var(--font-display); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.pdf-page .row { display: flex; gap: 8px; align-items: center; }
+.pdf-page .bar { height: 8px; background: var(--panel); flex: 1; }
+.pdf-page .bar.s { flex: 0 0 38%; }
+.pdf-page .bar.tall { height: 52px; }
+.pdf-page .brand-tile { width: 22px; height: 22px; background: var(--accent); flex: none; }
+
+/* ---------- D1b · photos timeline (CompanyCam pattern) ----------
+   Date-grouped 2-up grid; every shot carries its stamp (time + GPS implied)
+   burned into a pill overlay, same badge language as the aerial views. */
+.ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ph-cell { position: relative; border: 1px solid var(--line-soft); aspect-ratio: 4 / 3; overflow: hidden; }
+.ph-cell img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ph-stamp {
+  position: absolute; left: 6px; bottom: 6px;
+  background: rgba(45,32,18,0.82); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro);
+  padding: 2px 8px; border-radius: var(--r-pill);
+}
+
+/* ---------- empty states for sub-screens ----------
+   Deliberately lighter than the jobs-hub welcome card (which carries a video):
+   a sub-screen is reached on purpose, so it only has to say what goes here and
+   how to start. One quiet line + the screen's own CTA, which is already
+   pinned — never a second button competing with it. */
+.empty-note {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center; gap: 6px; padding: 0 32px;
+}
+.empty-note .ic { width: 28px; height: 28px; color: var(--line-ink); opacity: 0.45; margin-bottom: 4px; }
+.empty-note b { font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-heading); color: var(--ink); }
+.empty-note span { font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--muted); max-width: 26ch; }
+
+/* ---------- D1b · photo viewer + markup ----------
+   The dark stage is --ink (the app's warm espresso), never pure black, and
+   every translucent value is color-mixed from a token the same way
+   --field-active-line is — no raw rgba() invented here. */
+.photo-view { position: absolute; inset: 0; background: var(--ink); display: flex; flex-direction: column; }
+.photo-view .pv-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px 0; }
+/* the shared 44px pill icon-btn, inverted for the dark stage: the ink border
+   would vanish on a photo, so the fill carries it instead */
+.photo-view .icon-btn { background: color-mix(in srgb, var(--ground) 16%, transparent); border-color: transparent; color: var(--ground); }
+/* identical treatment to .ph-stamp and .aerial .badge — ONE way to burn a
+   label onto an image, everywhere in the app */
+.photo-view .pv-stamp {
+  background: rgba(45, 32, 18, 0.82); color: #fff;
+  font-family: var(--font-ui); font-variation-settings: 'wght' 600; font-size: var(--t-micro);
+  padding: 4px 12px; border-radius: var(--r-pill);
+}
+.photo-view .pv-img { flex: 1; min-height: 0; position: relative; display: grid; place-items: center; overflow: hidden; }
+.photo-view .pv-img img { width: 100%; height: 100%; object-fit: contain; }
+/* the markup bar is the TAB BAR's structure on the dark stage: same 66px,
+   same 4 equal slots, same single hairline on top — a row of icon buttons
+   already has one right answer in this system, so it reuses it */
+.markup-bar {
+  flex: none; height: 66px;
+  display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; justify-items: center;
+  border-top: 1px solid color-mix(in srgb, var(--ground) 22%, transparent);
+}
+.markup-bar .mk {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border: none; background: none; border-radius: var(--r-pill); cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  color: color-mix(in srgb, var(--ground) 70%, transparent);
+}
+.markup-bar .mk .ic { width: 24px; height: 24px; }
+.markup-bar .mk.on { background: color-mix(in srgb, var(--ground) 16%, transparent); color: var(--ground); }
+/* the drawn annotation — 2px, the icon family's own stroke weight, in the one accent */
+.mk-ring { position: absolute; width: 92px; height: 68px; border: 2px solid var(--accent); border-radius: 50%; left: 26%; top: 38%; }
+
+/* ---------- D1c · job notes ---------- */
+.note-card { border: 1px solid var(--line-soft); background: var(--surface); padding: 12px 14px; }
+.note-card p { font-family: var(--font-ui); font-size: var(--t-body); line-height: 1.5; color: var(--ink); }
+.note-card .when { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: var(--t-micro); color: var(--muted); }
+
+/* delivery/pickup address row — READ-ONLY by design. Materials go to the roof
+   that was measured, so the destination is the job's own site address and
+   can't drift from it; a typo here sends a truck to the wrong house. "Where
+   exactly on the property" is the drop-zone note's job, not a second address.
+   Pickup shows RoofBros' fixed yard, which is never the roofer's to edit. */
+.addr-field { width: 100%; }
+.addr-field .addr-l { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.addr-field .addr-l > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.addr-field .addr-l .ic { flex: none; color: var(--muted); }
+
+/* ============================================================
+   MVP SCOPE MARKING — documentation scaffolding, NOT shipped
+   ------------------------------------------------------------
+   The build brief puts some capabilities out of the first MVP:
+   offline sync, push notifications, and stock/ordering
+   integration (the "submit order to RoofBros → approve →
+   status" loop). We do NOT delete the screens that show them —
+   the full flow stays readable — we DESATURATE them to grey
+   and tag WHY, so what's in vs out of the first build is
+   legible at a glance. Remove this whole block (and the
+   .descoped / .scope-flag / .scope-why / .descoped-el hooks in
+   the HTML) once scope is locked.
+   ============================================================ */
+
+/* whole screen out of scope: grey the phone, tag it above */
+.screen-slot.descoped .phone { filter: grayscale(1); opacity: 0.92; }
+
+/* the tag + reason sit ABOVE the phone, in the doc's own type
+   (not app UI) so it never reads as part of the screen */
+.scope-flag {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  margin: 0 0 12px; padding: 9px 12px;
+  border: 1px dashed var(--line-ink); background: var(--panel);
+  font-family: var(--font-ui); font-size: var(--t-caption); line-height: 1.45; color: var(--body);
+}
+.scope-flag b {
+  flex: none;
+  font-variation-settings: 'wght' 700; font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); white-space: nowrap;
+}
+.scope-flag em { font-style: normal; font-variation-settings: 'wght' 600; color: var(--ink); }
+
+/* one control inside an otherwise in-scope screen (e.g. a lone
+   "Submit to RoofBros" button on the quote-saved screen) */
+.descoped-el { filter: grayscale(1); opacity: 0.5; }
+
+/* caption note tying the scope call back to the affected element */
+.cap .scope-why { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line-soft); color: var(--body); }
+.cap .scope-why b { color: var(--ink); }
+.cap .scope-why em { font-style: normal; font-variation-settings: 'wght' 600; color: var(--ink); }

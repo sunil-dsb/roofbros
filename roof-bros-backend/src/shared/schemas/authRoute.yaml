@@ -1,0 +1,813 @@
+openapi: 3.0.0
+info:
+  title: Authentication API
+  description: Email/password authentication backed by better-auth.
+  version: 1.0.0
+tags:
+  - name: Authentication
+    description: Sign up, sign in and current-session endpoints
+
+paths:
+  /v1/auth/sign-up/email:
+    post:
+      summary: Create an account with email and password
+      description: >
+        Creates the user, opens a session and returns the session token in the response.
+        Rate limited to 5 requests per 15 minutes per IP.
+        Unknown body properties are rejected.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+      responses:
+        '201':
+          description: Account created; session token returned
+          headers:
+            Set-Cookie:
+              description: '`better-auth.session_token` (HttpOnly) plus the short-lived session cache cookie'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Account created successfully'
+                      data:
+                        $ref: '#/components/schemas/AuthPayload'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '422':
+          description: Rejected by better-auth (for example the email is already registered)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 422
+                message: 'User already exists. Use another email.'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/auth/sign-in/social:
+    post:
+      summary: Sign in with a social provider (Apple, Google, etc)
+      description: >
+        Inbuilt better-auth endpoint. Authenticates the user with a social provider.
+        Returns the provider's authorization URL to redirect the user to.
+
+        **Note for API Testing (Postman, etc):**
+        Because of built-in CSRF protection, raw API clients like Postman will get a `403 Missing or null Origin` error.
+        To test this endpoint, you must manually add an `Origin` header (e.g., `http://localhost:9000`).
+        Web browsers add this automatically, so this is not an issue in your frontend application.
+
+        To test different providers, simply change the `provider` field in the request body (e.g., "google", "apple").
+      tags:
+        - Authentication
+      security: []
+      parameters:
+        - in: header
+          name: Origin
+          required: false
+          schema:
+            type: string
+            example: 'https://mj680xjh-9000.inc1.devtunnels.ms'
+          description: Required to bypass CSRF protection when testing from external clients like Swagger UI or Postman.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [provider, callbackURL]
+              properties:
+                provider:
+                  type: string
+                  description: The social provider ID (e.g. "apple", "google", "github")
+                  example: 'apple'
+                callbackURL:
+                  type: string
+                  description: The URL to redirect to after successful authentication
+                  example: '/'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: The authorization URL to redirect the user to
+                    example: 'https://appleid.apple.com/auth/authorize?...'
+                  redirect:
+                    type: boolean
+                    example: true
+
+  /v1/auth/sign-in/email:
+    post:
+      summary: Sign in with email and password
+      description: >
+        Returns the session token on success.
+        Rate limited to 10 *failed* attempts per 15 minutes per IP; successful
+        sign ins are not counted. Invalid credentials always return the same
+        generic message, so the response cannot be used to probe which email
+        addresses are registered.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+      responses:
+        '200':
+          description: Signed in; session token returned
+          headers:
+            Set-Cookie:
+              description: '`better-auth.session_token` (HttpOnly) plus the short-lived session cache cookie'
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Signed in successfully'
+                      data:
+                        $ref: '#/components/schemas/AuthPayload'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 401
+                message: 'Invalid email or password'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/otp/send:
+    post:
+      summary: Send an OTP to an email address
+      description: >
+        Sends a one-time password (OTP) to the given email address. This is used specifically 
+        for email verification. Rate limited to 5 requests per 15 minutes.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: OTP sent successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'OTP sent successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/verify-email:
+    post:
+      summary: Verify the user's email with an OTP
+      description: >
+        Verifies an email using an OTP previously sent via `/v1/auth/otp/send` with 
+        type `email-verification`.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, otp]
+              properties:
+                email:
+                  type: string
+                  format: email
+                otp:
+                  type: string
+      responses:
+        '200':
+          description: Email verified successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Email verified successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/password/forget:
+    post:
+      summary: Send a password reset OTP
+      description: >
+        Initiates the password reset flow by sending a reset OTP to the user's email.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Password reset OTP sent successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Password reset OTP sent successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/password/forget/verify:
+    post:
+      summary: Verify a password reset OTP without resetting the password
+      description: >
+        Checks if the OTP sent to the user's email is valid. Use this for 
+        multi-step UIs to validate the OTP before asking for a new password.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, otp]
+              properties:
+                email:
+                  type: string
+                  format: email
+                otp:
+                  type: string
+      responses:
+        '200':
+          description: OTP is valid
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Password reset OTP verified successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/password/reset:
+    post:
+      summary: Reset password with OTP
+      description: >
+        Completes the password reset flow using the OTP sent via `/v1/auth/password/forget`.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, otp, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                otp:
+                  type: string
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Password reset successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/password/change:
+    post:
+      summary: Change password for a logged-in user
+      description: >
+        Changes the password for the current authenticated user.
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currentPassword, newPassword]
+              properties:
+                currentPassword:
+                  type: string
+                  format: password
+                newPassword:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Password changed successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          description: No valid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 401
+                message: 'Authentication required'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/me:
+    get:
+      summary: Get the currently authenticated user and session
+      description: >
+        **Protected.** Requires a valid Bearer token in the `Authorization` header; the
+        request is rejected with 401 before reaching the handler when the session
+        is missing, expired or revoked. Rate limited to 60 requests per minute
+        per IP.
+
+
+        In Swagger UI, use the "Authorize" button to set your Bearer token.
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: The active session and its user
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Session fetched successfully'
+                      data:
+                        $ref: '#/components/schemas/SessionEnvelope'
+        '401':
+          description: No valid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 401
+                message: 'Authentication required'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/business-details/{abn}:
+    get:
+      summary: Get business details by ABN
+      description: >
+        Fetches business details (such as Entity Name, State, Postcode) from the ABR API using the provided ABN.
+        **Protected.** Requires a valid Bearer token in the `Authorization` header.
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: abn
+          required: true
+          schema:
+            type: string
+          description: The ABN to lookup (11 digits, can include spaces)
+      responses:
+        '200':
+          description: Business details fetched successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Business details fetched successfully'
+                      data:
+                        type: object
+                        properties:
+                          Abn:
+                            type: string
+                            example: '11111111111'
+                          EntityName:
+                            type: string
+                            example: 'Test Business Pty Ltd'
+        '400':
+          description: Invalid ABN provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 400
+                message: 'Search text is not a valid ABN or ACN'
+        '401':
+          description: No valid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 401
+                message: 'Authentication required'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /v1/auth/me/business:
+    put:
+      summary: Update business details for the current user
+      description: >
+        Updates the authenticated user's profile with their business details (`abn` and `businessName`).
+        Sets `isBusiness` to true.
+        **Protected.** Requires a valid Bearer token in the `Authorization` header.
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [abn, businessName]
+              properties:
+                abn:
+                  type: string
+                  description: The ABN of the business (11 digits, can include spaces)
+                  example: '11 111 111 111'
+                businessName:
+                  type: string
+                  description: The name of the business
+                  example: 'Test Business Pty Ltd'
+      responses:
+        '200':
+          description: Business details updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessEnvelope'
+                  - type: object
+                    properties:
+                      message:
+                        example: 'Business details updated successfully'
+                      data:
+                        type: object
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          description: No valid session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                code: 401
+                message: 'Authentication required'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >
+        Bearer token issued by the sign-in and sign-up endpoints.
+        The client must pass it in the `Authorization: Bearer <token>` header.
+
+  schemas:
+    SignUpRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: Letters, spaces, apostrophes, hyphens and periods only
+          example: 'Jane Doe'
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          description: Trimmed and lower-cased before storage
+          example: 'jane.doe@example.com'
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 128
+          description: >
+            Must contain at least one lowercase letter, one uppercase letter,
+            one number and one special character.
+          example: 'Str0ng!Pass'
+
+    SignInRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: 'jane.doe@example.com'
+        password:
+          type: string
+          format: password
+          maxLength: 128
+          example: 'Str0ng!Pass'
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'rh3NgMQP2fLEjnbcthnp2dVt8HlJDTYz'
+        name:
+          type: string
+          example: 'Jane Doe'
+        email:
+          type: string
+          format: email
+          example: 'jane.doe@example.com'
+        emailVerified:
+          type: boolean
+          example: false
+        image:
+          type: string
+          format: uri
+          nullable: true
+          example: null
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    SessionRecord:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'krDTf7ThtDxB61DwuQvoXmnMX5VCZX8V'
+        token:
+          type: string
+          example: 'DRqrZNi1mE4wVF2to6TG4eX3wtFaNfgD'
+        userId:
+          type: string
+          example: 'rh3NgMQP2fLEjnbcthnp2dVt8HlJDTYz'
+        expiresAt:
+          type: string
+          format: date-time
+        ipAddress:
+          type: string
+          nullable: true
+          example: '127.0.0.1'
+        userAgent:
+          type: string
+          nullable: true
+          example: 'Mozilla/5.0'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    SessionEnvelope:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/SessionRecord'
+        user:
+          $ref: '#/components/schemas/AuthUser'
+
+    AuthPayload:
+      type: object
+      properties:
+        token:
+          type: string
+          description: 'Session token. Must be passed in the `Authorization: Bearer <token>` header.'
+          example: 'DRqrZNi1mE4wVF2to6TG4eX3wtFaNfgD'
+        user:
+          $ref: '#/components/schemas/AuthUser'
+
+    SuccessEnvelope:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          nullable: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Validation error'
+        errors:
+          type: array
+          description: Present on validation failures only
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        stack:
+          type: string
+          description: Development environment only
+
+    ValidationIssue:
+      type: object
+      properties:
+        field:
+          type: string
+          example: 'password'
+        message:
+          type: string
+          example: 'Password must contain at least one uppercase letter'
+
+  responses:
+    ValidationError:
+      description: The request body failed validation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: 400
+            message: 'Validation error'
+            errors:
+              - field: 'email'
+                message: 'Please provide a valid email address'
+              - field: 'password'
+                message: 'Password must contain at least one uppercase letter'
+
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: 429
+            message: 'Too many sign in attempts, please try again in 15 minutes.'
+
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            code: 500
+            message: 'Internal Server Error'

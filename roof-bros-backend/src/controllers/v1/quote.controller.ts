@@ -1,0 +1,39 @@
+import type { Request, Response } from 'express';
+import * as quoteService from '../../services/quote/quote.service.ts';
+import httpStatus from 'http-status';
+import catchAsync from '../../shared/utils/catchAsync.ts';
+import ApiResponse from '../../shared/utils/ApiResponse.ts';
+import type { CreateQuotePayload } from '../../shared/validations/quote.validation.ts';
+
+export const createQuote = catchAsync(async (req: Request, res: Response) => {
+  const jobId = req.params.jobId as string;
+  const payload = req.body as CreateQuotePayload;
+
+  const quote = await quoteService.createQuoteService({ ...payload, jobId });
+
+  return res
+    .status(httpStatus.CREATED)
+    .json(ApiResponse.success('Quote Created Successfully', quote));
+});
+
+export const getQuotesByJobId = catchAsync(
+  async (req: Request, res: Response) => {
+    const jobId = req.params.jobId;
+
+    const quotes = await quoteService.getQuotesByJobIdService(jobId as string);
+
+    return res
+      .status(httpStatus.OK)
+      .json(ApiResponse.success('Quotes Fetched Successfully', quotes));
+  },
+);
+
+export const getQuoteById = catchAsync(async (req: Request, res: Response) => {
+  const quoteId = req.params.quoteId;
+
+  const quote = await quoteService.getQuoteByIdService(quoteId as string);
+
+  return res
+    .status(httpStatus.OK)
+    .json(ApiResponse.success('Quote Fetched Successfully', quote));
+});

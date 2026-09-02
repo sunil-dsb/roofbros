@@ -1,0 +1,13 @@
+# Normalize line endings: LF in the repo AND in the working tree on every OS.
+# `eol=lf` overrides a developer's `core.autocrlf=true`, which would otherwise
+# check files out with CRLF and make every line fail prettier's endOfLine rule.
+* text=auto eol=lf
+
+# Never touch binaries.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary

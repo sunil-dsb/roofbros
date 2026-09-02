@@ -1,0 +1,107 @@
+paths:
+  /v1/tiles:
+    get:
+      summary: Get all tile types
+      description: Returns a list of all available tile types.
+      tags:
+        - Tiles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Tiles fetched successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+  /v1/tiles/{tileId}/profiles:
+    get:
+      summary: Get profiles by tile type
+      description: Returns all tile profiles associated with a specific tile type.
+      tags:
+        - Tiles
+      parameters:
+        - in: path
+          name: tileId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The ID of the tile type
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Profiles fetched successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        tileTypeId:
+                          type: string
+  /v1/tiles/colors:
+    get:
+      summary: Get colors
+      description: Returns all tile colors, or colors for a specific profile if profileId is provided.
+      tags:
+        - Tiles
+      parameters:
+        - in: query
+          name: profileId
+          schema:
+            type: string
+            format: uuid
+          description: Filter colors by tile profile ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Colors fetched successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        hexCode:
+                          type: string

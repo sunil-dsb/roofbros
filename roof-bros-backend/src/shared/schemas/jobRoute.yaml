@@ -1,0 +1,238 @@
+openapi: 3.0.0
+info:
+  title: Job API
+  description: Endpoints for the Job module
+  version: 1.0.0
+tags:
+  - name: Job
+    description: Job-related endpoints
+
+paths:
+  /v1/job/create:
+    post:
+      summary: Create a new job
+      description: Creates a new job with the specified details.
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - address
+                - areaSqmt
+              properties:
+                address:
+                  type: string
+                  example: 123 Fake St, Sydney NSW
+                areaSqmt:
+                  type: number
+                  example: 250
+                confidence:
+                  type: number
+                  example: 0.95
+                jobStatus:
+                  type: string
+                  enum: [Quoted, Requested, Delivered]
+                  example: Requested
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Job Created Successfully
+                  data:
+                    type: object
+
+  /v1/job:
+    get:
+      summary: Get all jobs
+      description: Returns a list of all jobs, optionally filtered by status
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [Quoted, Requested, Delivered]
+          required: false
+          description: Filter jobs by status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Jobs Fetched Successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+  /v1/job/{id}:
+    get:
+      summary: Get job by ID
+      description: Fetch details of a specific job by its ID
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Job Fetched Successfully
+                  data:
+                    type: object
+        '404':
+          description: Job Not Found
+
+  /v1/job/{id}/status:
+    patch:
+      summary: Update job status
+      description: Update the status of an existing job
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [Quoted, Requested, Delivered]
+                  example: Quoted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Job Status Updated Successfully
+                  data:
+                    type: object
+        '404':
+          description: Job Not Found
+
+  /v1/job/{id}/notes:
+    patch:
+      summary: Add job notes
+      description: Append new notes to a job
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - notes
+              properties:
+                notes:
+                  type: array
+                  items:
+                    type: string
+                  example: ['Please check the backyard']
+      responses:
+        '200':
+          description: OK
+
+  /v1/job/{id}/dropzone-photos:
+    patch:
+      summary: Upload dropzone photos
+      description: Upload multiple dropzone photos for a job (multipart/form-data)
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Array of image files (max 10)
+      responses:
+        '200':
+          description: OK

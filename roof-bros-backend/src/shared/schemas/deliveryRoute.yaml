@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Delivery API
+  description: Endpoints for the Delivery module
+  version: 1.0.0
+tags:
+  - name: Delivery
+    description: Delivery-related endpoints
+
+paths:
+  /v1/deliveries/{jobId}/request:
+    post:
+      summary: Request delivery for a job
+      description: Request delivery for a given job and upload a drop zone photo (optional)
+      tags:
+        - Delivery
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - method
+                - preferredDay
+                - timeWindow
+              properties:
+                quoteId:
+                  type: string
+                  format: uuid
+                method:
+                  type: string
+                  enum: [deliver to site, pickup at yard]
+                deliveryAddress:
+                  type: string
+                preferredDay:
+                  type: string
+                  format: date-time
+                timeWindow:
+                  type: string
+                  enum: [morning, afternoon]
+                dropZoneNotes:
+                  type: string
+                urgent:
+                  type: boolean
+                  default: false
+                image:
+                  type: string
+                  format: binary
+                  description: Drop zone photo
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Delivery requested successfully
+                  data:
+                    type: object
+        '404':
+          description: Job Not Found
+
+  /v1/deliveries/{jobId}:
+    put:
+      summary: Update delivery status
+      description: Update delivery status (scheduled, out for delivery, delivered) and upload proof of delivery photo
+      tags:
+        - Delivery
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                scheduledAt:
+                  type: string
+                  format: date-time
+                outForDeliveryAt:
+                  type: string
+                  format: date-time
+                deliveredAt:
+                  type: string
+                  format: date-time
+                image:
+                  type: string
+                  format: binary
+                  description: Proof of delivery photo
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Delivery updated successfully
+                  data:
+                    type: object
+        '404':
+          description: Delivery Not Found
