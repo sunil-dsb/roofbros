@@ -1,5 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -15,6 +21,7 @@ import { fontFamily } from '../../assets/fontFamily';
 import FlowHeader from '../../components/FlowHeader';
 import CustomButton from '../../components/CustomButton';
 import CheckIcon from '../../assets/icons/checkIcon';
+import CloseIcon from '../../assets/icons/closeIcon';
 import { goBack, navigate, reset } from '../../navigations/navigationServices';
 import { routesConstants } from '../../navigations/routeConstants';
 import FormInput from '../../components/FormInput';
@@ -71,38 +78,49 @@ const BusinessDetails = () => {
   const isAbnValid = cleanAbn.length === 11 && !errors.abn;
 
   const { userData } = useSelector((state: any) => state.persist);
-  const [getBusinessDetails] = useLazyGetBusinessDetailsQuery();
+  const [getBusinessDetails, { isFetching: isFetchingName }] =
+    useLazyGetBusinessDetailsQuery();
   const [updateBusinessDetails] = useUpdateBusinessDetailsMutation();
+  const [abnApiError, setAbnApiError] = useState(false);
+
+  const fetchBusinessDetails = useCallback(() => {
+    setAbnApiError(false);
+    managerApiCall(
+      getBusinessDetails,
+      cleanAbn,
+      (res: any) => {
+        const fetchedName =
+          res?.data?.EntityName ||
+          (Array.isArray(res?.data?.BusinessName) &&
+            res?.data?.BusinessName[0]) ||
+          res?.data?.BusinessName ||
+          res?.data?.name ||
+          res?.data?.businessName ||
+          res?.data?.entityName;
+        if (fetchedName) {
+          setValue('businessName', fetchedName, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true,
+          });
+          trigger();
+        } else {
+          setAbnApiError(true);
+        }
+      },
+      () => {
+        setAbnApiError(true);
+      },
+      true,
+    );
+  }, [cleanAbn, getBusinessDetails, setValue, trigger]);
 
   useEffect(() => {
     if (cleanAbn.length === 11 && cleanAbn !== lastFetchedAbn.current) {
       lastFetchedAbn.current = cleanAbn;
-      managerApiCall(
-        getBusinessDetails,
-        cleanAbn,
-        (res: any) => {
-          const fetchedName =
-            res?.data?.EntityName ||
-            (Array.isArray(res?.data?.BusinessName) &&
-              res?.data?.BusinessName[0]) ||
-            res?.data?.BusinessName ||
-            res?.data?.name ||
-            res?.data?.businessName ||
-            res?.data?.entityName;
-          if (fetchedName) {
-            setValue('businessName', fetchedName, {
-              shouldValidate: true,
-              shouldDirty: true,
-              shouldTouch: true,
-            });
-            trigger();
-          }
-        },
-        () => {},
-        true,
-      );
+      fetchBusinessDetails();
     }
-  }, [cleanAbn, getBusinessDetails, setValue, trigger]);
+  }, [cleanAbn, fetchBusinessDetails]);
 
   const handleSave = async (data: BusinessDetailsForm) => {
     const payload = {
@@ -143,7 +161,11 @@ const BusinessDetails = () => {
             maxLength={11}
             rightElement={
               isAbnValid ? (
-                <CheckIcon color={colors.success} size={20} />
+                abnApiError ? (
+                  <CloseIcon color={colors.error} size={20} />
+                ) : (
+                  <CheckIcon color={colors.success} size={20} />
+                )
               ) : undefined
             }
           />
@@ -153,6 +175,19 @@ const BusinessDetails = () => {
             label="Business name"
             placeholder="Filled from your ABN"
             editable={false}
+            rightElement={
+              isFetchingName ? (
+                <ActivityIndicator color={colors.ink} size="small" />
+              ) : abnApiError ? (
+                <TouchableOpacity onPress={fetchBusinessDetails}>
+                  <AppText
+                    style={{ color: colors.error, fontSize: fontSizes.f14 }}
+                  >
+                    Retry
+                  </AppText>
+                </TouchableOpacity>
+              ) : undefined
+            }
           />
         </View>
 

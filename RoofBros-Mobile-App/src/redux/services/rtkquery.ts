@@ -3,11 +3,15 @@ import Config from 'react-native-config';
 
 
 
-// export const BASE_URL = 'http://192.168.0.153:9000/api/v1/'; //Local
-export const BASE_URL = 'https://roof-bros-backend-production.up.railway.app/api/v1/'; //Local
 
-// export const BASE_URL_NO_V1 = 'http://192.168.0.153:9000/api/'; //Local (no v1 - for social login)
-export const BASE_URL_NO_V1 = 'https://roof-bros-backend-production.up.railway.app/api/'; //Production (no v1)
+// export const BASE_URL = 'http://192.168.0.153:1001/api/v1/'; //Local
+export const BASE_URL = 'https://roofbros.mosaiceffect.in/api/v1/'; //Local
+// export const BASE_URL = 'https://roof-bros-backend-production.up.railway.app/api/v1/'; //Local
+
+
+// export const BASE_URL_NO_V1 = 'http://192.168.0.153:1001/api/'; //Local (no v1 - for social login)
+export const BASE_URL_NO_V1 = 'https://roofbros.mosaiceffect.in/api/'; //Production (no v1)
+// export const BASE_URL_NO_V1 = 'https://roof-bros-backend-production.up.railway.app/api/'; //Production (no v1)
 export const IMAGE_URL = 'https://pub-5f7c1aebbfac4467b5f210cd0df99dcd.r2.dev'; //Local
 
 export const GOOGLE_MAPS_API_KEY = Config.GOOGLE_MAPS_API_KEY as string;
@@ -17,7 +21,7 @@ export const emptySplitApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     credentials: 'include',
-    timeout: 60000,
+    timeout: 180000,
     prepareHeaders: async (headers, { getState }) => {
       const state: any = getState();
       const access_token = state?.persist?.token;

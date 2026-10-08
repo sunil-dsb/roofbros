@@ -92,12 +92,25 @@ export const Method = {
   },
   GETPARAMS_QUERY(builder: any, url: string, header?: any) {
     return builder.query({
-      query: (id: string | number) => ({
-        url: `${url}/${id}`,
-        method: 'GET',
-        headers: header,
-      }),
-      providesTags: (result: any, error: any, id: string) => [{ type: 'Job', id }],
+      query: (arg: string | number | { id: string | number; params?: any }) => {
+        if (typeof arg === 'object' && arg !== null && 'id' in arg) {
+          return {
+            url: `${url}/${arg.id}`,
+            method: 'GET',
+            headers: header,
+            params: arg.params,
+          };
+        }
+        return {
+          url: `${url}/${arg}`,
+          method: 'GET',
+          headers: header,
+        };
+      },
+      providesTags: (result: any, error: any, arg: any) => {
+        const id = typeof arg === 'object' && arg !== null && 'id' in arg ? arg.id : arg;
+        return [{ type: 'Job', id }];
+      },
     });
   },
   DELETEPARAMS(builder: any, url: string, header?: any) {

@@ -207,16 +207,18 @@ const MeasurementReview = () => {
             </View>
           </View>
           {/* Row 2 */}
-          <View style={styles.gridRow}>
-            <View style={[styles.gridItem]}>
+          {jobType !== 'restoration' && (
+            <View style={styles.gridRow}>
+              {/* <View style={[styles.gridItem]}>
               <AppText variant="data">{roofDetails.tilesize}</AppText>
               <AppText style={styles.gridLabel}>TILE SIZE</AppText>
+            </View> */}
+              <View style={[styles.gridItem, { alignItems: 'center' }]}>
+                <AppText variant="data">{roofDetails.totalTiles}</AppText>
+                <AppText style={styles.gridLabel}>TOTAL TILES</AppText>
+              </View>
             </View>
-            <View style={styles.gridItem}>
-              <AppText variant="data">{roofDetails.totalTiles}</AppText>
-              <AppText style={styles.gridLabel}>TOTAL TILES</AppText>
-            </View>
-          </View>
+          )}
         </View>
       </ScrollView>
 

@@ -37,7 +37,7 @@ export const managerApiCall = async (
         if (response?.error?.status === 401) {
           // Session expired  clear data, reset redux store, and go back to login
           ShowAlertMessage(errorMsg, popTypes.error);
-          // performLocalLogout();
+          performLocalLogout();
         } else if (response?.error?.status === 'FETCH_ERROR') {
           console.log('Error occurred:', response);
           ShowAlertMessage(response.error.error, popTypes.error);

@@ -48,7 +48,9 @@ const Profile = () => {
     '';
   const email = currentUser?.email || '';
   const profileImage = currentUser?.image;
-  const isGoogleUser = currentUser?.authProvider?.toLowerCase() === 'google';
+  const isSocialUser =
+    currentUser?.authProvider?.toLowerCase() === 'google' ||
+    currentUser?.authProvider?.toLowerCase() === 'apple';
 
   useEffect(() => {
     managerApiCall(
@@ -80,15 +82,7 @@ const Profile = () => {
   const handleEmail = async () => {
     const url = 'mailto:help@roofbros.com.au';
     try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert(
-          'Email App Not Found',
-          'No mail application is configured on this emulator/device.\n\nEmail: help@roofbros.com.au',
-        );
-      }
+      await Linking.openURL(url);
     } catch {
       Alert.alert(
         'Unable to Open Email',
@@ -100,19 +94,23 @@ const Profile = () => {
   const handleCall = async () => {
     const url = 'tel:1800766327';
     try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert(
-          'Phone App Not Found',
-          'No phone dialer application is available on this emulator/device.\n\nPhone: 1800 766 327',
-        );
-      }
+      await Linking.openURL(url);
     } catch {
       Alert.alert(
         'Unable to Make Call',
         'Could not launch phone dialer.\n\nPhone: 1800 766 327',
+      );
+    }
+  };
+
+  const handleWebsite = async () => {
+    const url = 'https://roofbros.com.au/';
+    try {
+      await Linking.openURL(url);
+    } catch {
+      Alert.alert(
+        'Unable to Open Website',
+        'Could not launch browser.\n\nWebsite: https://roofbros.com.au/',
       );
     }
   };
@@ -170,13 +168,13 @@ const Profile = () => {
         <AppText style={styles.sectionHeader}>ACCOUNT</AppText>
         <View style={styles.listContainer}>
           <TouchableOpacity
-            style={[styles.listItem, isGoogleUser && styles.lastItem]}
+            style={[styles.listItem, isSocialUser && styles.lastItem]}
             onPress={handleBusinessDetails}
           >
             <AppText style={styles.listItemLabel}>Business details</AppText>
             <ChevronRightIcon color={colors.muted} size={20} />
           </TouchableOpacity>
-          {!isGoogleUser && (
+          {!isSocialUser && (
             <TouchableOpacity
               style={[styles.listItem, styles.lastItem]}
               onPress={handleChangePassword}
@@ -195,15 +193,25 @@ const Profile = () => {
             activeOpacity={0.7}
           >
             <AppText style={styles.listItemLabel}>Email us</AppText>
-            <AppText style={styles.listItemValue}>help@roofbros.com.au</AppText>
+            <AppText style={styles.listItemValue}>
+              Jaden@roofbros.com.au
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.listItem, styles.lastItem]}
+            style={styles.listItem}
             onPress={handleCall}
             activeOpacity={0.7}
           >
             <AppText style={styles.listItemLabel}>Call us</AppText>
-            <AppText style={styles.listItemValue}>1800 766 327</AppText>
+            <AppText style={styles.listItemValue}>9644 7706</AppText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.listItem, styles.lastItem]}
+            onPress={handleWebsite}
+            activeOpacity={0.7}
+          >
+            <AppText style={styles.listItemLabel}>Website</AppText>
+            <AppText style={styles.listItemValue}>roofbros.com.au</AppText>
           </TouchableOpacity>
         </View>
 

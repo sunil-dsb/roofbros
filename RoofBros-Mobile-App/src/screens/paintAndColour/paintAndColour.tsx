@@ -280,7 +280,7 @@ const PaintAndColour = () => {
         <AppText style={styles.sectionLabel}>
           Colour{' '}
           <AppText style={styles.sectionSublabel}>
-            · {selectedBrand?.name}
+            · {selectedColor?.name}
           </AppText>
         </AppText>
         {isLoadingColors ? (

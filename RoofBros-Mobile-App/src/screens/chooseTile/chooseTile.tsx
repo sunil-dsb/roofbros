@@ -25,7 +25,6 @@ import AppText from '../../components/AppText';
 import FlowHeader from '../../components/FlowHeader';
 import CustomButton from '../../components/CustomButton';
 import CheckIcon from '../../assets/icons/checkIcon';
-import TileTexture from '../../components/TileTexture';
 import { colors } from '../../themes/colors';
 import fontSizes from '../../themes/fontSizes';
 import { fontFamily } from '../../assets/fontFamily';
@@ -36,10 +35,8 @@ import {
   useLazyGetTileProfilesQuery,
   useLazyGetTileColorsQuery,
 } from '../../redux/services/authApi';
-import { useCalculateMaterialMutation } from '../../redux/services/homeApi';
 import { managerApiCall } from '../../helper/manageApiCallFun';
 import { getImageUrl } from '../../helper/commonFunctions';
-import { spacing } from '../../themes/spacing';
 
 const { width } = Dimensions.get('window');
 
@@ -143,8 +140,6 @@ const ChooseTile = () => {
   const [getTiles] = useLazyGetTilesQuery();
   const [getTileProfiles] = useLazyGetTileProfilesQuery();
   const [getTileColors] = useLazyGetTileColorsQuery();
-  const [calculateMaterial, { isLoading: isCalculating }] =
-    useCalculateMaterialMutation();
 
   const [materialsList, setMaterialsList] = useState<any[]>([]);
   const [profilesList, setProfilesList] = useState<any[]>([]);
@@ -526,7 +521,10 @@ const ChooseTile = () => {
                       source={getImageUrl(tile.imageUrl)}
                       style={[
                         styles.tileImagePlaceholder,
-                        { backgroundColor: tile.hexCode || tile.color || '#373838' }
+                        {
+                          backgroundColor:
+                            tile.hexCode || tile.color || '#373838',
+                        },
                       ]}
                     />
                     {isSelected && (

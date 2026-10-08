@@ -39,34 +39,7 @@ const TileDetails = () => {
   const [additionalDetails, setAdditionalDetails] = useState('');
   const [isUrgent, setIsUrgent] = useState(false);
 
-  const textureOpacity = useSharedValue(1);
-  const pillLabelOpacity1 = useSharedValue(1);
-  const pillLabelOpacity2 = useSharedValue(0);
 
-  const handleHoldStart = () => {
-    textureOpacity.value = withTiming(0, {
-      duration: 400,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(0, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(1, { duration: 200 });
-  };
-
-  const handleHoldEnd = () => {
-    textureOpacity.value = withTiming(1, {
-      duration: 350,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(1, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(0, { duration: 200 });
-  };
-
-  const pillLabel1Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity1.value,
-  }));
-  const pillLabel2Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity2.value,
-  }));
 
   const tileTitle =
     tile?.name ||
@@ -94,28 +67,10 @@ const TileDetails = () => {
           </TouchableOpacity>
         )}
 
-        <Pressable onPressIn={handleHoldStart} onPressOut={handleHoldEnd}>
-          <TileTexture
-            color={tile?.color || (isNewJob ? '#574b47' : '#333333')}
-            style={styles.imagePlaceholder}
-            textureOpacity={textureOpacity}
-          >
-            <View style={styles.holdPill}>
-              <Animated.Text style={[styles.holdPillText, pillLabel1Style]}>
-                Hold to see original
-              </Animated.Text>
-              <Animated.Text
-                style={[
-                  styles.holdPillText,
-                  styles.holdPillTextOverlay,
-                  pillLabel2Style,
-                ]}
-              >
-                Release to restore
-              </Animated.Text>
-            </View>
-          </TileTexture>
-        </Pressable>
+        <TileTexture
+          color={tile?.color || (isNewJob ? '#574b47' : '#333333')}
+          style={styles.imagePlaceholder}
+        />
 
         <View style={styles.titleRow}>
           <AppText variant="title" style={styles.title}>

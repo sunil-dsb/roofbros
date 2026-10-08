@@ -22,6 +22,16 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.777843248690-akr1erj99g7fjshmfght2q604od395lk</string>
+				<string>com.googleusercontent.apps.777843248690-mjkmcukv2ui5tqh4tb6lgfobje8tr9i5</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -34,9 +44,26 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>RoofBros requires access to your location to accurately show your position on the map and calculate distances to job sites.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>RoofBros requires access to your camera so you can take photos of roofs and job sites to attach to your quotes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>RoofBros requires access to your photo library so you can select and upload existing photos of job sites to your quotes.</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Outfit-Bold.ttf</string>
+		<string>Outfit-Regular.ttf</string>
+		<string>Outfit-Black.ttf</string>
+		<string>Outfit-Thin.ttf</string>
+		<string>Outfit-SemiBold.ttf</string>
+		<string>Outfit-ExtraLight.ttf</string>
+		<string>afAnotherSans-Semibold.ttf</string>
+		<string>Outfit-ExtraBold.ttf</string>
+		<string>Outfit-Medium.ttf</string>
+		<string>Outfit-Light.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -56,27 +83,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Outfit-Bold.ttf</string>
-		<string>Outfit-Regular.ttf</string>
-		<string>Outfit-Black.ttf</string>
-		<string>Outfit-Thin.ttf</string>
-		<string>Outfit-SemiBold.ttf</string>
-		<string>Outfit-ExtraLight.ttf</string>
-		<string>afAnotherSans-Semibold.ttf</string>
-		<string>Outfit-ExtraBold.ttf</string>
-		<string>Outfit-Medium.ttf</string>
-		<string>Outfit-Light.ttf</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.777843248690-akr1erj99g7fjshmfght2q604od395lk</string>
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>

@@ -13,7 +13,11 @@ import {
 } from '../../navigations/navigationServices';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store/store';
-import { updateQuoteData, resetQuoteData, setCurrentJob } from '../../redux/slices/globalSlice';
+import {
+  updateQuoteData,
+  resetQuoteData,
+  setCurrentJob,
+} from '../../redux/slices/globalSlice';
 import AppText from '../../components/AppText';
 import FlowHeader from '../../components/FlowHeader';
 import CustomButton from '../../components/CustomButton';
@@ -38,9 +42,9 @@ const formatKey = (str: string) => {
   return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 };
 
-// Helper to map UI quote fields
 const mapQuoteDataForUI = (rawData: any) => {
   const uiData: any = {};
+  if (rawData.area_sq_mt !== undefined) uiData.area_sq_mt = rawData.area_sq_mt;
   if (rawData.totalTiles !== undefined) uiData.totalTiles = rawData.totalTiles;
   if (rawData.topCoatBuckets !== undefined)
     uiData.topCoatBuckets = rawData.topCoatBuckets;
@@ -128,7 +132,7 @@ const QuoteDetails = () => {
       calculateMaterial,
       payload,
       (res: any) => {
-        setApiQuoteData(res.data || res);
+        setApiQuoteData(mapQuoteDataForUI(res.data || res));
       },
       (err: any) => {
         console.log('Error fetching material calculation:', err);
@@ -161,10 +165,25 @@ const QuoteDetails = () => {
           tileProfileId: globalQuoteData?.tileProfileId || '',
           tileColorId: globalQuoteData?.tileColorId || '',
           area_sq_mt: Number(globalQuoteData?.area_sq_mt) || 0,
-          topCoatBuckets: Number(apiQuoteData?.['top coat buckets'] || apiQuoteData?.topCoatBuckets) || 0,
-          primerType: globalQuoteData?.primerType || 'Terracotta Primer',
-          primer: Number(apiQuoteData?.primer) || 0,
-          totalTiles: Number(apiQuoteData?.totalTiles) || 0,
+          topCoatBuckets:
+            jobType === 'restoration'
+              ? Number(
+                  apiQuoteData?.['top coat buckets'] ||
+                    apiQuoteData?.topCoatBuckets,
+                ) || 0
+              : undefined,
+          primerType:
+            jobType === 'restoration'
+              ? globalQuoteData?.primerType || 'Terracotta Primer'
+              : undefined,
+          primer:
+            jobType === 'restoration'
+              ? Number(apiQuoteData?.primer) || 0
+              : undefined,
+          totalTiles:
+            jobType === 'restoration'
+              ? undefined
+              : Number(apiQuoteData?.totalTiles) || 0,
         };
 
         managerApiCall(
@@ -172,9 +191,13 @@ const QuoteDetails = () => {
           { id: globalQuoteData.existingJobId, body: createJobQuotePayload },
           (res: any) => {
             const resData = res?.data || res || {};
-            const qNum = resData?.quoteNumber || resData?.activeQuote?.quoteNumber || 'Q-XXX';
-            const price = resData?.totalPrice || resData?.activeQuote?.totalPrice || 'TBD';
-            
+            const qNum =
+              resData?.quoteNumber ||
+              resData?.activeQuote?.quoteNumber ||
+              'Q-XXX';
+            const price =
+              resData?.totalPrice || resData?.activeQuote?.totalPrice || 'TBD';
+
             dispatch(resetQuoteData());
             navigate(routesConstants.quoteSaved, {
               quoteNumber: qNum,
@@ -195,14 +218,27 @@ const QuoteDetails = () => {
           confidence: Number(globalQuoteData?.confidence) || 0,
           pitch: Number(globalQuoteData?.pitch) || 0,
           tilesize: Number(globalQuoteData?.tilesize) || 0,
-          totalTiles: Number(apiQuoteData?.totalTiles) || 0,
+          totalTiles:
+            jobType === 'restoration'
+              ? undefined
+              : Number(apiQuoteData?.totalTiles) || 0,
           area_square: Number(globalQuoteData?.area_square) || 1,
           roofImage: globalQuoteData?.roofImage || '',
           tileTypeId: globalQuoteData?.tileTypeId || '',
           tileProfileId: globalQuoteData?.tileProfileId || '',
           tileColorId: globalQuoteData?.tileColorId || '',
-          'top coat buckets': apiQuoteData?.['top coat buckets'] || 0,
-          primer: apiQuoteData?.primer || 0,
+          topCoatBuckets:
+            jobType === 'restoration'
+              ? Number(apiQuoteData?.topCoatBuckets) || 0
+              : undefined,
+          primerType:
+            jobType === 'restoration'
+              ? globalQuoteData?.primerType || 'Terracotta Primer'
+              : undefined,
+          primer:
+            jobType === 'restoration'
+              ? Number(apiQuoteData?.primer) || 0
+              : undefined,
           jobStatus: 'quoted',
           additionalNotes: globalQuoteData?.additionalNotes || '',
           urgent: globalQuoteData?.urgent || false,
@@ -213,9 +249,13 @@ const QuoteDetails = () => {
           createJobPayload,
           (res: any) => {
             const resData = res?.data || res || {};
-            const qNum = resData?.quoteNumber || resData?.activeQuote?.quoteNumber || 'Q-XXX';
-            const price = resData?.totalPrice || resData?.activeQuote?.totalPrice || 'TBD';
-            
+            const qNum =
+              resData?.quoteNumber ||
+              resData?.activeQuote?.quoteNumber ||
+              'Q-XXX';
+            const price =
+              resData?.totalPrice || resData?.activeQuote?.totalPrice || 'TBD';
+
             dispatch(setCurrentJob(resData));
             dispatch(resetQuoteData());
             navigate(routesConstants.quoteSaved, {
@@ -259,7 +299,7 @@ const QuoteDetails = () => {
         </AppText>
 
         <FlashList<any>
-          data={Object.entries(apiQuoteData)}
+          data={Object.entries(apiQuoteData).filter(([_, v]) => v !== null)}
           style={styles.content}
           getItemType={() => 'item'}
           ItemSeparatorComponent={() => (

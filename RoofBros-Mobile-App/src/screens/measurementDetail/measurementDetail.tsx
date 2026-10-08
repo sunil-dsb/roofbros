@@ -23,6 +23,7 @@ const MeasurementDetail = () => {
   const job = route.params?.job || {};
 
   const address = job?.address || 'Unknown Address';
+  const jobType = job?.jobType || 'restoration';
   const confidence =
     job?.confidence != null ? Math.round(job.confidence) : '--';
   const areaSqmt = job?.areaSqmt != null ? job.areaSqmt.toFixed(1) : '--';
@@ -86,16 +87,18 @@ const MeasurementDetail = () => {
             </View>
           </View>
           {/* Row 2 */}
-          <View style={styles.gridRow}>
-            <View style={styles.gridItem}>
+          {jobType !== 'restoration' && (
+            <View style={styles.gridRow}>
+              {/* <View style={styles.gridItem}>
               <AppText variant="data">{tileSize}</AppText>
               <AppText style={styles.gridLabel}>TILE SIZE</AppText>
+            </View> */}
+              <View style={[styles.gridItem, { alignItems: 'center' }]}>
+                <AppText variant="data">{totalTiles}</AppText>
+                <AppText style={styles.gridLabel}>TOTAL TILES</AppText>
+              </View>
             </View>
-            <View style={styles.gridItem}>
-              <AppText variant="data">{totalTiles}</AppText>
-              <AppText style={styles.gridLabel}>TOTAL TILES</AppText>
-            </View>
-          </View>
+          )}
         </View>
       </ScrollView>
 

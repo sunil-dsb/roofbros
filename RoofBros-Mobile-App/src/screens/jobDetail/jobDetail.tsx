@@ -273,14 +273,14 @@ const JobDetail = () => {
 
         {/* Aerial Photo */}
         <View style={styles.photoContainer}>
-          <Image 
+          <Image
             source={
-              job?.aerial_image_url 
-                ? getImageUrl(job.aerial_image_url) 
-                : (job?.image || appImages.ba1Before)
-            } 
-            style={styles.photo} 
-            resizeMode="cover" 
+              job?.aerial_image_url
+                ? getImageUrl(job.aerial_image_url)
+                : job?.image || appImages.ba1Before
+            }
+            style={styles.photo}
+            resizeMode="cover"
           />
         </View>
 
@@ -312,9 +312,7 @@ const JobDetail = () => {
               onPress={() => navigate(routesConstants.photosList)}
             >
               <AppText style={styles.hubTitle}>
-                {job.photosCount
-                  ? `Photos (${job.photosCount})`
-                  : 'Photos'}
+                {job.photosCount ? `Photos (${job.photosCount})` : 'Photos'}
               </AppText>
               <AppText style={styles.hubSubtitle}>
                 {job.photosCount ? 'site shots' : 'None yet'}

@@ -70,12 +70,14 @@ const AccountBusinessDetails = () => {
             control={control}
             label="Full name"
             placeholder="Enter your full name"
+            editable={false}
           />
           <FormInput
             name="businessName"
             control={control}
             label="Business name"
             placeholder="Enter business name"
+            editable={false}
           />
           <FormInput
             name="abn"
@@ -83,6 +85,7 @@ const AccountBusinessDetails = () => {
             label="ABN"
             placeholder="Enter ABN"
             keyboardType="numeric"
+            editable={false}
           />
         </View>
 

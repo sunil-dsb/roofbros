@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {
   SafeAreaView,
@@ -13,6 +14,7 @@ import {
 import AppText from '../../components/AppText';
 import CustomButton from '../../components/CustomButton';
 import FormInput from '../../components/FormInput';
+import AppModal from '../../components/AppModal';
 import StackedInput from '../../components/StackedInput';
 import FlowHeader from '../../components/FlowHeader';
 import { useForm } from 'react-hook-form';
@@ -33,6 +35,7 @@ import {
 import { width } from '../../themes/spacing';
 import { useDeleteAccountMutation } from '../../redux/services/authApi';
 import { managerApiCall } from '../../helper/manageApiCallFun';
+import { useSelector } from 'react-redux';
 
 const deleteAccountSchema = z.object({
   password: z.string().min(1, 'Password is required'),
@@ -53,19 +56,38 @@ const DeleteAccount = () => {
 
   const password = watch('password');
 
-  const [deleteAccountApi] = useDeleteAccountMutation();
+  const { userData } = useSelector((state: any) => state.persist);
+  // Using a broad check for social provider. Adjust field name if it's different (e.g. social_provider, isSocial)
+  const isSocialUser =
+    userData?.authProvider === 'google' || userData?.authProvider === 'apple';
 
-  const handleDelete = (data: DeleteAccountForm) => {
+  const [deleteAccountApi] = useDeleteAccountMutation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const confirmDelete = () => {
+    setIsModalVisible(true);
+  };
+
+  const executeDelete = () => {
+    setIsModalVisible(false);
     managerApiCall(
       deleteAccountApi,
-      { password: data.password },
+      isSocialUser ? {} : { password: password },
       () => {
         performLocalLogout();
       },
       () => {
         // Error handling is managed by managerApiCall automatically
-      }
+      },
     );
+  };
+
+  const handleDelete = (data: DeleteAccountForm) => {
+    confirmDelete();
+  };
+
+  const handleSocialDelete = () => {
+    confirmDelete();
   };
 
   return (
@@ -95,17 +117,19 @@ const DeleteAccount = () => {
             </View>
           </View>
 
-          <View style={styles.formContainer}>
-            <FormInput
-              name="password"
-              control={control}
-              label="Enter your password to confirm"
-              secureTextEntry
-              autoCapitalize="none"
-              placeholder="••••••••"
-              style={styles.passwordInput}
-            />
-          </View>
+          {!isSocialUser && (
+            <View style={styles.formContainer}>
+              <FormInput
+                name="password"
+                control={control}
+                label="Enter your password to confirm"
+                secureTextEntry
+                autoCapitalize="none"
+                placeholder="••••••••"
+                style={styles.passwordInput}
+              />
+            </View>
+          )}
         </View>
       </CustomKeyboardScrollView>
 
@@ -113,13 +137,35 @@ const DeleteAccount = () => {
         <CustomButton
           variant="dangerOutline"
           title="Delete my account"
-          onPress={handleSubmit(handleDelete)}
-          disabled={!password}
+          onPress={
+            isSocialUser ? handleSocialDelete : handleSubmit(handleDelete)
+          }
+          disabled={!isSocialUser && !password}
           style={styles.deleteButton}
           iconLeft={<TrashIcon color={colors.error} size={20} />}
         />
         <CustomButton variant="secondary" title="Cancel" onPress={goBack} />
       </View>
+
+      <AppModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        title="Delete Account"
+        description={"Are you sure you want to delete your account?\n\nYour account will be scheduled for deletion and permanently removed after 15 days. You can restore your account anytime during this period by simply logging back in."}
+      >
+        <View style={{ gap: 12, marginTop: 12 }}>
+          <CustomButton
+            variant="dangerOutline"
+            title="Delete"
+            onPress={executeDelete}
+          />
+          <CustomButton
+            variant="primary"
+            title="Cancel"
+            onPress={() => setIsModalVisible(false)}
+          />
+        </View>
+      </AppModal>
     </SafeAreaView>
   );
 };

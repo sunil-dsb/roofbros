@@ -31,14 +31,13 @@ import { routesConstants } from '../../navigations/routeConstants';
 import { width, spacing } from '../../themes/spacing';
 import { Spacer } from '../../components';
 
-const manualMeasurementSchema = z.object({
+const manualMeasurementSchemaBase = z.object({
   area: z.string().min(1, 'Roof area is required'),
   pitch: z.string().min(1, 'Roof pitch is required'),
-  tileSize: z.string().min(1, 'Tile size is required'),
-  totalTiles: z.string().min(1, 'Total tiles is required'),
+  totalTiles: z.string().optional(),
 });
 
-type ManualMeasurementForm = z.infer<typeof manualMeasurementSchema>;
+type ManualMeasurementForm = z.infer<typeof manualMeasurementSchemaBase>;
 
 const ManualMeasurement = () => {
   const route = useRoute<any>();
@@ -46,13 +45,18 @@ const ManualMeasurement = () => {
 
   const dispatch = useDispatch();
 
+  const schema = jobType !== 'restoration'
+    ? manualMeasurementSchemaBase.extend({
+        totalTiles: z.string().min(1, 'Total tiles is required'),
+      })
+    : manualMeasurementSchemaBase;
+
   const { control, handleSubmit, watch } = useForm<ManualMeasurementForm>({
-    resolver: zodResolver(manualMeasurementSchema),
+    resolver: zodResolver(schema),
     mode: 'onChange',
     defaultValues: {
       area: '',
       pitch: '',
-      tileSize: '',
       totalTiles: '',
     },
   });
@@ -68,9 +72,8 @@ const ManualMeasurement = () => {
       updateQuoteData({
         area_sq_mt: Number(_data.area) || 0,
         pitch: Number(_data.pitch) || 0,
-        tilesize: Number(_data.tileSize) || 0,
         totalTiles: Number(_data.totalTiles) || 0,
-      })
+      }),
     );
     if (jobType === 'restoration') {
       navigate(routesConstants.existingRoof, { jobType, flow: 'newJob' });
@@ -149,32 +152,22 @@ const ManualMeasurement = () => {
         </TouchableOpacity> */}
         <Spacer height={width * 0.06} />
 
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <AppText style={styles.label}>Tile size</AppText>
-            <FormInput
-              name="tileSize"
-              control={control}
-              placeholder="e.g., 4096"
-              keyboardType="numeric"
-              style={{
-                height: width * 0.14,
-              }}
-            />
+        {jobType !== 'restoration' && (
+          <View style={styles.row}>
+            <View style={styles.col}>
+              <AppText style={styles.label}>Total tiles</AppText>
+              <FormInput
+                name="totalTiles"
+                control={control}
+                placeholder="e.g., 3487"
+                keyboardType="numeric"
+                style={{
+                  height: width * 0.14,
+                }}
+              />
+            </View>
           </View>
-          <View style={styles.col}>
-            <AppText style={styles.label}>Total tiles</AppText>
-            <FormInput
-              name="totalTiles"
-              control={control}
-              placeholder="e.g., 3487"
-              keyboardType="numeric"
-              style={{
-                height: width * 0.14,
-              }}
-            />
-          </View>
-        </View>
+        )}
       </ScrollView>
 
       <View style={[styles.footer]}>

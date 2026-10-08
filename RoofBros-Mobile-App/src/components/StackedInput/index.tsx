@@ -42,6 +42,7 @@ const StackedInput = forwardRef<TextInput, StackedInputProps>(
       inputStyle,
       onFocus,
       onBlur,
+      onChangeText,
       ...props
     },
     ref,
@@ -64,6 +65,26 @@ const StackedInput = forwardRef<TextInput, StackedInputProps>(
     const handleBlur = (e: any) => {
       setIsFocused(false);
       if (onBlur) onBlur(e);
+    };
+
+    const handleChangeText = (text: string) => {
+      if (onChangeText) {
+        const isNoSpaceType =
+          props.keyboardType === 'email-address' ||
+          props.keyboardType === 'numeric' ||
+          props.keyboardType === 'phone-pad' ||
+          props.keyboardType === 'number-pad';
+
+        if (isNoSpaceType) {
+          // Remove all spaces for email and number fields
+          onChangeText(text.replace(/\s/g, ''));
+        } else if (text.startsWith(' ')) {
+          // Prevent spaces at the start for other fields
+          onChangeText(text.trimStart());
+        } else {
+          onChangeText(text);
+        }
+      }
     };
 
     const isPassword = secureTextEntry;
@@ -99,6 +120,7 @@ const StackedInput = forwardRef<TextInput, StackedInputProps>(
               style={[styles.input, inputStyle]}
               onFocus={handleFocus}
               onBlur={handleBlur}
+              onChangeText={handleChangeText}
               autoCorrect={false}
               allowFontScaling={false}
               cursorColor={colors.ink}

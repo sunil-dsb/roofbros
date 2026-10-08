@@ -40,6 +40,7 @@ import Loader from '../../components/loader';
 import { setLoaderOn, setLoaderOff } from '../../helper/commonFunctions';
 import { managerApiCall } from '../../helper/manageApiCallFun';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -109,6 +110,7 @@ const Login = () => {
         await GoogleSignin.signIn();
         const tokens = await GoogleSignin.getTokens();
         const { idToken, accessToken } = tokens;
+        console.log('tokens', tokens);
         if (!idToken) {
           Alert.alert('Error', 'Failed to get Google ID token.');
           return;
@@ -134,6 +136,60 @@ const Login = () => {
         );
       } catch (error: any) {
         console.log('Google Sign-In error:', error);
+      }
+    } else if (provider === 'Apple') {
+      try {
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+        });
+        console.log('appleAuthRequestResponse', appleAuthRequestResponse);
+        const credentialState = await appleAuth.getCredentialStateForUser(
+          appleAuthRequestResponse.user,
+        );
+        console.log('credentialState', credentialState);
+        if (credentialState === appleAuth.State.AUTHORIZED) {
+          managerApiCall(
+            socialLogin,
+            {
+              provider: 'apple',
+              idToken: {
+                token: appleAuthRequestResponse.identityToken,
+                accessToken: appleAuthRequestResponse.authorizationCode,
+                user: {
+                  name: {
+                    firstName:
+                      appleAuthRequestResponse.fullName?.givenName || '',
+                    lastName:
+                      appleAuthRequestResponse.fullName?.familyName || '',
+                  },
+                },
+                nonce: appleAuthRequestResponse.nonce,
+              },
+            },
+            (res: any) => {
+              const token = res?.data?.token || res?.token;
+              const user = res?.data?.user || res?.user;
+              if (token) {
+                dispatch(setToken(token));
+              }
+              if (user) {
+                dispatch(setUserData(user));
+              }
+              if (user?.isBusiness === false) {
+                reset(routesConstants.businessDetails);
+              } else {
+                reset(routesConstants.bottomTab);
+              }
+            },
+          );
+        }
+      } catch (error: any) {
+        if (error.code === appleAuth.Error.CANCELED) {
+          console.log('User canceled Apple Sign in.');
+        } else {
+          console.log('Apple Sign-In error:', error);
+        }
       }
     }
   };

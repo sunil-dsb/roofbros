@@ -188,36 +188,7 @@ const TryOnRoof = () => {
   const CONTAINER_WIDTH = width - 28;
   const splitX = useSharedValue(CONTAINER_WIDTH / 2);
 
-  // Animated opacity driving the texture fade: 1 = tile visible, 0 = plain colour
-  const textureOpacity = useSharedValue(1);
-  // Pill label crossfade: 1 = 'Hold to see original', 0 = 'Release to restore'
-  const pillLabelOpacity1 = useSharedValue(1);
-  const pillLabelOpacity2 = useSharedValue(0);
 
-  const handleHoldStart = () => {
-    textureOpacity.value = withTiming(0, {
-      duration: 400,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(0, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(1, { duration: 200 });
-  };
-
-  const handleHoldEnd = () => {
-    textureOpacity.value = withTiming(1, {
-      duration: 350,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(1, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(0, { duration: 200 });
-  };
-
-  const pillLabel1Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity1.value,
-  }));
-  const pillLabel2Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity2.value,
-  }));
 
   const dragGesture = Gesture.Pan().onUpdate(event => {
     splitX.value = Math.max(30, Math.min(CONTAINER_WIDTH - 30, event.x));
@@ -314,40 +285,17 @@ const TryOnRoof = () => {
           >
             {mode === 'One colour' ? (
               <View>
-                <Pressable
-                  onPressIn={handleHoldStart}
-                  onPressOut={handleHoldEnd}
-                >
-                  <ColorSurface
-                    colorObj={selectedColor1}
-                    style={styles.texturePlaceholder}
-                    textureOpacity={textureOpacity}
-                  >
-                    <View style={styles.holdPill}>
-                      <Animated.Text
-                        style={[styles.holdPillText, pillLabel1Style]}
-                      >
-                        Hold to see original
-                      </Animated.Text>
-                      <Animated.Text
-                        style={[
-                          styles.holdPillText,
-                          styles.holdPillTextOverlay,
-                          pillLabel2Style,
-                        ]}
-                      >
-                        Release to restore
-                      </Animated.Text>
-                    </View>
-                  </ColorSurface>
-                </Pressable>
+                <ColorSurface
+                  colorObj={selectedColor1}
+                  style={styles.texturePlaceholder}
+                />
 
                 <View style={styles.detailsContainer}>
                   <AppText style={styles.colorName}>
                     {selectedColor1.name}
                   </AppText>
                   <AppText style={styles.colorDesc}>
-                    Industrial roof coatings · 15-year rating
+                    Monier · 15-year rating
                   </AppText>
                 </View>
 
@@ -543,9 +491,7 @@ const TryOnRoof = () => {
                   <AppText style={styles.modalColorTitle}>
                     {item.color.name}
                   </AppText>
-                  <AppText style={styles.modalColorSub}>
-                    Industrial roof coatings
-                  </AppText>
+                  <AppText style={styles.modalColorSub}>Monier</AppText>
                 </View>
                 <AppText style={styles.modalPositionLabel}>
                   {item.label}

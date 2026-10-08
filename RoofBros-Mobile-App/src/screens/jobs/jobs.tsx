@@ -8,6 +8,7 @@ import {
   View,
   RefreshControl,
   Animated as RNAnimated,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -129,14 +130,14 @@ const JobCard = ({ job }: { job: Job }) => {
         {imageError || !job.image ? (
           <Image source={appImages.ba1Before} style={styles.thumbImage} />
         ) : (
-          <FastImage 
-            source={job.image} 
+          <FastImage
+            source={job.image}
             style={styles.thumbImage}
             onLoad={() => setImageLoaded(true)}
             onError={() => {
               setImageError(true);
               setImageLoaded(true);
-            }} 
+            }}
           />
         )}
         {!imageLoaded && !imageError && !!job.image && <ShimmerLoader />}
@@ -229,81 +230,155 @@ const Jobs = () => {
   const [isOffline] = useState(false);
   const [jobsData, setJobsData] = useState<Job[] | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [showLocalLoader, setShowLocalLoader] = useState(false);
+  
+  const isFetchingInitial = useRef(false);
 
   const [getJobs] = useLazyGetJobsQuery();
 
-  const loadJobs = useCallback(() => {
-    // Build the payload for query params
-    const payload =
-      activeFilter === 'All' ? {} : { jobStatus: activeFilter.toLowerCase() };
+  const loadJobs = useCallback(
+    (pageNum = 1, skipGlobalLoader = false, filterVal = activeFilter, searchVal = searchQuery) => {
+      if (pageNum === 1) {
+        isFetchingInitial.current = true;
+      }
+      if (pageNum > 1) {
+        setIsLoadingMore(true);
+      }
 
-    managerApiCall(
-      getJobs,
-      payload,
-      res => {
-        if (res?.data && Array.isArray(res.data)) {
-          const mappedJobs: Job[] = res.data.map((apiJob: any) => {
-            // Capitalize status (e.g. 'quoted' -> 'Quoted')
-            const statusCapitalized = apiJob.jobStatus
-              ? apiJob.jobStatus.charAt(0).toUpperCase() +
-                apiJob.jobStatus.slice(1)
-              : 'Measured';
+      // Build the payload for query params
+      const payload: any =
+        filterVal === 'All'
+          ? { page: pageNum, limit: 10 }
+          : { jobStatus: filterVal.toLowerCase(), page: pageNum, limit: 10 };
+          
+      if (searchVal.trim()) {
+        payload.search = searchVal.trim();
+      }
 
-            // Construct subtitle
-            const tileName =
-              apiJob.activeQuote?.tileType?.name ||
-              apiJob.tileType?.name ||
-              'Unknown Tile';
-            const colorName =
-              apiJob.activeQuote?.tileColor?.name ||
-              apiJob.tileColor?.name ||
-              'Unknown Color';
-            const subtitle = `${tileName} · ${colorName}`;
+      managerApiCall(
+        getJobs,
+        payload,
+        res => {
+          const jobsArray = res?.data?.jobs || res?.jobs;
 
-            return {
-              id: apiJob.id,
-              address: apiJob.address || 'Unknown Address',
-              subtitle: subtitle,
-              status: statusCapitalized as JobStatus,
-              value: undefined, // Price is not provided in API yet
-              image: apiJob.roofImage
-                ? getImageUrl(apiJob.roofImage)
-                : appImages.ba1Before, // Fallback image if null
-            };
-          });
-          setJobsData(mappedJobs);
-        } else {
-          setJobsData([]);
-        }
-        setRefreshing(false);
-      },
-      err => {
-        setJobsData([]);
-        setRefreshing(false);
-      },
-    );
-  }, [getJobs, activeFilter]);
+          if (jobsArray && Array.isArray(jobsArray)) {
+            const mappedJobs: Job[] = jobsArray.map((apiJob: any) => {
+              // Capitalize status (e.g. 'quoted' -> 'Quoted')
+              const statusCapitalized = apiJob.jobStatus
+                ? apiJob.jobStatus.charAt(0).toUpperCase() +
+                  apiJob.jobStatus.slice(1)
+                : 'Measured';
+
+              // Construct subtitle
+              const tileName =
+                apiJob.activeQuote?.tileType?.name ||
+                apiJob.tileType?.name ||
+                'Unknown Tile';
+              const colorName =
+                apiJob.activeQuote?.tileColor?.name ||
+                apiJob.tileColor?.name ||
+                'Unknown Color';
+              const subtitle = `${tileName} · ${colorName}`;
+
+              return {
+                id: apiJob.id,
+                address: apiJob.address || 'Unknown Address',
+                subtitle: subtitle,
+                status: statusCapitalized as JobStatus,
+                value: undefined, // Price is not provided in API yet
+                image: apiJob.roofImage
+                  ? getImageUrl(apiJob.roofImage)
+                  : appImages.ba1Before, // Fallback image if null
+              };
+            });
+
+            const meta = res?.data?.meta || res?.meta;
+            if (meta && meta.totalPages !== undefined) {
+              setHasMore(pageNum < meta.totalPages);
+            } else {
+              setHasMore(mappedJobs.length === 10);
+            }
+
+            if (pageNum === 1) {
+              setJobsData(mappedJobs);
+            } else {
+              setJobsData(prev => [...(prev || []), ...mappedJobs]);
+            }
+          } else {
+            if (pageNum === 1) {
+              setJobsData([]);
+            }
+            setHasMore(false);
+          }
+          if (pageNum === 1) isFetchingInitial.current = false;
+          setRefreshing(false);
+          setIsLoadingMore(false);
+        },
+        err => {
+          if (pageNum === 1) {
+            setJobsData([]);
+            isFetchingInitial.current = false;
+          }
+          setRefreshing(false);
+          setIsLoadingMore(false);
+        },
+        pageNum > 1 || skipGlobalLoader ? 'no-loader' : undefined,
+      );
+    },
+    [getJobs],
+  );
+
+  const prevFilter = useRef(activeFilter);
+  const initialLoadDone = useRef(false);
 
   useEffect(() => {
-    loadJobs();
-  }, [loadJobs]);
+    if (prevFilter.current !== activeFilter) {
+      prevFilter.current = activeFilter;
+      setPage(1);
+      setShowLocalLoader(true);
+      setJobsData(null);
+      setHasMore(false);
+      setIsLoadingMore(false);
+      loadJobs(1, true, activeFilter, searchQuery);
+    } else {
+      const delay = setTimeout(() => {
+        setPage(1);
+        if (initialLoadDone.current) {
+          setShowLocalLoader(true);
+          setJobsData(null);
+          setHasMore(false);
+          setIsLoadingMore(false);
+        }
+        loadJobs(1, initialLoadDone.current, activeFilter, searchQuery);
+        initialLoadDone.current = true;
+      }, initialLoadDone.current ? 400 : 0);
+      return () => clearTimeout(delay);
+    }
+  }, [activeFilter, searchQuery, loadJobs]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    loadJobs();
-  }, [loadJobs]);
+    setPage(1);
+    loadJobs(1, true, activeFilter, searchQuery);
+  }, [loadJobs, activeFilter, searchQuery]);
+
+  const loadMore = useCallback(() => {
+    if (isFetchingInitial.current) return;
+    if (!isLoadingMore && hasMore && !refreshing) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      loadJobs(nextPage, true, activeFilter, searchQuery);
+    }
+  }, [isLoadingMore, hasMore, refreshing, page, loadJobs, activeFilter, searchQuery]);
 
   const displayJobs = jobsData || [];
 
   const filteredJobs = displayJobs.filter(job => {
-    // The API is now handling the status filtering via query param,
-    // but we can leave this here as a fallback or for instant local filtering.
-    const matchesFilter = activeFilter === 'All' || job.status === activeFilter;
-    const matchesSearch =
-      !searchQuery.trim() ||
-      job.address.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
-      job.subtitle.toLowerCase().includes(searchQuery.trim().toLowerCase());
-    return matchesFilter && matchesSearch;
+    // Local fallback for instant tab switching
+    return activeFilter === 'All' || job.status === activeFilter;
   });
 
   const isSearchNoResults =
@@ -379,9 +454,24 @@ const Jobs = () => {
           renderItem={({ item }) => <JobCard job={item} />}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={JobSeparator}
-          ListFooterComponent={<Spacer height={width * 0.3} />}
+          ListFooterComponent={
+            <View>
+              {isLoadingMore && (
+                <View style={{ paddingVertical: spacing.xl }}>
+                  <ActivityIndicator size="large" color={colors.ink} />
+                </View>
+              )}
+              <Spacer height={width * 0.3} />
+            </View>
+          }
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.5}
           ListEmptyComponent={
-            isSearchNoResults ? (
+            jobsData === null ? (
+              <View style={{ paddingVertical: spacing.xl, flex: 1, justifyContent: 'center' }}>
+                <ActivityIndicator size="large" color={colors.ink} />
+              </View>
+            ) : isSearchNoResults ? (
               <SearchEmptyState
                 searchQuery={searchQuery}
                 onStart={() => navigate(routesConstants.newJob)}

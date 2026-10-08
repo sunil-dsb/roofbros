@@ -27,6 +27,23 @@ import { getImageUrl } from '../../helper/commonFunctions';
 import FastImage from '@d11/react-native-fast-image';
 import { FlashList } from '@shopify/flash-list';
 import { Spacer } from '../../components';
+const formatKey = (str: string) => {
+  let formatted = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+  formatted = formatted.replace(/_/g, ' ');
+  formatted = formatted.toLowerCase();
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+};
+
+const mapQuoteDataForUI = (rawData: any) => {
+  const uiData: any = {};
+  if (rawData.area_sq_mt !== undefined) uiData.area_sq_mt = rawData.area_sq_mt;
+  if (rawData.totalTiles !== undefined) uiData.totalTiles = rawData.totalTiles;
+  if (rawData.topCoatBuckets !== undefined)
+    uiData.topCoatBuckets = rawData.topCoatBuckets;
+  if (rawData.primer !== undefined) uiData.primer = rawData.primer;
+  if (rawData.primerType !== undefined) uiData.primerType = rawData.primerType;
+  return uiData;
+};
 
 const DeliveryDetail = () => {
   const route = useRoute<any>();
@@ -215,30 +232,6 @@ const DeliveryDetail = () => {
         </View>
 
         {/* Materials Card */}
-        <View style={styles.infoCard}>
-          <View style={styles.materialRow}>
-            <View style={styles.materialLeft}>
-              <AppText style={styles.materialName}>
-                Main tiles · {tileColorName || 'Unknown Color'}
-              </AppText>
-              <AppText style={styles.materialDesc}>
-                {activeQuoteTileType || 'Unknown Type'}
-              </AppText>
-            </View>
-            <AppText style={styles.materialQty}>
-              {totalTiles?.toLocaleString() || '-'}
-            </AppText>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.materialRow}>
-            <View style={styles.materialLeft}>
-              <AppText style={styles.materialName}>Coat Buckets</AppText>
-            </View>
-            <AppText style={styles.materialQty}>
-              {topCoatBuckets?.toLocaleString() || '-'}
-            </AppText>
-          </View>
-        </View>
 
         {/* Drop-zone notes + photo (Requested mode) */}
         {(apiDelivery?.dropZoneNotes ||

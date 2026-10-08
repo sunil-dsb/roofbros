@@ -38,6 +38,7 @@ import { managerApiCall } from '../../helper/manageApiCallFun';
 import { useDispatch } from 'react-redux';
 import { setToken, setUserData } from '../../redux/slices/persistedSlice';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 const signupSchema = z.object({
   name: z
@@ -120,6 +121,60 @@ const SignUp = () => {
         );
       } catch (error: any) {
         console.log('Google Sign-In error:', error);
+      }
+    } else if (provider === 'Apple') {
+      try {
+        const appleAuthRequestResponse = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+        });
+
+        const credentialState = await appleAuth.getCredentialStateForUser(
+          appleAuthRequestResponse.user,
+        );
+
+        if (credentialState === appleAuth.State.AUTHORIZED) {
+          managerApiCall(
+            socialLogin,
+            {
+              provider: 'apple',
+              idToken: {
+                token: appleAuthRequestResponse.identityToken,
+                accessToken: appleAuthRequestResponse.authorizationCode,
+                user: {
+                  name: {
+                    firstName:
+                      appleAuthRequestResponse.fullName?.givenName || '',
+                    lastName:
+                      appleAuthRequestResponse.fullName?.familyName || '',
+                  },
+                },
+                nonce: appleAuthRequestResponse.nonce,
+              },
+            },
+            (res: any) => {
+              const token = res?.data?.token || res?.token;
+              const user = res?.data?.user || res?.user;
+              if (token) {
+                dispatch(setToken(token));
+              }
+              if (user) {
+                dispatch(setUserData(user));
+              }
+              if (user?.isBusiness === false) {
+                reset(routesConstants.businessDetails);
+              } else {
+                reset(routesConstants.bottomTab);
+              }
+            },
+          );
+        }
+      } catch (error: any) {
+        if (error.code === appleAuth.Error.CANCELED) {
+          console.log('User canceled Apple Sign in.');
+        } else {
+          console.log('Apple Sign-In error:', error);
+        }
       }
     }
   };
@@ -226,6 +281,19 @@ const SignUp = () => {
           </Pressable>
         </View>
 
+        {/* Switch screen footer */}
+        <View style={styles.footerRow}>
+          <AppText variant="body" style={styles.footerText}>
+            Already have an account?{' '}
+            <AppText
+              onPress={() => navigate(routesConstants.login)}
+              style={styles.footerLink}
+            >
+              Sign in
+            </AppText>
+          </AppText>
+        </View>
+
         {/* Terms and Privacy policy statement */}
         <View style={styles.termsRow}>
           <AppText variant="caption" style={styles.termsText}>
@@ -244,19 +312,6 @@ const SignUp = () => {
               Privacy{'\u00A0'}Policy
             </AppText>
             .
-          </AppText>
-        </View>
-
-        {/* Switch screen footer */}
-        <View style={styles.footerRow}>
-          <AppText variant="body" style={styles.footerText}>
-            Already have an account?{' '}
-            <AppText
-              onPress={() => navigate(routesConstants.login)}
-              style={styles.footerLink}
-            >
-              Sign in
-            </AppText>
           </AppText>
         </View>
       </CustomKeyboardScrollView>

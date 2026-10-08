@@ -26,8 +26,10 @@ import { useLazyGetTilesQuery } from '../../redux/services/authApi';
 import { managerApiCall } from '../../helper/manageApiCallFun';
 
 const LOCAL_DESC_MAP: Record<string, string> = {
-  terracotta: 'Clay tiles  takes terracotta primer',
-  concrete: 'Cement or pressed tiles  takes high-build primer',
+  terracotta:
+    'Terracotta Tiles Must Be Primed With An Etching Terracotta Primer',
+  concrete:
+    'Cement Roof Tiles can be primed with a range of primers including a high-build primer, medium build primer or standard sealer',
   metal: 'Colorbond or similar sheet  takes metal primer',
 };
 

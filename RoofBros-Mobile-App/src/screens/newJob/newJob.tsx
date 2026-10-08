@@ -4,7 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate, goBack } from '../../navigations/navigationServices';
-import { updateQuoteData, resetQuoteData } from '../../redux/slices/globalSlice';
+import {
+  updateQuoteData,
+  resetQuoteData,
+} from '../../redux/slices/globalSlice';
 import AppText from '../../components/AppText';
 import FlowHeader from '../../components/FlowHeader';
 import { colors } from '../../themes/colors';
@@ -26,21 +29,28 @@ const NewJob = () => {
 
   const handleNext = (jobType: 'restoration' | 'installation') => {
     setSelectedJob(jobType);
-    
+
     if (fromQuotesList && currentJob) {
       dispatch(resetQuoteData());
-      dispatch(updateQuoteData({
-        jobType,
-        address: currentJob?.address,
-        area_sq_mt: currentJob?.measurement?.areaSqmt,
-        pitch: currentJob?.measurement?.pitch,
-        tilesize: currentJob?.measurement?.tilesize,
-        confidence: currentJob?.measurement?.confidence,
-        roofImage: currentJob?.roofImage,
-        urgent: false,
-        existingJobId: currentJob.id,
-      }));
-      
+      dispatch(
+        updateQuoteData({
+          jobType,
+          address: currentJob?.address,
+          area_sq_mt:
+            currentJob?.measurement?.areaSqmt ||
+            currentJob?.measurement?.area_sq_mt ||
+            currentJob?.areaSqmt ||
+            currentJob?.area_sq_mt,
+          pitch: currentJob?.measurement?.pitch || currentJob?.pitch,
+          tilesize: currentJob?.measurement?.tilesize || currentJob?.tilesize,
+          confidence:
+            currentJob?.measurement?.confidence || currentJob?.confidence,
+          roofImage: currentJob?.roofImage,
+          urgent: false,
+          existingJobId: currentJob.id,
+        }),
+      );
+
       if (jobType === 'restoration') {
         navigate(routesConstants.existingRoof);
       } else {
@@ -83,9 +93,7 @@ const NewJob = () => {
             />
           </View>
           <View style={styles.cardText}>
-            <AppText style={styles.cardTitle}>
-              Roof Restoration / Replacement
-            </AppText>
+            <AppText style={styles.cardTitle}>Roof Restoration</AppText>
             <AppText style={styles.cardDesc}>
               Clean, repair and recoat an existing roof
             </AppText>
@@ -109,7 +117,9 @@ const NewJob = () => {
             />
           </View>
           <View style={styles.cardText}>
-            <AppText style={styles.cardTitle}>New Roof Installation</AppText>
+            <AppText style={styles.cardTitle}>
+              New Tile Roof / Tile Roof Replacement
+            </AppText>
             <AppText style={styles.cardDesc}>
               New tiles: new builds and full replacements
             </AppText>

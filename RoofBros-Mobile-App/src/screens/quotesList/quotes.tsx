@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import {
   SafeAreaView,
@@ -29,25 +34,65 @@ const Quotes = () => {
   const initialJob = route.params?.job;
   const [getJobQuotes] = useLazyGetJobQuotesQuery();
   const [rawQuotes, setRawQuotes] = React.useState<any[]>([]);
+  const [page, setPage] = React.useState(1);
+  const [hasMore, setHasMore] = React.useState(false);
+  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const loadQuotes = React.useCallback(
+    (pageNum = 1, isRefresh = false) => {
+      if (!initialJob?.id) return;
+      if (pageNum > 1) {
+        setIsLoadingMore(true);
+      }
+      managerApiCall(
+        getJobQuotes,
+        { id: initialJob.id, params: { page: pageNum, limit: 10 } },
+        (res: any) => {
+          const resAny = res as any;
+          let newQuotes: any[] = [];
+
+          if (Array.isArray(resAny?.data)) {
+            newQuotes = resAny.data;
+          } else if (Array.isArray(resAny?.data?.quotes)) {
+            newQuotes = resAny.data.quotes;
+          } else if (Array.isArray(resAny)) {
+            newQuotes = resAny;
+          }
+
+          const meta = resAny?.data?.meta || resAny?.meta;
+          if (meta && meta.totalPages !== undefined) {
+            setHasMore(pageNum < meta.totalPages);
+          } else {
+            setHasMore(newQuotes.length === 10);
+          }
+
+          if (pageNum === 1) {
+            setRawQuotes(newQuotes);
+          } else {
+            setRawQuotes(prev => [...(prev || []), ...newQuotes]);
+          }
+
+          setIsLoadingMore(false);
+          setRefreshing(false);
+        },
+        (err: any) => {
+          console.log('Failed to fetch quotes', err);
+          if (pageNum === 1) setRawQuotes([]);
+          setHasMore(false);
+          setIsLoadingMore(false);
+          setRefreshing(false);
+        },
+        pageNum > 1 || isRefresh ? 'no-loader' : undefined,
+      );
+    },
+    [initialJob?.id, getJobQuotes],
+  );
 
   React.useEffect(() => {
-    if (!initialJob?.id) return;
-    managerApiCall(
-      getJobQuotes,
-      initialJob.id,
-      (res: any) => {
-        const resAny = res as any;
-        if (Array.isArray(resAny?.data)) {
-          setRawQuotes(resAny.data);
-        } else if (Array.isArray(resAny?.data?.quotes)) {
-          setRawQuotes(resAny.data.quotes);
-        } else if (Array.isArray(resAny)) {
-          setRawQuotes(resAny);
-        }
-      },
-      (err: any) => console.log('Failed to fetch quotes', err),
-    );
-  }, [initialJob?.id, getJobQuotes]);
+    setPage(1);
+    loadQuotes(1);
+  }, [loadQuotes]);
 
   const quotesData = rawQuotes.map((q: any) => {
     const tileName = q?.tileColor?.name || q?.tileType?.name || 'Unknown Tile';
@@ -121,6 +166,29 @@ const Quotes = () => {
               )}
               ItemSeparatorComponent={() => <Spacer height={width * 0.07} />}
               showsVerticalScrollIndicator={false}
+              onEndReached={() => {
+                if (!isLoadingMore && hasMore && !refreshing) {
+                  const nextPage = page + 1;
+                  setPage(nextPage);
+                  loadQuotes(nextPage);
+                }
+              }}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={
+                <View>
+                  {isLoadingMore && (
+                    <View style={{ paddingVertical: spacing.xl }}>
+                      <ActivityIndicator size="large" color={colors.ink} />
+                    </View>
+                  )}
+                </View>
+              }
+              refreshing={refreshing}
+              onRefresh={() => {
+                setRefreshing(true);
+                setPage(1);
+                loadQuotes(1, true);
+              }}
             />
           ) : (
             <View style={styles.emptyContainer}>
@@ -135,7 +203,9 @@ const Quotes = () => {
         <View style={[styles.footer]}>
           <CustomButton
             title="Start another quote"
-            onPress={() => navigate(routesConstants.newJob, { fromQuotesList: true })}
+            onPress={() =>
+              navigate(routesConstants.newJob, { fromQuotesList: true })
+            }
           />
         </View>
       )}

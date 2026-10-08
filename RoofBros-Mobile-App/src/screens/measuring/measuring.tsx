@@ -632,5 +632,6 @@ const styles = StyleSheet.create({
     color: colors.muted,
     lineHeight: 22,
     marginTop: 8,
+    marginRight: 30,
   },
 });

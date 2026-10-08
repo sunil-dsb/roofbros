@@ -60,6 +60,24 @@ import { CustomKeyboardScrollView } from '../../components';
 type DeliveryMode = 'Deliver to site' | 'Pickup at yard';
 type TimeWindow = 'Morning' | 'Afternoon';
 
+const formatKey = (str: string) => {
+  let formatted = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+  formatted = formatted.replace(/_/g, ' ');
+  formatted = formatted.toLowerCase();
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+};
+
+const mapQuoteDataForUI = (rawData: any) => {
+  const uiData: any = {};
+  if (rawData.area_sq_mt !== undefined) uiData.area_sq_mt = rawData.area_sq_mt;
+  if (rawData.totalTiles !== undefined) uiData.totalTiles = rawData.totalTiles;
+  if (rawData.topCoatBuckets !== undefined)
+    uiData.topCoatBuckets = rawData.topCoatBuckets;
+  if (rawData.primer !== undefined) uiData.primer = rawData.primer;
+  if (rawData.primerType !== undefined) uiData.primerType = rawData.primerType;
+  return uiData;
+};
+
 const deliveryRequestSchema = z.object({
   address: z.string().optional(),
   dropZoneNotes: z.string().optional(),
@@ -424,30 +442,21 @@ const DeliveryRequest = () => {
 
         {/* Materials */}
         <View style={styles.materialsCard}>
-          <View style={styles.materialRow}>
-            <View style={styles.materialLeft}>
-              <AppText style={styles.materialName}>
-                Main tiles · {rawQuote?.tileColor?.name || 'Unknown Color'}
-              </AppText>
-              <AppText style={styles.materialDesc}>
-                {rawQuote?.tileProfile?.name ||
-                  rawQuote?.tileType?.name ||
-                  'Unknown Type'}
-              </AppText>
-            </View>
-            <AppText style={styles.materialQty}>
-              {rawQuote?.totalTiles?.toLocaleString() || '-'}
-            </AppText>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.materialRow}>
-            <View style={styles.materialLeft}>
-              <AppText style={styles.materialName}>Coat Buckets</AppText>
-            </View>
-            <AppText style={styles.materialQty}>
-              {rawQuote?.topCoatBuckets?.toLocaleString() || '-'}
-            </AppText>
-          </View>
+          {Object.entries(mapQuoteDataForUI(rawQuote))
+            .filter(([_, v]) => v !== null)
+            .map(([key, value], index, arr) => (
+              <React.Fragment key={key}>
+                <View style={styles.materialRow}>
+                  <View style={styles.materialLeft}>
+                    <AppText style={styles.materialName}>
+                      {formatKey(key)}
+                    </AppText>
+                  </View>
+                  <AppText style={styles.materialQty}>{String(value)}</AppText>
+                </View>
+                {index < arr.length - 1 && <View style={styles.divider} />}
+              </React.Fragment>
+            ))}
         </View>
 
         {/* Date Picker */}

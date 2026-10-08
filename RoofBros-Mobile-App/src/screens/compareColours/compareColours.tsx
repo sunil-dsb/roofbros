@@ -149,36 +149,7 @@ const CompareColours = () => {
     }
   }, [route.params?.profileId]);
 
-  // Animated opacity driving the texture fade: 1 = tile visible, 0 = plain colour
-  const textureOpacity = useSharedValue(1);
-  // Pill label crossfade: 1 = 'Hold to see original', 0 = 'Release to restore'
-  const pillLabelOpacity1 = useSharedValue(1);
-  const pillLabelOpacity2 = useSharedValue(0);
 
-  const handleHoldStart = () => {
-    textureOpacity.value = withTiming(0, {
-      duration: 400,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(0, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(1, { duration: 200 });
-  };
-
-  const handleHoldEnd = () => {
-    textureOpacity.value = withTiming(1, {
-      duration: 350,
-      easing: Easing.out(Easing.cubic),
-    });
-    pillLabelOpacity1.value = withTiming(1, { duration: 200 });
-    pillLabelOpacity2.value = withTiming(0, { duration: 200 });
-  };
-
-  const pillLabel1Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity1.value,
-  }));
-  const pillLabel2Style = useAnimatedStyle(() => ({
-    opacity: pillLabelOpacity2.value,
-  }));
 
   const CONTAINER_WIDTH = width - 28;
   const splitX = useSharedValue(CONTAINER_WIDTH / 2);
@@ -261,10 +232,6 @@ const CompareColours = () => {
           >
             {mode === 'One colour' ? (
               <View>
-                <Pressable
-                  onPressIn={handleHoldStart}
-                  onPressOut={handleHoldEnd}
-                >
                   <View
                     style={[
                       styles.texturePlaceholder,
@@ -277,36 +244,14 @@ const CompareColours = () => {
                       },
                     ]}
                   >
-                    <Animated.View
-                      style={[
-                        StyleSheet.absoluteFill,
-                        { opacity: textureOpacity },
-                      ]}
-                    >
+                    <View style={StyleSheet.absoluteFill}>
                       <FastImage
                         source={getImageUrl(selectedColor1.imageUrl)}
                         style={StyleSheet.absoluteFill}
                         resizeMode={FastImage.resizeMode.cover}
                       />
-                    </Animated.View>
-                    <View style={styles.holdPill}>
-                      <Animated.Text
-                        style={[styles.holdPillText, pillLabel1Style]}
-                      >
-                        Hold to see original
-                      </Animated.Text>
-                      <Animated.Text
-                        style={[
-                          styles.holdPillText,
-                          styles.holdPillTextOverlay,
-                          pillLabel2Style,
-                        ]}
-                      >
-                        Release to restore
-                      </Animated.Text>
                     </View>
                   </View>
-                </Pressable>
 
                 <View style={styles.detailsContainer}>
                   <AppText style={styles.colorName}>
