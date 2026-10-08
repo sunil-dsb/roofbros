@@ -1,12 +1,21 @@
 import { isAPIError } from 'better-auth/api';
 import httpStatus from 'http-status';
-import { auth, type AuthSession } from '../../shared/utils/auth.ts';
+import {
+  auth,
+  generateAppleClientSecret,
+  type AuthSession,
+} from '../../shared/utils/auth.ts';
 import ApiError from '../../shared/utils/ApiError.ts';
 import config from '../../config/index.ts';
 import { db } from '../../config/db.ts';
-import { sql, eq } from 'drizzle-orm';
-import { user, session } from '../../db/schema/auth.schema.ts';
+import { eq, and } from 'drizzle-orm';
+import {
+  user,
+  session,
+  account as accountSchema,
+} from '../../db/schema/auth.schema.ts';
 import crypto from 'node:crypto';
+import { exchangeAppleAuthorizationCode } from '../../shared/utils/apple.ts';
 import type {
   SignInInput,
   SignUpInput,
@@ -18,6 +27,7 @@ import type {
   ChangePasswordInput,
   UpdateBusinessInput,
   DeleteAccountInput,
+  StoreAppleTokenInput,
 } from '../../shared/validations/auth.validation.ts';
 
 /**
@@ -41,6 +51,7 @@ export interface AuthUser {
   abn?: string | null | undefined;
   businessName?: string | null | undefined;
   authProvider?: string | null | undefined;
+  deletionRequestedAt?: Date | null | undefined;
 }
 
 export interface SignUpResponse {
@@ -48,7 +59,11 @@ export interface SignUpResponse {
   user: AuthUser;
 }
 
-export type SignInResponse = SignUpResponse;
+export interface SignInResponse extends SignUpResponse {
+  redirect?: boolean | string;
+  isRestored?: boolean;
+  restoreMessage?: string | null;
+}
 
 export interface OtpResponse {
   success: boolean;
@@ -58,11 +73,15 @@ export interface VerifyEmailResponse {
   status?: boolean;
   token: string | null;
   user: AuthUser;
+  isRestored?: boolean;
+  restoreMessage?: string | null;
   session?: {
     id: string;
     token: string;
     expiresAt: Date;
     userId: string;
+    isRestored?: boolean;
+    restoreMessage?: string | null;
   };
 }
 
@@ -116,10 +135,11 @@ export const signUpService = async (
   try {
     // Because better-auth automatically masks duplicate signups when requireEmailVerification is true,
     // we explicitly check the database first so we can return the 422 error to the frontend as requested.
-    const existingUsers = await db.execute(
-      sql`SELECT id FROM "user" WHERE email = ${input.email} LIMIT 1`,
-    );
-    if (existingUsers.rows.length > 0) {
+    const existingUser = await db.query.user.findFirst({
+      where: eq(user.email, input.email),
+      columns: { id: true },
+    });
+    if (existingUser) {
       throw new ApiError('User already exists. Use another email.', 422, true);
     }
 
@@ -173,7 +193,32 @@ export const signInService = async (
     });
     const responseHeaders: Headers = signInResult.headers;
     const response: SignInResponse = signInResult.response;
-    return { data: response, headers: responseHeaders };
+
+    let isRestored = false;
+    let restoreMessage: string | null = null;
+
+    if (response.token) {
+      const userSession = await db.query.session.findFirst({
+        where: eq(session.token, response.token),
+      });
+      if (userSession) {
+        isRestored = userSession.isRestored ?? false;
+        restoreMessage = userSession.restoreMessage ?? null;
+      }
+    }
+
+    if (isRestored && response.user) {
+      response.user.deletionRequestedAt = null;
+    }
+
+    return {
+      data: {
+        ...response,
+        isRestored,
+        restoreMessage,
+      },
+      headers: responseHeaders,
+    };
   } catch (error) {
     // Intercept invalid credentials. better-auth throws a 401 APIError with
     // code "INVALID_EMAIL_OR_PASSWORD" for a wrong email/password; surface it
@@ -184,7 +229,7 @@ export const signInService = async (
       error.body?.code === 'INVALID_EMAIL_OR_PASSWORD'
     ) {
       throw new ApiError(
-        'Email and password is invalid',
+        'Invalid email and password',
         httpStatus.BAD_REQUEST,
         true,
       );
@@ -249,6 +294,24 @@ export const verifyEmailOtpService = async (
     });
 
     if (verifiedUser) {
+      let isRestored = false;
+      let restoreMessage: string | null = null;
+
+      if (verifiedUser.deletionRequestedAt) {
+        const GRACE_PERIOD_MS = 2 * 24 * 60 * 60 * 1000;
+        const elapsed =
+          Date.now() - new Date(verifiedUser.deletionRequestedAt).getTime();
+
+        if (elapsed < GRACE_PERIOD_MS) {
+          await db
+            .update(user)
+            .set({ deletionRequestedAt: null })
+            .where(eq(user.id, verifiedUser.id));
+          isRestored = true;
+          restoreMessage = 'Welcome back! Your account has been restored.';
+        }
+      }
+
       const token = crypto.randomUUID();
       const sessionId = crypto.randomUUID();
       const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
@@ -258,19 +321,30 @@ export const verifyEmailOtpService = async (
         token: token,
         expiresAt,
         userId: verifiedUser.id,
+        isRestored,
+        restoreMessage,
       });
 
       return {
         data: {
           ...response,
           token,
+          isRestored,
+          restoreMessage,
           session: {
             id: sessionId,
             token,
             expiresAt,
             userId: verifiedUser.id,
+            isRestored,
+            restoreMessage,
           },
-          user: verifiedUser as AuthUser,
+          user: {
+            ...(verifiedUser as AuthUser),
+            deletionRequestedAt: isRestored
+              ? null
+              : verifiedUser.deletionRequestedAt,
+          },
         },
         headers: responseHeaders,
       };
@@ -278,7 +352,11 @@ export const verifyEmailOtpService = async (
 
     return { data: response, headers: responseHeaders };
   } catch (error) {
-    if (isAPIError(error) && error.body?.message === 'OTP expired') {
+    if (
+      isAPIError(error) &&
+      (error.statusCode === 400 ||
+        error.body?.message?.toLowerCase().includes('expired'))
+    ) {
       throw new ApiError('Invalid OTP', 400, true);
     }
     throw toApiError(error as Error, 'Unable to verify email OTP');
@@ -290,6 +368,15 @@ export const forgetPasswordService = async (
   headers: Headers,
 ): Promise<AuthResult<OtpResponse>> => {
   try {
+    // Explicitly check if the user exists to bypass better-auth's enumeration protection
+    const existingUser = await db.query.user.findFirst({
+      where: eq(user.email, input.email),
+    });
+
+    if (!existingUser) {
+      throw new ApiError('User not found', httpStatus.NOT_FOUND, true);
+    }
+
     const forgetResult = await auth.api.forgetPasswordEmailOTP({
       body: { email: input.email },
       headers,
@@ -299,14 +386,12 @@ export const forgetPasswordService = async (
     const response: OtpResponse = forgetResult.response;
     return { data: response, headers: responseHeaders };
   } catch (error) {
-    // Do NOT reveal whether the email is registered — always return success.
-    // This prevents user enumeration via the forgot-password endpoint.
     if (
       isAPIError(error) &&
       (error.statusCode === 404 ||
         error.body?.message?.toLowerCase().includes('user not found'))
     ) {
-      return { data: { success: true }, headers: new Headers() };
+      throw new ApiError('User not found', httpStatus.NOT_FOUND, true);
     }
     throw toApiError(error as Error, 'Unable to send password reset OTP');
   }
@@ -326,7 +411,11 @@ export const verifyForgetPasswordOtpService = async (
     const response: OtpResponse = verifyOtpResult.response;
     return { data: response, headers: responseHeaders };
   } catch (error) {
-    if (isAPIError(error) && error.body?.message === 'OTP expired') {
+    if (
+      isAPIError(error) &&
+      (error.statusCode === 400 ||
+        error.body?.message?.toLowerCase().includes('expired'))
+    ) {
       throw new ApiError('Invalid OTP', 400, true);
     }
     throw toApiError(error as Error, 'Unable to verify password reset OTP');
@@ -351,7 +440,11 @@ export const resetPasswordService = async (
     const response: OtpResponse = resetResult.response;
     return { data: response, headers: responseHeaders };
   } catch (error) {
-    if (isAPIError(error) && error.body?.message === 'OTP expired') {
+    if (
+      isAPIError(error) &&
+      (error.statusCode === 400 ||
+        error.body?.message?.toLowerCase().includes('expired'))
+    ) {
       throw new ApiError('Invalid OTP', 400, true);
     }
     throw toApiError(error as Error, 'Unable to reset password');
@@ -489,44 +582,144 @@ export const deleteAccountService = async (
   userId: string,
   input: DeleteAccountInput,
   headers: Headers,
-): Promise<{ success: boolean }> => {
+): Promise<{ success: boolean; message: string }> => {
   try {
     // 1. Verify the password by attempting to sign in via better-auth's
     //    internal verifyPassword endpoint.
     const userRecord = await db.query.user.findFirst({
       where: eq(user.id, userId),
-      columns: { email: true },
+      columns: { email: true, authProvider: true },
     });
 
     if (!userRecord) {
       throw new ApiError('User not found', httpStatus.NOT_FOUND, true);
     }
 
-    // Verify password using better-auth's built-in API
-    try {
-      await auth.api.verifyPassword({
-        body: {
-          password: input.password,
-        },
-        headers,
-      });
-    } catch {
-      throw new ApiError(
-        'Incorrect password. Please try again.',
-        httpStatus.BAD_REQUEST,
-        true,
-      );
+    // Only require and verify password if the user signed up via credentials
+    if (!userRecord.authProvider || userRecord.authProvider === 'credential') {
+      if (!input.password) {
+        throw new ApiError(
+          'Password is required to delete this account',
+          httpStatus.BAD_REQUEST,
+          true,
+        );
+      }
+
+      // Verify password using better-auth's built-in API
+      try {
+        await auth.api.verifyPassword({
+          body: {
+            password: input.password,
+          },
+          headers,
+        });
+      } catch {
+        throw new ApiError(
+          'Incorrect password. Please try again.',
+          httpStatus.BAD_REQUEST,
+          true,
+        );
+      }
     }
 
-    // 2. Delete the user — all related data (sessions, accounts, jobs,
-    //    quotes, deliveries) will be cascade-deleted by the database.
-    await db.delete(user).where(eq(user.id, userId));
-
-    return { success: true };
+    // 2. Soft delete the user by setting deletionRequestedAt
+    await db
+      .update(user)
+      .set({ deletionRequestedAt: new Date() })
+      .where(eq(user.id, userId));
+    return {
+      success: true,
+      message:
+        'Your account is scheduled for deletion in 2 days. You have been logged out.',
+    };
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;
     }
     throw toApiError(error as Error, 'Failed to delete account');
+  }
+};
+
+export const storeAppleTokenService = async (
+  userId: string,
+  input: StoreAppleTokenInput,
+): Promise<{ success: boolean; message: string }> => {
+  try {
+    let refreshToken = input.refreshToken;
+    let accessToken: string | undefined = input.accessToken;
+
+    if (input.authorizationCode) {
+      const clientSecret = await generateAppleClientSecret(
+        config.appleClientId,
+        config.appleTeamId,
+        config.appleKeyId,
+        config.applePrivateKey,
+      );
+
+      const tokenResult = await exchangeAppleAuthorizationCode(
+        config.appleClientId,
+        clientSecret,
+        input.authorizationCode,
+      );
+
+      if (
+        !tokenResult ||
+        (!tokenResult.refreshToken && !tokenResult.accessToken)
+      ) {
+        throw new ApiError(
+          'Failed to exchange authorization code with Apple',
+          httpStatus.BAD_REQUEST,
+          true,
+        );
+      }
+
+      if (tokenResult.refreshToken) refreshToken = tokenResult.refreshToken;
+      if (tokenResult.accessToken) accessToken = tokenResult.accessToken;
+    }
+
+    if (!refreshToken && !accessToken) {
+      throw new ApiError(
+        'No token (refresh token or access token) available to save',
+        httpStatus.BAD_REQUEST,
+        true,
+      );
+    }
+
+    const existingAccount = await db.query.account.findFirst({
+      where: and(
+        eq(accountSchema.userId, userId),
+        eq(accountSchema.providerId, 'apple'),
+      ),
+    });
+
+    if (existingAccount) {
+      await db
+        .update(accountSchema)
+        .set({
+          ...(refreshToken && { refreshToken }),
+          ...(accessToken && { accessToken }),
+          updatedAt: new Date(),
+        })
+        .where(eq(accountSchema.id, existingAccount.id));
+    } else {
+      await db.insert(accountSchema).values({
+        id: crypto.randomUUID(),
+        accountId: userId,
+        providerId: 'apple',
+        userId,
+        refreshToken,
+        accessToken,
+      });
+    }
+
+    return {
+      success: true,
+      message: 'Apple refresh token stored successfully',
+    };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw toApiError(error as Error, 'Failed to store Apple token');
   }
 };

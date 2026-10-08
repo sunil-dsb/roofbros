@@ -1,0 +1,1 @@
+ALTER TABLE "session" ADD COLUMN "is_restored" boolean DEFAULT false NOT NULL;

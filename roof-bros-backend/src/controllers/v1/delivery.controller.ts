@@ -23,7 +23,9 @@ export const requestDelivery = catchAsync(
       req.body.dropZonePhotos = urls;
     }
 
+    const userId = req.auth?.user?.id as string;
     const result = await deliveryService.requestDeliveryService(
+      userId,
       jobId,
       req.body,
     );
@@ -51,7 +53,12 @@ export const markDelivered = catchAsync(async (req: Request, res: Response) => {
     req.body.proofOfDeliveryPhotos = urls;
   }
 
-  const result = await deliveryService.markDeliveredService(jobId, req.body);
+  const userId = req.auth?.user?.id as string;
+  const result = await deliveryService.markDeliveredService(
+    userId,
+    jobId,
+    req.body,
+  );
 
   return res
     .status(httpStatus.OK)

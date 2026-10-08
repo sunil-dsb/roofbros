@@ -90,7 +90,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [provider, callbackURL]
+              required: [provider]
               properties:
                 provider:
                   type: string
@@ -98,8 +98,42 @@ paths:
                   example: 'apple'
                 callbackURL:
                   type: string
-                  description: The URL to redirect to after successful authentication
+                  description: >
+                    The URL to redirect to after successful authentication.
+                    Required for the redirect flow; ignored when `idToken` is sent.
                   example: '/'
+                idToken:
+                  type: object
+                  description: >
+                    Native sign-in flow. When present the server verifies the token
+                    and returns a session immediately instead of an authorize URL.
+                  required: [token]
+                  properties:
+                    token:
+                      type: string
+                      description: The id_token from the native Apple/Google SDK
+                    nonce:
+                      type: string
+                      description: The nonce used to request the token, if any
+                    user:
+                      type: object
+                      description: >
+                        **Apple only, and only on the user's first ever authorization.**
+                        Apple never puts the display name in the id_token, so the app MUST
+                        forward `ASAuthorizationAppleIDCredential.fullName` here on that
+                        first sign-in. It is not recoverable afterwards.
+                      properties:
+                        email:
+                          type: string
+                        name:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                              example: 'Sandeep'
+                            lastName:
+                              type: string
+                              example: 'Negi'
       responses:
         '200':
           description: OK

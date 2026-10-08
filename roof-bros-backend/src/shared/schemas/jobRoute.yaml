@@ -8,10 +8,10 @@ tags:
     description: Job-related endpoints
 
 paths:
-  /v1/job/create:
+  /v1/jobs/create:
     post:
       summary: Create a new job
-      description: Creates a new job with the specified details.
+      description: Creates a new job with the specified details. Also automatically generates the initial quote.
       tags:
         - Job
       security:
@@ -24,21 +24,56 @@ paths:
               type: object
               required:
                 - address
-                - areaSqmt
+                - jobType
               properties:
+                jobType:
+                  type: string
+                  enum:
+                    [new roof installation, roof restoration, roof replacement]
+                  example: new roof installation
                 address:
                   type: string
-                  example: 123 Fake St, Sydney NSW
-                areaSqmt:
+                  example: 1 Joalah Road Kincumber
+                area_sq_mt:
                   type: number
-                  example: 250
+                  example: 348.7
                 confidence:
                   type: number
-                  example: 0.95
+                  example: 97.9
+                pitch:
+                  type: number
+                  example: 3.13
+                tilesize:
+                  type: integer
+                  example: 4096
+                totalTiles:
+                  type: integer
+                  example: 3487
+                roofImage:
+                  type: string
+                  example: /upload/job/1786016977006_nearmap.png
+                tileTypeId:
+                  type: string
+                  format: uuid
+                tileProfileId:
+                  type: string
+                  format: uuid
+                tileColorId:
+                  type: string
+                  format: uuid
+                topCoatBuckets:
+                  type: integer
+                  example: 4
+                primerType:
+                  type: string
+                  example: WB Sealer
+                primer:
+                  type: integer
+                  example: 2
                 jobStatus:
                   type: string
-                  enum: [Quoted, Requested, Delivered]
-                  example: Requested
+                  enum: [quoted, requested, delivered]
+                  example: quoted
       responses:
         '201':
           description: Created
@@ -56,22 +91,52 @@ paths:
                   data:
                     type: object
 
-  /v1/job:
+  /v1/jobs:
     get:
       summary: Get all jobs
-      description: Returns a list of all jobs, optionally filtered by status
+      description: Returns a paginated list of jobs for the authenticated user, optionally filtered by status, jobId, or search term.
       tags:
         - Job
       security:
         - bearerAuth: []
       parameters:
         - in: query
-          name: status
+          name: jobStatus
           schema:
             type: string
-            enum: [Quoted, Requested, Delivered]
+            enum: [quoted, requested, delivered]
           required: false
           description: Filter jobs by status
+        - in: query
+          name: jobId
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: Filter by a specific job ID
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+          description: Search jobs by address or other fields
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+          required: false
+          description: Page number (default 1)
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          required: false
+          description: Number of items per page (default 10, max 100)
       responses:
         '200':
           description: OK
@@ -87,11 +152,20 @@ paths:
                     type: string
                     example: Jobs Fetched Successfully
                   data:
-                    type: array
-                    items:
-                      type: object
+                    type: object
+                    properties:
+                      jobs:
+                        type: array
+                        items:
+                          type: object
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
 
-  /v1/job/{id}:
+  /v1/jobs/details/{id}:
     get:
       summary: Get job by ID
       description: Fetch details of a specific job by its ID
@@ -106,6 +180,7 @@ paths:
           schema:
             type: string
             format: uuid
+          description: Job ID (UUID)
       responses:
         '200':
           description: OK
@@ -125,7 +200,46 @@ paths:
         '404':
           description: Job Not Found
 
-  /v1/job/{id}/status:
+  /v1/jobs/{id}/area:
+    get:
+      summary: Get job area
+      description: Returns the area in square meters for a specific job.
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Job ID (UUID)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Job Area Fetched Successfully
+                  data:
+                    type: object
+                    properties:
+                      area_sq_mt:
+                        type: number
+                        example: 348.7
+        '404':
+          description: Job Not Found
+
+  /v1/jobs/{id}/status:
     patch:
       summary: Update job status
       description: Update the status of an existing job
@@ -147,12 +261,12 @@ paths:
             schema:
               type: object
               required:
-                - status
+                - jobStatus
               properties:
-                status:
+                jobStatus:
                   type: string
-                  enum: [Quoted, Requested, Delivered]
-                  example: Quoted
+                  enum: [quoted, requested, delivered]
+                  example: quoted
       responses:
         '200':
           description: OK
@@ -172,7 +286,61 @@ paths:
         '404':
           description: Job Not Found
 
-  /v1/job/{id}/notes:
+  /v1/jobs/calculateMaterial:
+    post:
+      summary: Calculate materials (BOM)
+      description: Calculate top coat buckets, primer buckets, primer type, and total tiles based on area and tile selection.
+      tags:
+        - Job
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - area_sq_mt
+                - jobType
+                - tileTypeId
+                - tileProfileId
+              properties:
+                area_sq_mt:
+                  type: number
+                  example: 150
+                jobType:
+                  type: string
+                  enum:
+                    [new roof installation, roof restoration, roof replacement]
+                  example: roof restoration
+                tileTypeId:
+                  type: string
+                  format: uuid
+                tileProfileId:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Materials Calculated Successfully
+                  data:
+                    type: object
+                    properties:
+                      area_sq_mt:
+                        type: number
+
+  /v1/jobs/{id}/notes:
     patch:
       summary: Add job notes
       description: Append new notes to a job
@@ -205,7 +373,7 @@ paths:
         '200':
           description: OK
 
-  /v1/job/{id}/dropzone-photos:
+  /v1/jobs/{id}/dropzone-photos:
     patch:
       summary: Upload dropzone photos
       description: Upload multiple dropzone photos for a job (multipart/form-data)
@@ -232,7 +400,7 @@ paths:
                   items:
                     type: string
                     format: binary
-                  description: Array of image files (max 10)
+                  description: Array of image files (max 5)
       responses:
         '200':
           description: OK

@@ -165,8 +165,23 @@ export const businessDetailsParamsSchema = z.object({
 });
 
 export const deleteAccountSchema = z.strictObject({
-  password: existingPasswordField,
+  password: existingPasswordField.or(z.literal('')).optional(),
 });
+
+export const storeAppleTokenSchema = z
+  .strictObject({
+    authorizationCode: z.string().optional(),
+    refreshToken: z.string().optional(),
+    accessToken: z.string().optional(),
+  })
+  .refine(
+    (data) =>
+      Boolean(data.authorizationCode || data.refreshToken || data.accessToken),
+    {
+      message:
+        'At least one of authorizationCode, refreshToken, or accessToken must be provided',
+    },
+  );
 
 export type SignUpInput = z.infer<typeof signUpSchema>;
 export type SignInInput = z.infer<typeof signInSchema>;
@@ -181,3 +196,4 @@ export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 export type UpdateBusinessInput = z.infer<typeof updateBusinessSchema>;
 export type BusinessDetailsParams = z.infer<typeof businessDetailsParamsSchema>;
 export type DeleteAccountInput = z.infer<typeof deleteAccountSchema>;
+export type StoreAppleTokenInput = z.infer<typeof storeAppleTokenSchema>;

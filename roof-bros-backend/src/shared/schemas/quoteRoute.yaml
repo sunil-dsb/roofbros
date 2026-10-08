@@ -31,21 +31,10 @@ paths:
               type: object
               required:
                 - area_sq_mt
-                - topCoatBuckets
-                - primerType
-                - primer
-                - totalTiles
               properties:
                 area_sq_mt:
                   type: number
-                topCoatBuckets:
-                  type: number
-                primerType:
-                  type: string
-                primer:
-                  type: number
-                totalTiles:
-                  type: number
+
                 jobType:
                   type: string
                   enum: [new roof installation, roof restoration]
@@ -82,7 +71,7 @@ paths:
 
     get:
       summary: Get all quotes for a job
-      description: Get all quotes for a specific job
+      description: Get all quotes for a specific job. Supports pagination via page and limit query params.
       tags:
         - Quote
       security:
@@ -94,6 +83,23 @@ paths:
           schema:
             type: string
             format: uuid
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+          required: false
+          description: Page number (default 1)
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          required: false
+          description: Number of items per page (default 10, max 100)
       responses:
         '200':
           description: OK
@@ -109,8 +115,17 @@ paths:
                     type: string
                     example: Quotes Fetched Successfully
                   data:
-                    type: array
-                    items:
-                      type: object
+                    type: object
+                    properties:
+                      quotes:
+                        type: array
+                        items:
+                          type: object
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
         '404':
           description: Job Not Found

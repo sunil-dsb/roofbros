@@ -11,6 +11,7 @@ export const user = pgTable('user', {
   abn: text('abn'),
   businessName: text('business_name'),
   authProvider: text('auth_provider'),
+  deletionRequestedAt: timestamp('deletion_requested_at'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()
@@ -30,6 +31,8 @@ export const session = pgTable(
       .notNull(),
     ipAddress: text('ip_address'),
     userAgent: text('user_agent'),
+    isRestored: boolean('is_restored').default(false).notNull(),
+    restoreMessage: text('restore_message'),
     userId: text('user_id')
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),

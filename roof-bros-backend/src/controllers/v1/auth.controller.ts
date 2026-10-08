@@ -14,6 +14,7 @@ import {
   getBusinessDetailsService,
   updateUserBusinessDetailsService,
   deleteAccountService,
+  storeAppleTokenService,
 } from '../../services/auth/auth.service.ts';
 import ApiResponse from '../../shared/utils/ApiResponse.ts';
 
@@ -27,6 +28,7 @@ import type {
   VerifyForgetPasswordOtpInput,
   ChangePasswordInput,
   DeleteAccountInput,
+  StoreAppleTokenInput,
 } from '../../shared/validations/auth.validation.ts';
 
 const forwardAuthCookies = (res: Response, headers: Headers): void => {
@@ -184,5 +186,20 @@ export const deleteAccount = catchAsync(async (req: Request, res: Response) => {
 
   return res
     .status(httpStatus.OK)
-    .json(ApiResponse.success('Account deleted successfully', result));
+    .json(ApiResponse.success(result.message, { success: result.success }));
 });
+
+export const storeAppleToken = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.auth?.user?.id as string;
+
+    const result = await storeAppleTokenService(
+      userId,
+      req.body as StoreAppleTokenInput,
+    );
+
+    return res
+      .status(httpStatus.OK)
+      .json(ApiResponse.success(result.message, { success: result.success }));
+  },
+);

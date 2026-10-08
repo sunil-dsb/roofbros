@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { eq, sql, and } from 'drizzle-orm';
 import { db } from '../../config/db.ts';
 import { job } from '../../db/schema/job.schema.ts';
 import { quote } from '../../db/schema/quote.schema.ts';
@@ -12,13 +12,14 @@ import ApiError from '../../shared/utils/ApiError.ts';
 import httpStatus from 'http-status';
 
 export const requestDeliveryService = async (
+  userId: string,
   jobId: string,
   payload: z.infer<typeof requestDeliverySchema>,
 ) => {
   return await db.transaction(async (tx) => {
     // 1. Verify the job exists and is in 'quoted' status
     const existingJob = await tx.query.job.findFirst({
-      where: eq(job.id, jobId),
+      where: and(eq(job.id, jobId), eq(job.userId, userId)),
     });
 
     if (!existingJob) {
@@ -96,6 +97,7 @@ export const requestDeliveryService = async (
 };
 
 export const markDeliveredService = async (
+  userId: string,
   jobId: string,
   payload: z.infer<typeof markDeliveredSchema>,
 ) => {
@@ -121,14 +123,32 @@ export const markDeliveredService = async (
     const [updatedJob] = await tx
       .update(job)
       .set({ jobStatus: newJobStatus })
-      .where(eq(job.id, jobId))
+      .where(and(eq(job.id, jobId), eq(job.userId, userId)))
       .returning();
 
     if (!updatedJob) {
       throw new ApiError('Job not found', httpStatus.NOT_FOUND);
     }
 
-    // 2. Update the delivery record
+    // 2. Fetch existing delivery to append photos
+    const [existingDelivery] = await tx
+      .select()
+      .from(delivery)
+      .where(eq(delivery.jobId, jobId));
+
+    if (!existingDelivery) {
+      throw new ApiError('Delivery not found', httpStatus.NOT_FOUND);
+    }
+
+    const updatedPhotos = existingDelivery.proofOfDeliveryPhotos || [];
+    if (
+      payload.proofOfDeliveryPhotos &&
+      payload.proofOfDeliveryPhotos.length > 0
+    ) {
+      updatedPhotos.push(...payload.proofOfDeliveryPhotos);
+    }
+
+    // 3. Update the delivery record
     const [updatedDelivery] = await tx
       .update(delivery)
       .set({
@@ -144,7 +164,7 @@ export const markDeliveredService = async (
           : newDeliveryStatus === 'delivered'
             ? new Date()
             : undefined,
-        proofOfDeliveryPhotos: payload.proofOfDeliveryPhotos || [],
+        proofOfDeliveryPhotos: updatedPhotos,
       })
       .where(eq(delivery.jobId, jobId))
       .returning();

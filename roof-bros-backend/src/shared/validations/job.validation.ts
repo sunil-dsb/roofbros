@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { jobTypeEnum, jobStatusEnum } from '../../db/schema/job.schema.ts';
+import { jobTypeEnum, jobStatusEnum } from '../../db/schema/enums.schema.ts';
 
 export const createJobSchema = z.object({
   jobType: z.enum(jobTypeEnum.enumValues, {
@@ -44,19 +44,6 @@ export const createJobSchema = z.object({
     })
     .nullable()
     .optional(),
-  tilesize: z
-    .number({
-      message: 'Tile size must be a number',
-    })
-    .nullable()
-    .optional(),
-  totalTiles: z
-    .number({
-      message: 'Total tiles must be a number',
-    })
-    .int('Total tiles must be an integer')
-    .nullable()
-    .optional(),
   tileTypeId: z
     .string({
       message: 'Tile Type ID is required',
@@ -72,24 +59,19 @@ export const createJobSchema = z.object({
       message: 'Tile Color ID is required',
     })
     .uuid('Invalid tile color ID'),
-  topCoatBuckets: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z
-      .number({ message: 'Top coat buckets must be a number' })
-      .min(0, 'Top coat buckets cannot be negative')
-      .nullable(),
-  ),
-  primerType: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z.string({ message: 'Primer type must be a string' }).nullable(),
-  ),
-  primer: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z
-      .number({ message: 'Primer must be a number' })
-      .min(0, 'Primer cannot be negative')
-      .nullable(),
-  ),
+  topCoatBuckets: z.number().optional(),
+  primer: z.number().optional(),
+  primerType: z
+    .enum([
+      'High Build Primer',
+      'WB Sealer',
+      'Terracotta Primer',
+      'Metal Primer',
+      'None',
+    ])
+    .optional(),
+  totalTiles: z.number().optional(),
+  tilesize: z.number().optional(),
   jobStatus: z.enum(jobStatusEnum.enumValues, {
     message: 'Job Status is required',
   }),
@@ -99,6 +81,14 @@ export const getJobsSchema = z.object({
   jobStatus: z.enum(jobStatusEnum.enumValues).optional(),
   jobId: z.string().uuid('Invalid job ID').optional(),
   search: z.string().optional(),
+  page: z.preprocess(
+    (val) => Number(val),
+    z.number().int().positive().default(1),
+  ),
+  limit: z.preprocess(
+    (val) => Number(val),
+    z.number().int().positive().max(100).default(10),
+  ),
 });
 
 export const getJobByIdSchema = z.object({

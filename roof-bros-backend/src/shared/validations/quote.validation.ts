@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { jobTypeEnum } from '../../db/schema/job.schema.ts';
+import { jobTypeEnum } from '../../db/schema/enums.schema.ts';
 
 export const createQuoteSchema = z.object({
   // Nullable in the DB (decimal, no notNull) — treat empty string as null
@@ -13,7 +13,7 @@ export const createQuoteSchema = z.object({
   ),
 
   jobType: z
-    .enum(jobTypeEnum.enumValues, { message: 'Job Type is required' })
+    .enum(jobTypeEnum.enumValues, { message: 'Invalid job type' })
     .nullable()
     .optional(),
 
@@ -25,40 +25,18 @@ export const createQuoteSchema = z.object({
     .nullable()
     .optional(),
   tileColorId: z.string().uuid('Invalid tile color ID').nullable().optional(),
-
-  // Nullable integers — match job.validation.ts preprocess pattern
-  topCoatBuckets: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z
-      .number({ message: 'Top coat buckets must be a number' })
-      .min(0, 'Top coat buckets cannot be negative')
-      .nullable()
-      .optional(),
-  ),
-
-  primerType: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z.string({ message: 'Primer type must be a string' }).nullable().optional(),
-  ),
-
-  primer: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z
-      .number({ message: 'Primer must be a number' })
-      .min(0, 'Primer cannot be negative')
-      .nullable()
-      .optional(),
-  ),
-
-  totalTiles: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z
-      .number({ message: 'Total tiles must be a number' })
-      .int('Total tiles must be an integer')
-      .min(0, 'Total tiles cannot be negative')
-      .nullable()
-      .optional(),
-  ),
+  topCoatBuckets: z.number().optional(),
+  primer: z.number().optional(),
+  primerType: z
+    .enum([
+      'High Build Primer',
+      'WB Sealer',
+      'Terracotta Primer',
+      'Metal Primer',
+      'None',
+    ])
+    .optional(),
+  totalTiles: z.number().optional(),
 });
 
 export type CreateQuotePayload = z.infer<typeof createQuoteSchema>;

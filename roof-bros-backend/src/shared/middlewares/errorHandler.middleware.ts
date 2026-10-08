@@ -46,6 +46,11 @@ const errorConverter = (
         'Cannot upload more than 5 images',
         httpStatus.BAD_REQUEST,
       );
+    } else if (multerError.code === 'LIMIT_FILE_SIZE') {
+      error = new ApiError(
+        'File size cannot exceed 5MB',
+        httpStatus.BAD_REQUEST,
+      );
     } else {
       error = new ApiError(multerError.message, httpStatus.BAD_REQUEST);
     }

@@ -1,21 +1,23 @@
 import { db } from '../../config/db.ts';
 import { job } from '../../db/schema/job.schema.ts';
 import { quote } from '../../db/schema/quote.schema.ts';
-import { eq, sql } from 'drizzle-orm';
+import { eq, sql, and, count } from 'drizzle-orm';
 import {
   tileType,
   tileProfile,
   tileColor,
+  tileProfileColor,
 } from '../../db/schema/tile.schema.ts';
 import type { CreateQuotePayload } from '../../shared/validations/quote.validation.ts';
 import ApiError from '../../shared/utils/ApiError.ts';
 import httpStatus from 'http-status';
 
 export const createQuoteService = async (
+  userId: string,
   payload: CreateQuotePayload & { jobId: string },
 ) => {
   const jobExists = await db.query.job.findFirst({
-    where: eq(job.id, payload.jobId),
+    where: and(eq(job.id, payload.jobId), eq(job.userId, userId)),
   });
 
   if (!jobExists) {
@@ -74,15 +76,15 @@ export const createQuoteService = async (
       .values({
         jobId: payload.jobId,
         quoteNumber,
-        areaSqmt: payload.area_sq_mt ? payload.area_sq_mt.toString() : null,
+        area_sq_mt: payload.area_sq_mt ? payload.area_sq_mt.toString() : null,
         jobType: payload.jobType || null,
         tileTypeId: finalTileTypeId,
         tileProfileId: finalTileProfileId,
         tileColorId: finalTileColorId,
-        topCoatBuckets: payload.topCoatBuckets,
-        primerType: payload.primerType,
-        primer: payload.primer,
-        totalTiles: payload.totalTiles,
+        topCoatBuckets: payload.topCoatBuckets ?? null,
+        primer: payload.primer ?? null,
+        primerType: payload.primerType ?? null,
+        totalTiles: payload.totalTiles ?? null,
       })
       .returning();
 
@@ -104,12 +106,39 @@ export const createQuoteService = async (
     return newQuote;
   });
 
-  return await getQuoteByIdService(createdQuote.id);
+  return await getQuoteByIdService(userId, createdQuote.id);
 };
 
-export const getQuotesByJobIdService = async (jobId: string) => {
+export const getQuotesByJobIdService = async (
+  userId: string,
+  jobId: string,
+  page: number = 1,
+  limit: number = 10,
+) => {
+  // First do a lightweight ownership check
+  const jobExists = await db.query.job.findFirst({
+    where: and(eq(job.id, jobId), eq(job.userId, userId)),
+    columns: { id: true },
+  });
+
+  if (!jobExists) {
+    throw new ApiError('Job not found', httpStatus.NOT_FOUND);
+  }
+
+  const offset = (page - 1) * limit;
+
+  const [totalCountResult] = await db
+    .select({ count: count() })
+    .from(quote)
+    .where(eq(quote.jobId, jobId));
+
+  const totalCount = totalCountResult?.count ?? 0;
+  const totalPages = Math.ceil(totalCount / limit);
+
   const quotes = await db.query.quote.findMany({
     where: eq(quote.jobId, jobId),
+    limit,
+    offset,
     with: {
       tileType: true,
       tileProfile: true,
@@ -117,13 +146,11 @@ export const getQuotesByJobIdService = async (jobId: string) => {
       job: {
         columns: {
           address: true,
+          userId: true,
         },
       },
     },
   });
-
-  const { tileProfileColor } = await import('../../db/schema/tile.schema.ts');
-  const { and } = await import('drizzle-orm');
 
   for (const q of quotes) {
     if (q.tileProfileId && q.tileColorId && q.tileColor) {
@@ -142,25 +169,35 @@ export const getQuotesByJobIdService = async (jobId: string) => {
     }
   }
 
-  return quotes;
+  return {
+    quotes,
+    meta: {
+      totalCount,
+      page,
+      limit,
+      totalPages,
+    },
+  };
 };
 
-export const getQuoteByIdService = async (quoteId: string) => {
+export const getQuoteByIdService = async (userId: string, quoteId: string) => {
   const singleQuote = await db.query.quote.findFirst({
     where: eq(quote.id, quoteId),
     with: {
       tileType: true,
       tileProfile: true,
       tileColor: true,
+      job: {
+        columns: {
+          userId: true,
+        },
+      },
     },
   });
 
-  if (!singleQuote) {
+  if (!singleQuote || singleQuote.job?.userId !== userId) {
     throw new ApiError('Quote not found', httpStatus.NOT_FOUND);
   }
-
-  const { tileProfileColor } = await import('../../db/schema/tile.schema.ts');
-  const { and } = await import('drizzle-orm');
 
   if (
     singleQuote.tileProfileId &&

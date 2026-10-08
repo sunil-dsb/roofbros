@@ -15,9 +15,10 @@ import { logger } from '../../config/logger.ts';
 import ApiError from './ApiError.ts';
 import httpStatus from 'http-status';
 import { getAuthEmailTemplate } from './emailTemplates.ts';
+import { revokeAppleAccount, exchangeAppleAuthorizationCode } from './apple.ts';
 
 // Generate the client secret JWT required for 'Sign in with Apple'.
-async function generateAppleClientSecret(
+export async function generateAppleClientSecret(
   clientId: string,
   teamId: string,
   keyId: string,
@@ -53,6 +54,9 @@ export const auth = betterAuth({
     provider: 'pg',
     schema,
   }),
+  account: {
+    updateAccountOnSignIn: true,
+  },
   user: {
     additionalFields: {
       authProvider: {
@@ -71,24 +75,148 @@ export const auth = betterAuth({
         type: 'string',
         required: false,
       },
+      deletionRequestedAt: {
+        type: 'date',
+        required: false,
+        input: false,
+      },
+    },
+  },
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // refresh the expiry at most once a day
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+    },
+    additionalFields: {
+      isRestored: {
+        type: 'boolean',
+        required: false,
+      },
+      restoreMessage: {
+        type: 'string',
+        required: false,
+      },
     },
   },
   databaseHooks: {
     account: {
       create: {
+        before: async (account) => {
+          if (
+            account.providerId === 'apple' &&
+            !account.refreshToken &&
+            account.accessToken
+          ) {
+            try {
+              const clientSecret = await generateAppleClientSecret(
+                config.appleClientId,
+                config.appleTeamId,
+                config.appleKeyId,
+                config.applePrivateKey,
+              );
+              const tokens = await exchangeAppleAuthorizationCode(
+                config.appleClientId,
+                clientSecret,
+                account.accessToken,
+              );
+              if (tokens?.refreshToken) {
+                logger.info(
+                  'Auto-exchanged Apple authorization code for refresh token',
+                );
+                return {
+                  data: {
+                    ...account,
+                    refreshToken: tokens.refreshToken,
+                    accessToken: tokens.accessToken || account.accessToken,
+                  },
+                };
+              }
+            } catch (err) {
+              logger.warn(
+                'Failed auto-exchanging Apple authorization code in hook',
+                {
+                  error: err,
+                },
+              );
+            }
+          }
+          return { data: account };
+        },
         after: async (account) => {
-          await db
-            .update(schema.user)
-            .set({ authProvider: account.providerId })
-            .where(eq(schema.user.id, account.userId));
+          if (account.providerId) {
+            await db
+              .update(schema.user)
+              .set({ authProvider: account.providerId })
+              .where(eq(schema.user.id, account.userId));
+          }
         },
       },
       update: {
         after: async (account) => {
-          await db
-            .update(schema.user)
-            .set({ authProvider: account.providerId })
-            .where(eq(schema.user.id, account.userId));
+          if (account.providerId) {
+            await db
+              .update(schema.user)
+              .set({ authProvider: account.providerId })
+              .where(eq(schema.user.id, account.userId));
+          }
+        },
+      },
+    },
+    session: {
+      create: {
+        before: async (session) => {
+          const userRecord = await db.query.user.findFirst({
+            where: eq(schema.user.id, session.userId),
+          });
+
+          if (userRecord?.deletionRequestedAt) {
+            const GRACE_PERIOD_MS = 2 * 24 * 60 * 60 * 1000; // 2 days (for testing)
+            const elapsed =
+              Date.now() - new Date(userRecord.deletionRequestedAt).getTime();
+
+            if (elapsed < GRACE_PERIOD_MS) {
+              // Within window → restore the account
+              await db
+                .update(schema.user)
+                .set({ deletionRequestedAt: null })
+                .where(eq(schema.user.id, userRecord.id));
+
+              // Tell the frontend by setting the flag on the session
+              return {
+                data: {
+                  ...session,
+                  isRestored: true,
+                  restoreMessage:
+                    'Welcome back! Your account deletion was cancelled.',
+                },
+              };
+            }
+
+            // Window expired -> Hard delete
+            // 1. Fetch OAuth accounts to see if we need to revoke Apple token
+            const accounts = await db.query.account.findMany({
+              where: eq(schema.account.userId, userRecord.id),
+            });
+            const appleAccount = accounts.find((a) => a.providerId === 'apple');
+            if (appleAccount) {
+              await revokeAppleAccount(appleAccount);
+            }
+
+            // 2. Hard delete the user (cascades to accounts and sessions)
+            await db
+              .delete(schema.user)
+              .where(eq(schema.user.id, userRecord.id));
+
+            // 3. Reject login attempt
+            throw new ApiError(
+              'ACCOUNT_PERMANENTLY_DELETED',
+              httpStatus.BAD_REQUEST,
+              true,
+            );
+          }
+          return { data: session };
         },
       },
     },
@@ -149,14 +277,6 @@ export const auth = betterAuth({
       expiresIn: 300,
     }),
   ],
-  session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24, // refresh the expiry at most once a day
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-    },
-  },
   advanced: {
     // disableOriginCheck: true,
     useSecureCookies: isProduction,
@@ -184,6 +304,11 @@ export const auth = betterAuth({
         config.appleKeyId,
         config.applePrivateKey,
       ),
+      mapProfileToUser: (profile) => {
+        return {
+          ...(profile.name ? { name: profile.name } : {}),
+        };
+      },
     }),
     google: {
       clientId: [

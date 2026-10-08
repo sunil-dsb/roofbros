@@ -22,16 +22,20 @@ export const getJobs = catchAsync(async (req: Request, res: Response) => {
     'quoted' | 'requested' | 'delivered' | undefined;
   const jobId = req.query.jobId as string | undefined;
   const search = req.query.search as string | undefined;
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
 
-  const jobs = await jobService.getJobsService(
+  const result = await jobService.getJobsService(
     userId,
     jobStatus,
     jobId,
     search,
+    page,
+    limit,
   );
   return res
     .status(httpStatus.OK)
-    .json(ApiResponse.success('Jobs Fetched Successfully', jobs));
+    .json(ApiResponse.success('Jobs Fetched Successfully', result));
 });
 
 export const getJobById = catchAsync(async (req: Request, res: Response) => {
@@ -59,10 +63,15 @@ export const getJobArea = catchAsync(async (req: Request, res: Response) => {
 
 export const updateJobStatus = catchAsync(
   async (req: Request, res: Response) => {
+    const userId = req.auth?.user?.id as string;
     const id = req.params.id as string;
     const { jobStatus } = req.body;
 
-    const updatedJob = await jobService.updateJobStatusService(id, jobStatus);
+    const updatedJob = await jobService.updateJobStatusService(
+      userId,
+      id,
+      jobStatus,
+    );
 
     return res
       .status(httpStatus.OK)
@@ -73,7 +82,7 @@ export const updateJobStatus = catchAsync(
 export const calculateBom = catchAsync(async (req: Request, res: Response) => {
   const { area_sq_mt, jobType, tileTypeId, tileProfileId } = req.body;
 
-  const bom = await jobService.calculateBomService(
+  const materials = await jobService.calculateBomService(
     area_sq_mt,
     jobType,
     tileTypeId,
@@ -83,19 +92,17 @@ export const calculateBom = catchAsync(async (req: Request, res: Response) => {
   return res.status(httpStatus.OK).json(
     ApiResponse.success('Materials Calculated Successfully', {
       area_sq_mt,
-      topCoatBuckets: bom.topCoatBuckets,
-      primerType: bom.primerType,
-      primer: bom.primerBuckets,
-      totalTiles: bom.totalTiles,
+      ...materials,
     }),
   );
 });
 
 export const addJobNotes = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.auth?.user?.id as string;
   const id = req.params.id as string;
   const { notes } = req.body;
 
-  const updatedJob = await jobService.addJobNotesService(id, notes);
+  const updatedJob = await jobService.addJobNotesService(userId, id, notes);
   return res
     .status(httpStatus.OK)
     .json(ApiResponse.success('Job Notes Added Successfully', updatedJob));
@@ -104,11 +111,26 @@ export const addJobNotes = catchAsync(async (req: Request, res: Response) => {
 export const addDropzonePhotos = catchAsync(
   async (req: Request, res: Response) => {
     const id = req.params.id as string;
+    const userId = req.auth?.user?.id as string;
+
     const files =
       (req.files as Express.Multer.File[]) || (req.file ? [req.file] : []);
 
     if (files.length === 0) {
       throw new ApiError('No images provided', httpStatus.BAD_REQUEST);
+    }
+
+    // Ensure job belongs to user before uploading to R2
+    const { db } = await import('../../config/db.ts');
+    const { job } = await import('../../db/schema/job.schema.ts');
+    const { and, eq } = await import('drizzle-orm');
+
+    const existingJob = await db.query.job.findFirst({
+      where: and(eq(job.id, id), eq(job.userId, userId)),
+    });
+
+    if (!existingJob) {
+      throw new ApiError('Job not found', httpStatus.NOT_FOUND);
     }
 
     const folder = `job/dropzone/${id}`;
@@ -121,6 +143,7 @@ export const addDropzonePhotos = catchAsync(
     );
 
     const updatedJob = await jobService.addDropzonePhotosService(
+      userId,
       id,
       uploadedUrls,
     );

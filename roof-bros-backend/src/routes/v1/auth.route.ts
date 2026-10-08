@@ -12,6 +12,7 @@ import {
   getBusinessDetails,
   updateBusinessDetails,
   deleteAccount,
+  storeAppleToken,
 } from '../../controllers/v1/auth.controller.ts';
 import { validate, validateParams } from '../../shared/middlewares/validate.ts';
 import { requireAuth } from '../../shared/middlewares/authenticate.middlewares.ts';
@@ -21,6 +22,7 @@ import {
   sessionLimiter,
   otpLimiter,
   passwordChangeLimiter,
+  passwordResetLimiter,
 } from '../../shared/middlewares/rateLimit.middleware.ts';
 import {
   signInSchema,
@@ -34,6 +36,7 @@ import {
   updateBusinessSchema,
   businessDetailsParamsSchema,
   deleteAccountSchema,
+  storeAppleTokenSchema,
 } from '../../shared/validations/auth.validation.ts';
 
 const authRoute: Router = express.Router();
@@ -53,19 +56,21 @@ authRoute.post(
 
 authRoute.post(
   '/password/forget',
+  otpLimiter,
   validate(forgetPasswordSchema),
   forgetPassword,
 );
 
 authRoute.post(
   '/password/forget/verify',
+  passwordResetLimiter,
   validate(verifyForgetPasswordOtpSchema),
   verifyForgetPasswordOtp,
 );
 
 authRoute.post(
   '/password/reset',
-  otpLimiter,
+  passwordResetLimiter,
   validate(resetPasswordSchema),
   resetPassword,
 );
@@ -98,8 +103,16 @@ authRoute.put(
 authRoute.delete(
   '/delete/me',
   requireAuth,
+  passwordChangeLimiter,
   validate(deleteAccountSchema),
   deleteAccount,
+);
+
+authRoute.post(
+  '/apple/store-token',
+  requireAuth,
+  validate(storeAppleTokenSchema),
+  storeAppleToken,
 );
 
 export default authRoute;

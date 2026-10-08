@@ -4,19 +4,14 @@ import {
   text,
   timestamp,
   uuid,
-  integer,
-  pgEnum,
   pgSequence,
   decimal,
+  integer,
 } from 'drizzle-orm/pg-core';
 import type { AnyPgColumn } from 'drizzle-orm/pg-core';
 import { job } from './job.schema.ts';
+import { jobTypeEnum } from './enums.schema.ts';
 import { tileType, tileProfile, tileColor } from './tile.schema.ts';
-
-const quoteJobTypeEnum = pgEnum('job_type_enum', [
-  'new roof installation',
-  'roof restoration',
-]);
 
 export const quoteSeq = pgSequence('quote_seq', { startWith: 1000 });
 
@@ -26,8 +21,8 @@ export const quote = pgTable('quote', {
     .references((): AnyPgColumn => job.id, { onDelete: 'cascade' })
     .notNull(),
   quoteNumber: text('quote_number').unique(),
-  areaSqmt: decimal('area_sqmt', { precision: 10, scale: 2 }),
-  jobType: quoteJobTypeEnum('job_type'),
+  area_sq_mt: decimal('area_sq_mt', { precision: 10, scale: 2 }),
+  jobType: jobTypeEnum('job_type'),
   tileTypeId: uuid('tile_type_id').references(() => tileType.id, {
     onDelete: 'set null',
   }),
@@ -37,10 +32,12 @@ export const quote = pgTable('quote', {
   tileColorId: uuid('tile_color_id').references(() => tileColor.id, {
     onDelete: 'set null',
   }),
+
   topCoatBuckets: integer('top_coat_buckets'),
   primerType: text('primer_type'),
   primer: integer('primer'),
   totalTiles: integer('total_tiles'),
+
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()

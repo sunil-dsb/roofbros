@@ -71,17 +71,17 @@ paths:
                   data:
                     type: object
 
-  /v1/nearmap/static-map/{surveyResourceId}:
+  /v1/nearmap/staticmap/{surveyId}:
     get:
       summary: Get static map
-      description: Get static map image from Nearmap
+      description: Fetches the Nearmap static map image for a given survey and uploads it to storage. Returns a relative URL.
       tags:
         - Nearmap
       security:
         - bearerAuth: []
       parameters:
         - in: path
-          name: surveyResourceId
+          name: surveyId
           required: true
           schema:
             type: string
@@ -91,23 +91,11 @@ paths:
           schema:
             type: string
         - in: query
-          name: x
+          name: bbox
           required: false
           schema:
             type: string
-            default: '0'
-        - in: query
-          name: y
-          required: false
-          schema:
-            type: string
-            default: '0'
-        - in: query
-          name: tileSize
-          required: false
-          schema:
-            type: string
-            default: '4096x4096'
+          description: Bounding box for the map image
       responses:
         '200':
           description: OK
@@ -123,10 +111,10 @@ paths:
                   data:
                     type: object
 
-  /v1/nearmap/consolidated-data:
+  /v1/nearmap/roof-details:
     get:
-      summary: Get consolidated data
-      description: Fetch all Nearmap data (coverage, features, map) in one call
+      summary: Get roof details (consolidated)
+      description: Fetches area_sq_mt, pitch, confidence, tilesize, totalTiles, area_square and Base64 roofImage in a single call.
       tags:
         - Nearmap
       security:

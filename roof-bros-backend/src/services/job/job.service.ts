@@ -1,4 +1,4 @@
-import { eq, and, ilike, sql } from 'drizzle-orm';
+import { eq, and, ilike, sql, count } from 'drizzle-orm';
 import { db } from '../../config/db.ts';
 import { job } from '../../db/schema/job.schema.ts';
 import { quote } from '../../db/schema/quote.schema.ts';
@@ -28,13 +28,17 @@ export const createJobService = async (
     tileProfileId,
     tileColorId,
     pitch,
-    tilesize,
     jobStatus,
+    tilesize,
+    topCoatBuckets,
+    primer,
     primerType,
+    totalTiles,
   } = payload;
 
+  let typeExists;
   if (tileTypeId) {
-    const typeExists = await db.query.tileType.findFirst({
+    typeExists = await db.query.tileType.findFirst({
       where: eq(tileType.id, tileTypeId),
     });
     if (!typeExists) {
@@ -42,8 +46,9 @@ export const createJobService = async (
     }
   }
 
+  let profile;
   if (tileProfileId) {
-    const profile = await db.query.tileProfile.findFirst({
+    profile = await db.query.tileProfile.findFirst({
       where: eq(tileProfile.id, tileProfileId),
     });
 
@@ -79,68 +84,20 @@ export const createJobService = async (
     }
   }
 
-  const payloadTopCoat = payload.topCoatBuckets;
-  const payloadPrimer = payload.primer;
-  const payloadPrimerType = payload.primerType;
-  const payloadTotalTiles = payload.totalTiles;
-
-  let topCoatBuckets = payloadTopCoat;
-  let primer = payloadPrimer;
-  let totalTiles = payloadTotalTiles;
-
-  // Track which fields were auto-calculated so we can warn the caller
-  const autoCalculatedFields: string[] = [];
-
-  // Auto-calculate missing materials only if we don't have them
-  if (!topCoatBuckets || !primer || !totalTiles) {
-    let materialName = '';
-    let profileName = '';
-
-    if (tileTypeId) {
-      const tileTypeRec = await db.query.tileType.findFirst({
-        where: eq(tileType.id, tileTypeId),
-      });
-      if (tileTypeRec) {
-        materialName = tileTypeRec.name;
-      }
-    }
-
-    if (tileProfileId) {
-      const tileProfileRec = await db.query.tileProfile.findFirst({
-        where: eq(tileProfile.id, tileProfileId),
-      });
-      if (tileProfileRec) {
-        profileName = tileProfileRec.name;
-      }
-    }
-
-    const bom = calculateBillOfMaterials(
-      area_sq_mt ?? 0,
-      materialName,
-      jobType,
-      profileName,
+  let materials: ReturnType<typeof calculateBillOfMaterials> = {};
+  if (area_sq_mt) {
+    materials = calculateBillOfMaterials(
+      area_sq_mt,
+      typeExists?.name || '',
+      jobType || '',
+      profile?.name || '',
     );
-
-    if (!payloadTopCoat) {
-      topCoatBuckets = bom.topCoatBuckets;
-      autoCalculatedFields.push('topCoatBuckets');
-    }
-    if (!payloadPrimer) {
-      primer = bom.primerBuckets;
-      autoCalculatedFields.push('primer');
-    }
-    if (!payloadTotalTiles) {
-      totalTiles = bom.totalTiles;
-      autoCalculatedFields.push('totalTiles');
-    }
-    if (!payloadPrimerType) {
-      autoCalculatedFields.push('primerType');
-    }
   }
 
-  // Ensure minimums or fallback if primer/topcoat logic missed
-  const finalTopCoatBuckets = topCoatBuckets || null;
-  const finalPrimer = primer || null;
+  if (topCoatBuckets !== undefined) materials.topCoatBuckets = topCoatBuckets;
+  if (primer !== undefined) materials.primer = primer;
+  if (primerType !== undefined) materials.primerType = primerType;
+  if (totalTiles !== undefined) materials.totalTiles = totalTiles;
 
   return await db.transaction(async (tx) => {
     // 1. Insert the Job
@@ -148,7 +105,7 @@ export const createJobService = async (
       .insert(job)
       .values({
         address,
-        areaSqmt: area_sq_mt ? area_sq_mt.toString() : null,
+        area_sq_mt: area_sq_mt ? area_sq_mt.toString() : null,
         roofImage: roofImage || null,
         dropzonePhotos: (Array.isArray(dropzonePhotos)
           ? dropzonePhotos
@@ -162,6 +119,10 @@ export const createJobService = async (
         tilesize: tilesize ? tilesize.toString() : null,
         jobStatus: jobStatus || 'quoted',
         quoteCount: 1,
+        topCoatBuckets: materials.topCoatBuckets || null,
+        primer: materials.primer || null,
+        primerType: materials.primerType || null,
+        totalTiles: materials.totalTiles || null,
       })
       .returning();
 
@@ -186,15 +147,15 @@ export const createJobService = async (
       .values({
         jobId: newJob.id,
         quoteNumber,
-        areaSqmt: area_sq_mt ? area_sq_mt.toString() : null,
+        area_sq_mt: area_sq_mt ? area_sq_mt.toString() : null,
         jobType,
         tileTypeId,
         tileProfileId,
         tileColorId,
-        topCoatBuckets: finalTopCoatBuckets,
-        primerType,
-        primer: finalPrimer,
-        totalTiles,
+        topCoatBuckets: materials.topCoatBuckets || null,
+        primer: materials.primer || null,
+        primerType: materials.primerType || null,
+        totalTiles: materials.totalTiles || null,
       })
       .returning();
 
@@ -231,12 +192,7 @@ export const createJobService = async (
     return {
       ...updatedJob,
       activeQuote: fullyPopulatedQuote,
-      ...(autoCalculatedFields.length > 0 && {
-        warnings: autoCalculatedFields.map((field) => ({
-          field,
-          message: `'${field}' was not provided and has been auto-calculated`,
-        })),
-      }),
+      ...materials,
     };
   });
 };
@@ -246,6 +202,8 @@ export const getJobsService = async (
   status?: 'quoted' | 'requested' | 'delivered',
   jobId?: string,
   search?: string,
+  page: number = 1,
+  limit: number = 10,
 ) => {
   const filters = [eq(job.userId, userId)];
 
@@ -256,14 +214,23 @@ export const getJobsService = async (
     filters.push(eq(job.id, jobId));
   }
   if (search) {
-    const cleanSearch = search.replace(/\s+/g, '');
-    filters.push(
-      ilike(sql`REPLACE(${job.address}, ' ', '')`, `%${cleanSearch}%`),
-    );
+    filters.push(ilike(job.address, `%${search}%`));
   }
+
+  const offset = (page - 1) * limit;
+
+  const [totalCountResult] = await db
+    .select({ count: count() })
+    .from(job)
+    .where(filters.length > 0 ? and(...filters) : undefined);
+
+  const totalCount = totalCountResult?.count ?? 0;
+  const totalPages = Math.ceil(totalCount / limit);
 
   const jobs = await db.query.job.findMany({
     where: filters.length > 0 ? and(...filters) : undefined,
+    limit,
+    offset,
     columns: {
       id: true,
       userId: true,
@@ -281,8 +248,6 @@ export const getJobsService = async (
           tileColorId: true,
           tileProfileId: true,
           tileTypeId: true,
-          totalTiles: true,
-          topCoatBuckets: true,
         },
         with: {
           tileType: true,
@@ -296,46 +261,61 @@ export const getJobsService = async (
 
   // Inject profile-specific color images
   for (const j of jobs) {
+    const activeQuote = j.activeQuote;
     if (
-      j.activeQuote &&
-      j.activeQuote.tileProfileId &&
-      j.activeQuote.tileColorId &&
-      j.activeQuote.tileColor
+      activeQuote &&
+      activeQuote.tileProfileId &&
+      activeQuote.tileColorId &&
+      activeQuote.tileColor
     ) {
       const [profileColor] = await db
         .select({ imageUrl: tileProfileColor.imageUrl })
         .from(tileProfileColor)
         .where(
           and(
-            eq(tileProfileColor.profileId, j.activeQuote.tileProfileId),
-            eq(tileProfileColor.colorId, j.activeQuote.tileColorId),
+            eq(tileProfileColor.profileId, activeQuote.tileProfileId),
+            eq(tileProfileColor.colorId, activeQuote.tileColorId),
           ),
         );
       if (profileColor && profileColor.imageUrl) {
-        j.activeQuote.tileColor.imageUrl = profileColor.imageUrl;
+        activeQuote.tileColor.imageUrl = profileColor.imageUrl;
       }
     }
 
     // Clean up redundant IDs
-    delete (j as Partial<typeof j>).activeQuoteId;
-    if (j.jobStatus === 'requested' || j.jobStatus === 'delivered') {
-      delete (j as Partial<typeof j>).quoteCount;
+    const currentJob = j as Record<string, unknown>;
+    delete currentJob.activeQuoteId;
+    if (
+      currentJob.jobStatus === 'requested' ||
+      currentJob.jobStatus === 'delivered'
+    ) {
+      delete currentJob.quoteCount;
       // Extract requestedAt
-      const deliveryObj = j.delivery;
+      const deliveryObj = currentJob.delivery as
+        Record<string, unknown> | undefined | null;
       if (deliveryObj) {
-        (j as Record<string, unknown>).requestedAt = deliveryObj.requestedAt;
+        currentJob.requestedAt = deliveryObj.requestedAt;
       }
     }
-    delete (j as Partial<typeof j>).delivery;
+    delete currentJob.delivery;
 
-    if (j.activeQuote) {
-      delete (j.activeQuote as Partial<typeof j.activeQuote>).tileColorId;
-      delete (j.activeQuote as Partial<typeof j.activeQuote>).tileProfileId;
-      delete (j.activeQuote as Partial<typeof j.activeQuote>).tileTypeId;
+    if (activeQuote) {
+      const aq = activeQuote as Record<string, unknown>;
+      delete aq.tileColorId;
+      delete aq.tileProfileId;
+      delete aq.tileTypeId;
     }
   }
 
-  return jobs;
+  return {
+    jobs,
+    meta: {
+      totalCount,
+      page,
+      limit,
+      totalPages,
+    },
+  };
 };
 
 export const updateJobRoofImageService = async (
@@ -374,8 +354,6 @@ export const getJobByIdService = async (
           tileTypeId: true,
           createdAt: true,
           updatedAt: true,
-          totalTiles: true,
-          topCoatBuckets: true,
         },
         with: {
           tileType: true,
@@ -394,8 +372,6 @@ export const getJobByIdService = async (
           tileTypeId: true,
           createdAt: true,
           updatedAt: true,
-          totalTiles: true,
-          topCoatBuckets: true,
         },
         with: {
           tileType: true,
@@ -450,9 +426,8 @@ export const getJobByIdService = async (
   }
 
   const {
-    areaSqmt,
+    area_sq_mt,
     pitch,
-    tilesize,
     ridges,
     roofFaces,
     confidence,
@@ -490,9 +465,8 @@ export const getJobByIdService = async (
   return {
     ...restJob,
     measurement: {
-      areaSqmt,
+      area_sq_mt,
       pitch,
-      tilesize,
       ridges,
       roofFaces,
       confidence,
@@ -508,32 +482,34 @@ export const getJobByIdService = async (
 export const getJobAreaService = async (userId: string, id: string) => {
   const jobResult = await db.query.job.findFirst({
     where: and(eq(job.id, id), eq(job.userId, userId)),
-    columns: { areaSqmt: true },
+    columns: { area_sq_mt: true },
   });
 
-  return jobResult?.areaSqmt || null;
+  return jobResult?.area_sq_mt || null;
 };
 
 export const updateJobStatusService = async (
+  userId: string,
   id: string,
   status: 'quoted' | 'requested' | 'delivered',
 ) => {
   const [updatedJob] = await db
     .update(job)
     .set({ jobStatus: status })
-    .where(eq(job.id, id))
+    .where(and(eq(job.id, id), eq(job.userId, userId)))
     .returning();
 
   return updatedJob;
 };
 
 export const addDropzonePhotosService = async (
+  userId: string,
   jobId: string,
   photos: string[],
 ) => {
   return await db.transaction(async (tx) => {
     const existingJob = await tx.query.job.findFirst({
-      where: eq(job.id, jobId),
+      where: and(eq(job.id, jobId), eq(job.userId, userId)),
       columns: { dropzonePhotos: true },
     });
 
@@ -598,10 +574,14 @@ export const calculateBomService = async (
   );
 };
 
-export const addJobNotesService = async (jobId: string, notes: string[]) => {
+export const addJobNotesService = async (
+  userId: string,
+  jobId: string,
+  notes: string[],
+) => {
   return await db.transaction(async (tx) => {
     const existingJob = await tx.query.job.findFirst({
-      where: eq(job.id, jobId),
+      where: and(eq(job.id, jobId), eq(job.userId, userId)),
       columns: { additionalNotes: true },
     });
 

@@ -63,6 +63,12 @@ export const passwordChangeLimiter = createLimiter({
   message: 'Too many password change attempts, please try again later.',
 });
 
+export const passwordResetLimiter = createLimiter({
+  limit: 5,
+  windowMs: 15 * 60 * 1000,
+  message: 'Too many requests, please try again later.',
+});
+
 export const apiWriteLimiter = createLimiter({
   limit: 100,
   windowMs: 15 * 60 * 1000,

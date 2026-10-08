@@ -78,7 +78,7 @@ export const calculatePaint = (
   jobType: string = '',
 ): {
   topCoatBuckets: number;
-  primerBuckets: number;
+  primer: number;
   primerType: PrimerType;
 } => {
   // 2 coats applied, 90m² per bucket across 2 coats = 45m² effective per bucket
@@ -86,14 +86,14 @@ export const calculatePaint = (
 
   const primerType = getPrimerType(tileTypeName, jobType);
 
-  let primerBuckets: number;
+  let primer: number;
   if (primerType === 'Metal Primer') {
-    primerBuckets = Math.ceil(areaSqm / 100);
+    primer = Math.ceil(areaSqm / 100);
   } else {
-    primerBuckets = Math.ceil(areaSqm / 90);
+    primer = Math.ceil(areaSqm / 90);
   }
 
-  return { topCoatBuckets, primerBuckets, primerType };
+  return { topCoatBuckets, primer, primerType };
 };
 
 /**
@@ -105,16 +105,30 @@ export const calculateBillOfMaterials = (
   jobType: string = '',
   profileName?: TileProfileName,
 ) => {
-  const paint = calculatePaint(areaSqm, tileTypeName, jobType);
-
   const isMetal = tileTypeName.toLowerCase().includes('metal');
-  const totalTiles =
-    !isMetal && profileName ? calculateTiles(areaSqm, profileName) : 0;
+  const normalizedJobType = jobType.toLowerCase();
 
-  return {
-    topCoatBuckets: paint.topCoatBuckets,
-    primerBuckets: paint.primerBuckets,
-    primerType: paint.primerType,
-    totalTiles,
-  };
+  const isRestoration = normalizedJobType === 'roof restoration';
+  const isNewRoof = normalizedJobType === 'new roof installation';
+
+  const result: {
+    topCoatBuckets?: number;
+    primer?: number;
+    primerType?: PrimerType;
+    totalTiles?: number;
+  } = {};
+
+  if (!isNewRoof) {
+    const paint = calculatePaint(areaSqm, tileTypeName, jobType);
+    result.topCoatBuckets = paint.topCoatBuckets;
+    result.primer = paint.primer;
+    result.primerType = paint.primerType;
+  }
+
+  if (!isRestoration) {
+    result.totalTiles =
+      !isMetal && profileName ? calculateTiles(areaSqm, profileName) : 0;
+  }
+
+  return result;
 };
