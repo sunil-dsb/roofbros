@@ -84,11 +84,20 @@ export const createJobService = async (
     }
   }
 
+  let typeName = typeExists?.name || '';
+  if (profile && !typeName) {
+    const profWithType = await db.query.tileProfile.findFirst({
+      where: eq(tileProfile.id, profile.id),
+      with: { type: true },
+    });
+    typeName = profWithType?.type?.name || '';
+  }
+
   let materials: ReturnType<typeof calculateBillOfMaterials> = {};
   if (area_sq_mt) {
     materials = calculateBillOfMaterials(
       area_sq_mt,
-      typeExists?.name || '',
+      typeName,
       jobType || '',
       profile?.name || '',
     );
@@ -556,6 +565,9 @@ export const calculateBomService = async (
   if (tileProfileId) {
     const tileProfileRec = await db.query.tileProfile.findFirst({
       where: eq(tileProfile.id, tileProfileId),
+      with: {
+        type: true,
+      },
     });
     if (!tileProfileRec) {
       throw new ApiError(
@@ -564,6 +576,9 @@ export const calculateBomService = async (
       );
     }
     profileName = tileProfileRec.name;
+    if (!materialName && tileProfileRec.type?.name) {
+      materialName = tileProfileRec.type.name;
+    }
   }
 
   return calculateBillOfMaterials(

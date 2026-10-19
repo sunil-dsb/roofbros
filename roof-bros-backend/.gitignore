@@ -146,5 +146,6 @@ development.env
 .vscode/settings.json
 
 RoofBros.postman_collection.json
-
+Roof Bros.postman_collection.json
+*.postman_collection.json
 Nearmap_Tests.postman_collection.json

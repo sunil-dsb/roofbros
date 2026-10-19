@@ -1,11 +1,24 @@
-export { default as AppText } from './AppText';
-export { default as BottomBar } from './bottomBar';
-export { default as Loader } from './loader';
-export { default as Spacer } from './spacer';
-export { default as CustomButton } from './CustomButton';
-export { default as CustomKeyboardScrollView } from './CustomKeyboardScrollView';
-export { default as StackedInput } from './StackedInput';
-export { default as IconButton } from './IconButton';
-export { default as FlowHeader } from './FlowHeader';
-export { default as FixedFooter } from './FixedFooter';
-export { default as AppModal } from './AppModal';
+import React from 'react';
+import { View, DimensionValue } from 'react-native';
+
+interface SpacerProps {
+  height?: DimensionValue;
+  width?: DimensionValue;
+  background?: string;
+  flex?: number;
+}
+
+const Spacer = ({ height = 10, width = '100%', background, flex }: SpacerProps) => {
+  return (
+    <View
+      style={{
+        height: height as any,
+        width: width,
+        backgroundColor: background,
+        flex: flex,
+      }}
+    />
+  );
+};
+
+export default Spacer;

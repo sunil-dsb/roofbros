@@ -80,8 +80,20 @@ const PaintAndColour = () => {
   const [calculateMaterial, { isLoading: isCalculating }] =
     useCalculateMaterialMutation();
 
-  const [materialsList, setMaterialsList] = useState<any[]>([]);
-  const [selectedMaterialId, setSelectedMaterialId] = useState('');
+  const insets = useSafeAreaInsets();
+  const route = useRoute<any>();
+  const quoteData = useSelector((state: RootState) => state.global.quoteData);
+  const area_sq_mt = quoteData?.area_sq_mt;
+  const jobType = quoteData?.jobType || 'restoration';
+  const dispatch = useDispatch();
+
+  const passedTileTypeId =
+    route.params?.tileTypeId ||
+    quoteData?.tileTypeId ||
+    quoteData?.roofType ||
+    '';
+
+  const [selectedMaterialId, setSelectedMaterialId] = useState(passedTileTypeId);
 
   const [brandsList, setBrandsList] = useState<any[]>([]);
   const [colorsList, setColorsList] = useState<any[]>([]);
@@ -92,79 +104,15 @@ const PaintAndColour = () => {
   const brandsFadeAnim = useRef(new Animated.Value(0)).current;
   const colorsFadeAnim = useRef(new Animated.Value(0)).current;
 
-  const insets = useSafeAreaInsets();
-  const route = useRoute<any>();
-  const quoteData = useSelector((state: RootState) => state.global.quoteData);
-  const area_sq_mt = quoteData?.area_sq_mt;
-  const jobType = quoteData?.jobType || 'restoration';
-  const dispatch = useDispatch();
-
   const [selectedBrand, setSelectedBrand] = useState<any>(null);
   const [selectedColor, setSelectedColor] = useState<any>(null);
 
-  useEffect(() => {
-    managerApiCall(
-      getTiles,
-      {},
-      (res: any) => {
-        const list = Array.isArray(res?.data)
-          ? res.data
-          : Array.isArray(res)
-          ? res
-          : [];
-        setMaterialsList(list);
-        if (list.length > 0) {
-          setSelectedMaterialId(list[0].id);
-        }
-      },
-      () => {},
-      true,
-    );
-  }, []);
-
-  useEffect(() => {
-    if (!selectedMaterialId) return;
-    setIsLoadingBrands(true);
-    brandsFadeAnim.setValue(0);
-    managerApiCall(
-      getTileProfiles,
-      { tileId: selectedMaterialId, profileType: 'restore' },
-      (res: any) => {
-        const list = Array.isArray(res?.data)
-          ? res.data
-          : Array.isArray(res?.profiles)
-          ? res.profiles
-          : Array.isArray(res)
-          ? res
-          : [];
-        setBrandsList(list);
-        if (list.length > 0) {
-          setSelectedBrand(list[0]);
-        } else {
-          setSelectedBrand(null);
-          setColorsList([]);
-        }
-        setIsLoadingBrands(false);
-        Animated.timing(brandsFadeAnim, {
-          toValue: 1,
-          duration: 350,
-          useNativeDriver: true,
-        }).start();
-      },
-      () => {
-        setIsLoadingBrands(false);
-      },
-      true,
-    );
-  }, [selectedMaterialId]);
-
-  useEffect(() => {
-    if (!selectedBrand?.id) return;
+  const fetchColors = (brandId: string) => {
     setIsLoadingColors(true);
     colorsFadeAnim.setValue(0);
     managerApiCall(
       getTileColors,
-      selectedBrand.id,
+      brandId,
       (res: any) => {
         const list = Array.isArray(res?.data)
           ? res.data
@@ -193,10 +141,90 @@ const PaintAndColour = () => {
       },
       true,
     );
-  }, [selectedBrand]);
+  };
+
+  const handleBrandSelect = (brand: any) => {
+    if (selectedBrand?.id === brand.id) return;
+    setSelectedBrand(brand);
+    fetchColors(brand.id);
+  };
+
+  const loadBrandsAndColors = (materialId: string) => {
+    setIsLoadingBrands(true);
+    brandsFadeAnim.setValue(0);
+    managerApiCall(
+      getTileProfiles,
+      { tileId: materialId, profileType: 'restore' },
+      (res: any) => {
+        const list = Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.profiles)
+          ? res.profiles
+          : Array.isArray(res)
+          ? res
+          : [];
+        setBrandsList(list);
+        setIsLoadingBrands(false);
+        Animated.timing(brandsFadeAnim, {
+          toValue: 1,
+          duration: 350,
+          useNativeDriver: true,
+        }).start();
+
+        if (list.length > 0) {
+          const firstBrand = list[0];
+          setSelectedBrand(firstBrand);
+          fetchColors(firstBrand.id);
+        } else {
+          setSelectedBrand(null);
+          setColorsList([]);
+          setSelectedColor(null);
+        }
+      },
+      () => {
+        setIsLoadingBrands(false);
+      },
+      true,
+    );
+  };
+
+  useEffect(() => {
+    const tileId =
+      route.params?.tileTypeId ||
+      quoteData?.tileTypeId ||
+      quoteData?.roofType;
+
+    if (tileId) {
+      setSelectedMaterialId(tileId);
+      loadBrandsAndColors(tileId);
+    } else {
+      managerApiCall(
+        getTiles,
+        {},
+        (res: any) => {
+          const list = Array.isArray(res?.data)
+            ? res.data
+            : Array.isArray(res)
+            ? res
+            : [];
+          if (list.length > 0) {
+            const fallbackId = list[0].id;
+            setSelectedMaterialId(fallbackId);
+            loadBrandsAndColors(fallbackId);
+          } else {
+            setIsLoadingBrands(false);
+          }
+        },
+        () => {
+          setIsLoadingBrands(false);
+        },
+        true,
+      );
+    }
+  }, [route.params?.tileTypeId, quoteData?.tileTypeId, quoteData?.roofType]);
+
   const [additionalDetails, setAdditionalDetails] = useState('');
   const [isUrgent, setIsUrgent] = useState(false);
-
   const handleNext = () => {
     dispatch(
       updateQuoteData({
@@ -260,7 +288,7 @@ const PaintAndColour = () => {
                     styles.brandCard,
                     isSelected && styles.brandCardSelected,
                   ]}
-                  onPress={() => setSelectedBrand(brand)}
+                  onPress={() => handleBrandSelect(brand)}
                 >
                   <AppText
                     style={[
@@ -339,9 +367,7 @@ const PaintAndColour = () => {
           </Animated.View>
         )}
 
-        <AppText style={styles.colourNote}>
-          Colours are per brand Shield coat swaps to its own reds & terracottas.
-        </AppText>
+      
       </CustomKeyboardScrollView>
 
       {!isLoadingColors && selectedColor?.id && (

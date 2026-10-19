@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/store';
 import { updateQuoteData } from '../../redux/slices/globalSlice';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -39,11 +40,20 @@ const ExistingRoof = () => {
   const flow = route.params?.flow || 'newJob';
 
   const dispatch = useDispatch();
+  const quoteData = useSelector((state: RootState) => state.global.quoteData);
 
   const [roofTypes, setRoofTypes] = useState<any[]>([]);
-  const [selectedRoofType, setSelectedRoofType] = useState('');
+  const [selectedRoofType, setSelectedRoofType] = useState(
+    quoteData?.tileTypeId || quoteData?.roofType || '',
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [getTiles] = useLazyGetTilesQuery();
+
+  useEffect(() => {
+    if (quoteData?.tileTypeId || quoteData?.roofType) {
+      setSelectedRoofType(quoteData?.tileTypeId || quoteData?.roofType);
+    }
+  }, [quoteData?.tileTypeId, quoteData?.roofType]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -66,12 +76,22 @@ const ExistingRoof = () => {
     );
   }, [getTiles]);
 
-  const handleSelect = (roofTypeId: string) => {
-    setSelectedRoofType(roofTypeId);
-    dispatch(updateQuoteData({ roofType: roofTypeId }));
+  const handleSelect = (type: any) => {
+    const typeId = type?.id || type;
+    const typeName = type?.name || '';
+    setSelectedRoofType(typeId);
+    dispatch(
+      updateQuoteData({
+        roofType: typeId,
+        tileTypeId: typeId,
+        tileTypeName: typeName,
+      }),
+    );
     navigate(routesConstants.paintAndColour, {
       jobType,
       flow,
+      tileTypeId: typeId,
+      tileTypeName: typeName,
     });
   };
 
@@ -110,7 +130,7 @@ const ExistingRoof = () => {
                   key={type.id}
                   activeOpacity={0.8}
                   style={[styles.card, isSelected && styles.cardSelected]}
-                  onPress={() => handleSelect(type.id)}
+                  onPress={() => handleSelect(type)}
                 >
                   <AppText style={styles.cardTitle}>{type.name}</AppText>
                   {desc ? (

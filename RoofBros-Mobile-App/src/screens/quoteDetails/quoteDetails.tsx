@@ -174,7 +174,9 @@ const QuoteDetails = () => {
               : undefined,
           primerType:
             jobType === 'restoration'
-              ? globalQuoteData?.primerType || 'Terracotta Primer'
+              ? apiQuoteData?.primerType ||
+                globalQuoteData?.primerType ||
+                'Terracotta Primer'
               : undefined,
           primer:
             jobType === 'restoration'
@@ -233,7 +235,9 @@ const QuoteDetails = () => {
               : undefined,
           primerType:
             jobType === 'restoration'
-              ? globalQuoteData?.primerType || 'Terracotta Primer'
+              ? apiQuoteData?.primerType ||
+                globalQuoteData?.primerType ||
+                'Terracotta Primer'
               : undefined,
           primer:
             jobType === 'restoration'

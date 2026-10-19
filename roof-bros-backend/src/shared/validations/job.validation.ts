@@ -107,11 +107,15 @@ export const calculateBomSchema = z.object({
     message: 'Job Type is required',
   }),
   tileTypeId: z
-    .string({ message: 'Tile Type ID is required' })
-    .uuid('Invalid tile type ID'),
+    .string({ message: 'Tile Type ID must be a valid UUID' })
+    .uuid('Invalid tile type ID')
+    .optional()
+    .nullable(),
   tileProfileId: z
-    .string({ message: 'Tile Profile ID is required' })
-    .uuid('Invalid tile profile ID'),
+    .string({ message: 'Tile Profile ID must be a valid UUID' })
+    .uuid('Invalid tile profile ID')
+    .optional()
+    .nullable(),
 });
 
 export const addJobNotesSchema = z.object({

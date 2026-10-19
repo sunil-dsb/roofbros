@@ -1,4 +1,14 @@
-export type TileProfileName = 'Marseille' | 'Elabana' | string;
+export type TileProfileName =
+  | 'Marseille'
+  | 'Nouveau'
+  | 'Urban Shingle'
+  | 'Elabana'
+  | 'Tudor'
+  | 'Horizon'
+  | 'Atura'
+  | 'Cambridge'
+  | 'Madison'
+  | string;
 
 export type PrimerType =
   | 'High Build Primer'
@@ -7,40 +17,109 @@ export type PrimerType =
   | 'Metal Primer'
   | 'None';
 
-// Packaging constraints — tiles per sqm and full row (pallet) size
+export const TERRACOTTA_PROFILES = ['Marseille', 'Nouveau', 'Urban Shingle'];
+
+export const CONCRETE_PROFILES = [
+  'Elabana',
+  'Tudor',
+  'Horizon',
+  'Atura',
+  'Cambridge',
+  'Madison',
+];
+
+// Packaging constraints for seeded DB profiles — tiles per sqm and full row size
 export const TILE_CONSTRAINTS: Record<
   string,
   { tilesPerSqm: number; fullRowSize: number }
 > = {
+  // Terracotta profiles
   Marseille: {
     tilesPerSqm: 12.5,
     fullRowSize: 56,
   },
+  Nouveau: {
+    tilesPerSqm: 12.5,
+    fullRowSize: 68,
+  },
+  'Urban Shingle': {
+    tilesPerSqm: 12.5,
+    fullRowSize: 88,
+  },
+  // Concrete profiles
   Elabana: {
     tilesPerSqm: 10.8,
     fullRowSize: 100,
   },
+  Tudor: {
+    tilesPerSqm: 10.8,
+    fullRowSize: 100,
+  },
+  Horizon: {
+    tilesPerSqm: 11.2,
+    fullRowSize: 80,
+  },
+  Atura: {
+    tilesPerSqm: 11.33,
+    fullRowSize: 100,
+  },
+  Cambridge: {
+    tilesPerSqm: 11.2,
+    fullRowSize: 80,
+  },
+  Madison: {
+    tilesPerSqm: 11.2,
+    fullRowSize: 80,
+  },
 };
 
 /**
- * Determine the primer type based on tile material and job type.
+ * Determine the primer type based on tile material, job type, and profile name.
  */
 export const getPrimerType = (
   tileTypeName: string = '',
   jobType: string = '',
+  profileName: string = '',
 ): PrimerType => {
   const mat = tileTypeName.toLowerCase();
   const job = jobType.toLowerCase();
+  const prof = profileName.toLowerCase().replace(/\\/g, '');
 
-  if (mat.includes('metal')) return 'Metal Primer';
-  if (mat.includes('terracotta')) return 'Terracotta Primer';
-  if (mat.includes('concrete')) {
-    if (job.includes('restoration')) return 'High Build Primer';
+  // 1. Metal check
+  if (mat.includes('metal') || prof.includes('metal')) {
+    return 'Metal Primer';
+  }
+
+  // 2. Profile-based material check against seeded profiles
+  const isConcreteProfile = CONCRETE_PROFILES.some(
+    (p) => prof === p.toLowerCase() || prof.includes(p.toLowerCase()),
+  );
+  const isTerracottaProfile = TERRACOTTA_PROFILES.some(
+    (p) =>
+      prof === p.toLowerCase().replace(/\\/g, '') ||
+      prof.includes(p.toLowerCase().replace(/\\/g, '')),
+  );
+
+  const isConcrete = mat.includes('concrete') || isConcreteProfile;
+  const isTerracotta = mat.includes('terracotta') || isTerracottaProfile;
+
+  if (isConcrete) {
+    if (job.includes('restoration')) {
+      return 'High Build Primer';
+    }
     // Reroof or New Roof Installation → WB Sealer
     return 'WB Sealer';
   }
 
-  // Tile (generic) defaults to WB Sealer
+  if (isTerracotta) {
+    return 'Terracotta Primer';
+  }
+
+  // 3. Fallbacks when tile type/profile is unspecified
+  if (job.includes('restoration')) {
+    return 'High Build Primer';
+  }
+
   return 'WB Sealer';
 };
 
@@ -52,10 +131,28 @@ export const calculateTiles = (
   areaSqm: number,
   profileName: TileProfileName,
 ): number => {
-  const profile = TILE_CONSTRAINTS[profileName];
-  if (!profile) {
-    // Fallback: 10 tiles per sqm if profile is unknown
+  if (!profileName) {
     return Math.ceil(areaSqm * 10);
+  }
+
+  let profile = TILE_CONSTRAINTS[profileName];
+  if (!profile) {
+    const normalizedKey = Object.keys(TILE_CONSTRAINTS).find(
+      (k) =>
+        k.toLowerCase().replace(/\\/g, '') ===
+        profileName.toLowerCase().replace(/\\/g, ''),
+    );
+    if (normalizedKey) {
+      profile = TILE_CONSTRAINTS[normalizedKey];
+    }
+  }
+
+  if (!profile) {
+    const isTerra = TERRACOTTA_PROFILES.some((p) =>
+      p.toLowerCase().includes(profileName.toLowerCase()),
+    );
+    const rate = isTerra ? 12.5 : 10.8;
+    return Math.ceil(areaSqm * rate);
   }
 
   const { tilesPerSqm, fullRowSize } = profile;
@@ -76,6 +173,7 @@ export const calculatePaint = (
   areaSqm: number,
   tileTypeName: string = '',
   jobType: string = '',
+  profileName: string = '',
 ): {
   topCoatBuckets: number;
   primer: number;
@@ -84,7 +182,7 @@ export const calculatePaint = (
   // 2 coats applied, 90m² per bucket across 2 coats = 45m² effective per bucket
   const topCoatBuckets = Math.ceil((areaSqm * 2) / 90);
 
-  const primerType = getPrimerType(tileTypeName, jobType);
+  const primerType = getPrimerType(tileTypeName, jobType, profileName);
 
   let primer: number;
   if (primerType === 'Metal Primer') {
@@ -105,11 +203,13 @@ export const calculateBillOfMaterials = (
   jobType: string = '',
   profileName?: TileProfileName,
 ) => {
-  const isMetal = tileTypeName.toLowerCase().includes('metal');
+  const isMetal =
+    tileTypeName.toLowerCase().includes('metal') ||
+    Boolean(profileName && profileName.toLowerCase().includes('metal'));
   const normalizedJobType = jobType.toLowerCase();
 
-  const isRestoration = normalizedJobType === 'roof restoration';
-  const isNewRoof = normalizedJobType === 'new roof installation';
+  const isRestoration = normalizedJobType.includes('restoration');
+  const isNewRoof = normalizedJobType.includes('new');
 
   const result: {
     topCoatBuckets?: number;
@@ -118,8 +218,13 @@ export const calculateBillOfMaterials = (
     totalTiles?: number;
   } = {};
 
-  if (!isNewRoof) {
-    const paint = calculatePaint(areaSqm, tileTypeName, jobType);
+  if (!isNewRoof || isRestoration) {
+    const paint = calculatePaint(
+      areaSqm,
+      tileTypeName,
+      jobType,
+      profileName || '',
+    );
     result.topCoatBuckets = paint.topCoatBuckets;
     result.primer = paint.primer;
     result.primerType = paint.primerType;

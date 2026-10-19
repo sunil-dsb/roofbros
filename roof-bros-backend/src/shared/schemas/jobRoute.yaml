@@ -303,8 +303,6 @@ paths:
               required:
                 - area_sq_mt
                 - jobType
-                - tileTypeId
-                - tileProfileId
               properties:
                 area_sq_mt:
                   type: number
@@ -312,7 +310,7 @@ paths:
                 jobType:
                   type: string
                   enum:
-                    [new roof installation, roof restoration, roof replacement]
+                    [new roof installation, roof restoration]
                   example: roof restoration
                 tileTypeId:
                   type: string
